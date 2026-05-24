@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Cash Pro — Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --cream2: #F2EDE4;
+  --cream3: #E8E0D4;
+  --ink: #1C1916;
+  --ink2: #3D3830;
+  --ink3: #7A7265;
+  --ink4: #B0A898;
+  --sage: #4A6741;
+  --sage2: #6B9362;
+  --sage-light: #E8F0E6;
+  --border: rgba(28,25,22,0.10);
+  --border2: rgba(28,25,22,0.18);
+  --shadow: 0 2px 16px rgba(28,25,22,0.07);
+  --shadow-lg: 0 8px 40px rgba(28,25,22,0.12);
+  --r: 10px;
+  --r-lg: 18px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ── HEADER ── */
+.doc-header {
+  background: var(--ink);
+  padding: 3rem 2rem 2.4rem;
+  text-align: center;
+}
+.doc-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--cream);
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.doc-logo em {
+  color: var(--sage2);
+  font-style: italic;
+}
+.doc-tagline {
+  font-size: 12px;
+  color: rgba(250,247,242,0.45);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+.doc-badge-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: rgba(250,247,242,0.65);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-family: 'Lato', sans-serif;
+}
+
+/* ── LAYOUT ── */
+.doc-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+/* ── SECTION TITLES ── */
+.doc-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--sage);
+  margin-bottom: 6px;
+}
+.doc-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+.doc-lead {
+  font-size: 15px;
+  color: var(--ink3);
+  margin-bottom: 2rem;
+  max-width: 580px;
+  line-height: 1.7;
+}
+
+/* ── DIVIDER ── */
+.doc-divider {
+  border: none;
+  border-top: 1.5px solid var(--cream3);
+  margin: 2.8rem 0;
+}
+
+/* ── CARDS ── */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 1.8rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.2rem;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.card p {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+.card p + p { margin-top: 0.6rem; }
+
+/* ── STEP LIST ── */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.step-num {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--sage);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.step-body {}
+.step-title {
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 14.5px;
+  margin-bottom: 3px;
+}
+.step-desc {
+  font-size: 13.5px;
+  color: var(--ink3);
+  line-height: 1.6;
+}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight {
+  background: var(--sage-light);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 0.9rem 1.2rem;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+.highlight strong { color: var(--sage); }
+
+/* ── WARNING BOX ── */
+.warn {
+  background: #FBF0DB;
+  border-left: 3px solid #BF8C30;
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 0.9rem 1.2rem;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+.warn strong { color: #8C6010; }
+
+/* ── INLINE CODE ── */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  background: var(--cream2);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 1px 6px;
+  color: var(--ink2);
+}
+
+/* ── FAQ / TROUBLESHOOT ── */
+.faq-list { display: flex; flex-direction: column; gap: 1.1rem; }
+.faq-item {}
+.faq-q {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.faq-a {
+  font-size: 13.5px;
+  color: var(--ink3);
+  line-height: 1.6;
+}
+
+/* ── CONTACT CARD ── */
+.contact-card {
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: 1.8rem 2rem;
+  text-align: center;
+  margin-top: 2.5rem;
+}
+.contact-card p {
+  font-size: 13.5px;
+  color: rgba(250,247,242,0.55);
+  margin-bottom: 6px;
+}
+.contact-email {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--sage2);
+  text-decoration: none;
+}
+.contact-email:hover { text-decoration: underline; }
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  color: var(--ink4);
+  border-top: 1px solid var(--cream3);
+}
+
+@media (max-width: 600px) {
+  .doc-wrap { padding: 2rem 1.2rem 4rem; }
+  .doc-h2 { font-size: 1.35rem; }
+  .card { padding: 1.2rem 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="doc-logo">Campus Cash <em>Pro</em></div>
+  <div class="doc-tagline">College Financial Toolkit</div>
+  <div class="doc-badge-row">
+    <span class="doc-badge">Works Offline</span>
+    <span class="doc-badge">Private by Default</span>
+    <span class="doc-badge">Built for Students</span>
+  </div>
+</header>
+
+<main class="doc-wrap">
+
+  <!-- WHAT IS IT -->
+  <div class="doc-section-label">Overview</div>
+  <h2 class="doc-h2">What is Campus Cash Pro?</h2>
+  <p class="doc-lead">Campus Cash Pro is an all-in-one personal finance toolkit designed specifically for college students. It lives entirely in a single HTML file — no installation, no subscription, no account required.</p>
+
+  <div class="card">
+    <p class="card-title">Everything in one file</p>
+    <p>Track your monthly budget, log transactions, manage sinking funds, set savings goals, monitor subscriptions, track debt payoff, log GPA, record scholarships and internships, and keep a money journal — all from a single file that opens right in your browser.</p>
+    <p>Your data stays on your device. Nothing is ever sent to a server.</p>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- HOW TO OPEN -->
+  <div class="doc-section-label">Getting Started</div>
+  <h2 class="doc-h2">How to open Campus Cash Pro</h2>
+  <p class="doc-lead">No installation needed. Just open the file.</p>
+
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Locate the file</div>
+        <div class="step-desc">Find <code>CampusCashPro.html</code> in the folder where you downloaded it. Keep this folder somewhere safe — like your Documents folder or Desktop.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Open in your browser</div>
+        <div class="step-desc">Double-click the file to open it in your default browser. It works in Chrome, Safari, Firefox, and Edge. No internet connection required after the first load.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Complete the quick setup</div>
+        <div class="step-desc">The first time you open it, a short welcome screen will guide you through entering your name, school, and choosing a color theme. Takes about 60 seconds.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Bookmark it (optional)</div>
+        <div class="step-desc">Drag the file onto your browser's toolbar or bookmark bar for quick one-click access anytime.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- DATA & PRIVACY -->
+  <div class="doc-section-label">Your Data</div>
+  <h2 class="doc-h2">Where is your data stored?</h2>
+  <p class="doc-lead">All your financial data is stored locally in your browser using a technology called <em>localStorage</em>. No server. No cloud. No account.</p>
+
+  <div class="card">
+    <p>Everything you enter — transactions, budget amounts, goals, notes — is saved automatically to your browser's local storage on your device. It works like a file on your computer: only you can see it, and it only exists on the device and browser you used to create it.</p>
+  </div>
+
+  <div class="highlight">
+    <strong>Important:</strong> Your data is tied to the specific browser and device you use. If you open the file in a different browser or on a different device, you will start fresh. Use the export feature in Settings to back up and transfer your data.
+  </div>
+
+  <div class="warn">
+    <strong>Do not use Private / Incognito mode</strong> as your regular window. Private browsing clears all local storage when the window is closed, which means your data will be permanently lost at the end of each session. Always use a normal browser window.
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- BACKUPS -->
+  <div class="doc-section-label">Backups</div>
+  <h2 class="doc-h2">Exporting and importing your data</h2>
+  <p class="doc-lead">Campus Cash Pro has a built-in backup system so you never lose your data.</p>
+
+  <div class="card">
+    <p class="card-title">How to export a backup</p>
+    <p>Go to <strong>Settings</strong> (the gear icon in the sidebar) and click <strong>Export Data</strong>. This downloads a small <code>.json</code> file to your Downloads folder. Store it somewhere safe — like a cloud folder or external drive.</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title">How to import a backup</p>
+    <p>Open Campus Cash Pro in your browser, go to <strong>Settings</strong>, and click <strong>Import Data</strong>. Select your previously exported <code>.json</code> file. Your data will be restored immediately.</p>
+  </div>
+
+  <div class="highlight">
+    <strong>Tip:</strong> Export a backup once a month, or before switching computers or browsers. This only takes a few seconds.
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- TROUBLESHOOTING -->
+  <div class="doc-section-label">Troubleshooting</div>
+  <h2 class="doc-h2">Common questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">My data disappeared. What happened?</div>
+      <div class="faq-a">This usually happens when the file is opened in a private/incognito window, or if browser storage was cleared. Going forward, always use a normal browser window. If you have a backup <code>.json</code> file, you can restore it via Settings → Import Data.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">The app looks broken or won't load properly.</div>
+      <div class="faq-a">Try a hard refresh: press <code>Cmd + Shift + R</code> on Mac or <code>Ctrl + Shift + R</code> on Windows. Make sure you're using a modern browser (Chrome 90+, Safari 14+, Firefox 88+, or Edge 90+).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is Campus Cash Pro available on mobile?</div>
+      <div class="faq-a">Campus Cash Pro is designed for desktop and laptop use. Some features may open in a mobile browser, but the layout and experience are optimized for a computer screen. For the best results, use it on a desktop or laptop.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I use Campus Cash Pro offline?</div>
+      <div class="faq-a">Yes, after the first load it works fully offline. The only feature that requires an internet connection is loading the Google Fonts used for the app's typography — if you're offline, the app will fall back to a system font automatically.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will my data sync between devices?</div>
+      <div class="faq-a">Not automatically. Use the export/import backup feature in Settings to move your data between devices. Export from your current device, then import on the new one.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can I rename or move the HTML file?</div>
+      <div class="faq-a">Yes. The file name and location don't affect how the app works. Just keep it somewhere you can find it easily.</div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-card">
+    <div class="contact-title">Need help?</div>
+    <p>Questions, feedback, or something not working right?</p>
+    <a class="contact-email" href="mailto:jrdud11@gmail.com">jrdud11@gmail.com</a>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 Julian D. &mdash; Campus Cash Pro &mdash; All rights reserved.
+</footer>
+
+</body>
+</html>

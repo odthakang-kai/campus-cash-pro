@@ -1,0 +1,148 @@
+================================================================
+  CAMPUS CASH PRO — Single-User License Agreement
+  (c) 2026 Julian D.
+  All rights reserved.
+================================================================
+
+
+LICENSE SUMMARY (plain language)
+-----------------------------------
+One purchase = one license for one person.
+
+  ALLOWED:
+  [+] Use the app on your own personal devices
+  [+] Manage your own personal finances with it
+  [+] Export and back up your own data
+  [+] Keep your copy permanently (license does not expire)
+
+  NOT ALLOWED:
+  [-] Share or give the file to other people
+  [-] Resell or redistribute the file (paid or free)
+  [-] Upload it to file-sharing or cloud platforms
+  [-] Use it for commercial or client work
+
+The full terms are below. When in doubt, the full terms apply.
+
+
+================================================================
+  SECTION 1 — GRANT OF LICENSE
+================================================================
+
+By purchasing Campus Cash Pro, you receive a single-user,
+non-exclusive, non-transferable license to use the product for
+your own personal financial management. One purchase covers
+one individual person.
+
+You may install and use the file on multiple personal devices
+that belong to you (for example, your laptop and your desktop
+computer), provided that you are the only person who uses it
+on those devices.
+
+
+================================================================
+  SECTION 2 — PERMITTED USES
+================================================================
+
+Under this license you may:
+
+  - Use Campus Cash Pro on your own personal devices for personal
+    financial tracking.
+
+  - Keep your copy of the file permanently. Your license does
+    not expire.
+
+  - Export, back up, and restore your personal data using the
+    built-in export feature.
+
+  - Contact the creator for support or to report issues.
+
+
+================================================================
+  SECTION 3 — RESTRICTIONS
+================================================================
+
+The following are NOT permitted under this license:
+
+  SHARING
+  You may not share, give, lend, or otherwise transfer the file
+  or your license to any other person.
+
+  REDISTRIBUTION
+  You may not redistribute, re-upload, or make the file available
+  for download anywhere — including file-sharing sites, cloud
+  drives, personal websites, Discord servers, or any other platform.
+
+  RESALE
+  You may not resell, sublicense, or offer the product for sale
+  or as part of a bundle, whether paid or free.
+
+  COMMERCIAL USE
+  You may not use Campus Cash Pro to manage finances for a business,
+  organization, clients, or any third party.
+
+  MODIFICATION FOR REDISTRIBUTION
+  You may not modify the file and distribute the modified version
+  to others.
+
+
+================================================================
+  SECTION 4 — FINANCIAL DISCLAIMER
+================================================================
+
+Campus Cash Pro is a personal budgeting and organizational tool.
+It is designed to help you track your own finances. It does not
+constitute financial, investment, tax, or legal advice.
+
+Any projections, estimates, goal calculations, or debt payoff
+schedules shown in the app are for EDUCATIONAL AND PLANNING
+PURPOSES ONLY.
+
+Always consult a qualified financial professional before making
+significant financial decisions.
+
+
+================================================================
+  SECTION 5 — PRODUCT PROVIDED AS-IS
+================================================================
+
+Campus Cash Pro is provided "as-is" without warranty of any kind,
+express or implied. The creator makes reasonable efforts to ensure
+the product works correctly but cannot guarantee it will be
+error-free or suitable for every use case.
+
+By using Campus Cash Pro, you accept responsibility for maintaining
+backups of your own data using the built-in export feature.
+
+The creator is not liable for:
+  - Loss of data resulting from browser storage being cleared,
+    device failure, or user error.
+  - Any financial decisions made based on information displayed
+    by the app.
+
+
+================================================================
+  SECTION 6 — INTELLECTUAL PROPERTY
+================================================================
+
+All content, design, code, and assets included in Campus Cash Pro
+are the intellectual property of Julian D. and
+are protected by copyright law.
+
+Purchasing this product grants you a license to use it. It does
+NOT transfer ownership of the product or its underlying code to you.
+
+
+================================================================
+  CONTACT
+================================================================
+
+Questions about this license?
+
+Email: jrdud11@gmail.com
+
+
+================================================================
+  (c) 2026 Julian D.
+  Campus Cash Pro — Single-User Personal License
+  Non-Transferable — All rights reserved.
+================================================================

@@ -35,8 +35,8 @@ html{scroll-behavior:smooth;}
 body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;font-size:15px;}
 
 /* ── ONBOARDING MODAL ── */
-#onboard-overlay{position:fixed;inset:0;background:rgba(28,25,22,0.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(3px);}
-#onboard-box{background:var(--cream);border-radius:var(--r-lg);padding:2.5rem;max-width:520px;width:100%;box-shadow:var(--shadow-lg);animation:fadeUp .35s ease;}
+#onboard-overlay{position:fixed;inset:0;background:rgba(28,25,22,0.6);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:2rem 1rem;backdrop-filter:blur(3px);overflow-y:auto;}
+#onboard-box{background:var(--cream);border-radius:var(--r-lg);padding:1.8rem 2rem;max-width:520px;width:100%;box-shadow:var(--shadow-lg);animation:fadeUp .35s ease;margin-bottom:2rem;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 .ob-step{display:none;} .ob-step.active{display:block;}
 .ob-logo{font-family:'Playfair Display',serif;font-size:2rem;color:var(--ink);margin-bottom:4px;}
@@ -60,12 +60,30 @@ body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--ink);min-
 
 /* ── ONBOARDING TOOLS PREVIEW ── */
 .ob-tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:1rem 0 1.2rem;}
-.ob-tool{background:var(--cream2);border:1px solid var(--border);border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
+.ob-tool{background:var(--cream2);border:1px solid var(--border);border-radius:6px;padding:5px 10px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);}
 .ob-tool-ico{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
 .ob-tool-name{font-weight:700;color:var(--ink);line-height:1.2;}
-.ob-tool-name span{display:block;font-weight:400;color:var(--ink3);font-size:10.5px;text-transform:uppercase;letter-spacing:0.4px;margin-top:1px;}
+.ob-tool-name span{display:inline;font-weight:400;color:var(--ink4);font-size:11px;text-transform:none;letter-spacing:0;margin-left:5px;}
+.ob-tool-name span::before{content:'·';margin-right:5px;color:var(--ink4);}
 .ob-promise{background:var(--accent-light,var(--sage-light));border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--ink2);margin-top:8px;line-height:1.5;}
+.ob-tools-section{grid-column:1/-1;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--ink4);margin-top:10px;margin-bottom:2px;}
+.ob-tools-section:first-child{margin-top:0;}
 .ob-promise strong{color:var(--accent,var(--sage));}
+
+/* ── OB STEP-0 WELCOME REDESIGN ── */
+.ob-welcome-head{margin-bottom:1.15rem;}
+#ob0 .ob-h{font-size:1.5rem;line-height:1.28;}
+#ob0 .ob-p{margin-bottom:0.55rem;font-size:13.5px;}
+.ob-privacy-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3);padding:3px 10px 3px 8px;border:1px solid var(--border2);border-radius:20px;background:var(--cream2);}
+.ob-kit{display:flex;flex-direction:column;gap:8px;margin:1.1rem 0 1rem;}
+.ob-kit-row{display:flex;align-items:flex-start;gap:9px;}
+.ob-kit-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.1px;color:var(--accent,var(--sage));background:var(--accent-light,var(--sage-light));border-radius:20px;padding:3px 9px;white-space:nowrap;flex-shrink:0;margin-top:2px;line-height:1.6;}
+.ob-kit-chips{display:flex;flex-wrap:wrap;gap:4px;align-items:flex-start;}
+.ob-kit-chip{font-size:11px;font-weight:600;color:var(--ink2);background:var(--cream2);border:1px solid var(--border);border-radius:5px;padding:3px 8px;white-space:nowrap;line-height:1.4;}
+.ob-setup-strip{display:flex;align-items:flex-start;gap:9px;background:var(--accent-light,var(--sage-light));border-radius:8px;padding:10px 12px;}
+.ob-setup-icon{flex-shrink:0;color:var(--accent,var(--sage));margin-top:1px;}
+.ob-setup-text{font-size:12.5px;color:var(--ink2);line-height:1.55;}
+.ob-setup-text strong{color:var(--accent,var(--sage));}
 
 /* ── BANK IMPORT MODAL ── */
 #import-overlay{position:fixed;inset:0;background:rgba(28,25,22,0.6);z-index:950;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;backdrop-filter:blur(3px);overflow-y:auto;}
@@ -165,6 +183,10 @@ body.theme-lavender{--accent:#7E5BB0;--accent2:#9C7FCE;--accent-light:#EEE7F8;}
 body.theme-berry{--accent:#8B3A62;--accent2:#A85B81;--accent-light:#F4DDE9;}
 body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 
+/* ── PRO LOCK BADGES ── */
+.sb-item .si-lock{font-size:10px;margin-left:auto;opacity:0.45;flex-shrink:0;}
+.sb-item.pro-locked:hover .si-lock{opacity:0.75;}
+
 /* ── SIDEBAR ── */
 #app{display:flex;min-height:100vh;}
 #sidebar{width:230px;background:var(--ink);flex-shrink:0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
@@ -211,11 +233,107 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
-@media(max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr;}.page{padding:1.2rem;} #sidebar{display:none;}}
+@media(max-width:640px){
+  .g2,.g3,.g4{grid-template-columns:1fr;}
+  .page{padding:1rem 1rem 5rem;}
+  #sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    width:80vw;
+    max-width:300px;
+    z-index:500;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    display:flex;
+  }
+  #sidebar.mob-open{transform:translateX(0);}
+  #main{padding-top:56px;}
+}
+
+/* ── MOBILE HEADER BAR ── */
+#mob-header{
+  display:none;
+  position:fixed;
+  top:0;left:0;right:0;
+  height:56px;
+  background:var(--ink);
+  z-index:400;
+  align-items:center;
+  padding:0 1rem;
+  gap:12px;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+#mob-header .mob-logo{
+  flex:1;
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;
+  color:var(--cream);
+  line-height:1;
+}
+#mob-header .mob-logo span{
+  color:var(--accent2,var(--sage2));
+  font-style:italic;
+}
+#mob-header .mob-month{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:rgba(250,247,242,0.5);
+  letter-spacing:0.3px;
+}
+#mob-hamburger{
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  flex-shrink:0;
+}
+#mob-hamburger span{
+  display:block;
+  width:22px;
+  height:2px;
+  background:rgba(250,247,242,0.7);
+  border-radius:2px;
+}
+#mob-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(28,25,22,0.55);
+  z-index:490;
+  backdrop-filter:blur(2px);
+}
+#mob-close{
+  display:none;
+  background:none;
+  border:none;
+  color:rgba(250,247,242,0.4);
+  font-size:24px;
+  cursor:pointer;
+  padding:0 4px;
+  line-height:1;
+  flex-shrink:0;
+}
+#mob-close:hover{color:rgba(250,247,242,0.8);}
+@media(max-width:640px){
+  #mob-header{display:flex;}
+  #mob-close{display:block;}
+  .sb-header{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    padding-right:0.5rem;
+  }
+}
 
 /* ── INPUTS ── */
 .field{margin-bottom:1rem;}
 .field label{font-size:13px;font-weight:700;color:var(--ink2);display:block;margin-bottom:5px;}
+.req-star{color:var(--accent, var(--sage));margin-left:1px;font-weight:700;}
 .field input,.field select,.field textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border2);border-radius:8px;font-family:'Lato',sans-serif;font-size:14px;background:var(--cream);color:var(--ink);outline:none;transition:border-color .15s;}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--accent,var(--sage));background:white;}
 .field textarea{resize:vertical;min-height:70px;line-height:1.5;}
@@ -434,19 +552,55 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 .wb-stat-val{font-family:'JetBrains Mono',monospace;font-size:1.4rem;color:var(--cream);}
 .wb-stat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:rgba(250,247,242,0.35);margin-top:2px;}
 
+/* ── WHAT NEEDS ATTENTION CARD ── */
+#dash-wna{margin-bottom:1.2rem;}
+.wna-card{background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem 1.6rem;box-shadow:var(--shadow);}
+.wna-item{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;border-radius:4px;margin:0 -4px;padding-left:4px;padding-right:4px;}
+.wna-item:last-of-type{border-bottom:none;}
+.wna-item:hover{background:var(--cream2);}
+.wna-item-icon{font-size:1.15rem;width:24px;text-align:center;flex-shrink:0;}
+.wna-item-body{flex:1;min-width:0;}
+.wna-item-name{font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.wna-item-meta{display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap;}
+.wna-item-sub{font-size:11px;color:var(--ink4);font-family:'JetBrains Mono',monospace;}
+.wna-days-pill{flex-shrink:0;font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.wna-days-today{background:var(--rust);color:white;}
+.wna-days-urgent{background:var(--rust-light);color:var(--rust);}
+.wna-days-soon{background:var(--gold-light);color:var(--gold);}
+.wna-days-ok{background:var(--cream2);color:var(--ink3);}
+.wna-footer{display:flex;align-items:center;justify-content:flex-end;padding-top:10px;margin-top:2px;font-size:12px;color:var(--ink4);}
+.wna-see-all{color:var(--accent,var(--sage));font-weight:700;cursor:pointer;margin-left:4px;}
+.wna-see-all:hover{text-decoration:underline;}
+
+/* ── GROWTH PLANNER ── */
+.growth-acct{background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem;margin-bottom:12px;box-shadow:var(--shadow);transition:box-shadow .15s;}
+.growth-acct:hover{box-shadow:var(--shadow-lg);}
+.growth-acct-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.growth-acct-name{font-weight:700;font-size:15px;color:var(--ink);}
+.growth-acct-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.growth-rate-badge{font-size:11px;background:var(--sage-light);color:var(--sage);border-radius:20px;padding:2px 9px;font-weight:700;cursor:pointer;transition:box-shadow .15s;}
+.growth-rate-badge:hover{box-shadow:0 0 0 1.5px var(--sage);}
+.growth-balance{font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--ink);font-weight:600;}
+.growth-bar-wrap{margin-bottom:12px;}
+.growth-bar-track{height:7px;background:var(--cream3);border-radius:4px;overflow:hidden;display:flex;}
+.growth-bar-contributed{height:100%;background:var(--ink4);border-radius:4px 0 0 4px;transition:width .5s ease;}
+.growth-bar-gain{height:100%;background:var(--accent,var(--sage));border-radius:0 4px 4px 0;transition:width .5s ease;}
+.growth-acct-footer{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--ink4);}
+.growth-acct-onetime{padding-top:10px;margin-top:10px;border-top:1px solid var(--border);}
+.growth-ot-out{margin-top:5px;font-size:12px;line-height:1.5;}
+.growth-preset-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.growth-pill{padding:4px 12px;border-radius:20px;border:1.5px solid var(--border2);background:var(--cream);font-size:12px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all .15s;font-family:'Lato',sans-serif;}
+.growth-pill:hover{border-color:var(--accent,var(--sage));color:var(--accent,var(--sage));background:var(--accent-light,var(--sage-light));}
+.growth-pill.active{border-color:var(--accent,var(--sage));color:var(--accent,var(--sage));background:var(--accent-light,var(--sage-light));}
+.growth-chart-wrap{width:100%;overflow-x:auto;margin-top:4px;}
+.growth-chart-wrap svg{width:100%;min-width:280px;display:block;}
+
 /* ── SETTINGS PANEL ── */
 .settings-section{margin-bottom:2rem;}
 .settings-section h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ink);margin-bottom:1rem;}
 .color-picker-row{display:flex;gap:10px;flex-wrap:wrap;}
 .color-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s;}
 .color-swatch.active{border-color:var(--ink);transform:scale(1.1);}
-
-/* ── NOTES ── */
-.note-card{background:var(--gold-light);border:1px solid rgba(191,140,48,0.2);border-radius:var(--r);padding:1.1rem;margin-bottom:8px;position:relative;}
-.note-card .note-date{font-size:11px;color:var(--gold);font-family:'JetBrains Mono',monospace;margin-bottom:4px;}
-.note-card .note-text{font-size:14px;color:var(--ink2);line-height:1.5;}
-.note-del{position:absolute;top:8px;right:10px;background:none;border:none;font-size:14px;cursor:pointer;color:var(--gold);opacity:0.5;}
-.note-del:hover{opacity:1;}
 
 /* ── CATEGORY COLORS ── */
 .c-food{background:#E76F51;}
@@ -658,27 +812,53 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       <div class="ob-dot done" id="dot0"></div>
       <div class="ob-dot" id="dot1"></div>
       <div class="ob-dot" id="dot2"></div>
-      <div class="ob-dot" id="dot3"></div>
     </div>
 
     <div class="ob-step active" id="ob0">
-      <div class="ob-h">Welcome — here's what's inside</div>
-      <div class="ob-p">Every tool you need to get a real handle on your money in college. Everything saves to your browser; nothing leaves your device.</div>
-      <div class="ob-tools-grid">
-        <div class="ob-tool"><span class="ob-tool-ico">◈</span><div class="ob-tool-name">Dashboard<span>your snapshot</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">◎</span><div class="ob-tool-name">Monthly Budget<span>income + limits</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">▦</span><div class="ob-tool-name">Month Archive<span>compare months</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">☰</span><div class="ob-tool-name">Spending Log<span>track expenses</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">◉</span><div class="ob-tool-name">Sinking Funds<span>save for goals</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">✦</span><div class="ob-tool-name">Financial Goals<span>big-picture wins</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">⬦</span><div class="ob-tool-name">Debt Tracker<span>payoff strategies</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">◫</span><div class="ob-tool-name">Subscriptions<span>recurring charges</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">✧</span><div class="ob-tool-name">Aid &amp; Scholarships<span>deadlines + awards</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">⧗</span><div class="ob-tool-name">Internships<span>full pipeline</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">◐</span><div class="ob-tool-name">GPA Calculator<span>semester + cumulative</span></div></div>
-        <div class="ob-tool"><span class="ob-tool-ico">✎</span><div class="ob-tool-name">Money Journal<span>reflections + wins</span></div></div>
+      <div class="ob-welcome-head">
+        <div class="ob-h">Welcome — here's what's inside</div>
+        <div class="ob-p" style="margin-top:6px;">Every tool you need to get a real handle on your money in college.</div>
+        <span class="ob-privacy-pill">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Saves to your browser · nothing leaves your device
+        </span>
       </div>
-      <div class="ob-promise"><strong>Quick setup:</strong> the next three steps take about a minute. You can edit anything later in Settings.</div>
+
+      <div class="ob-kit">
+        <div class="ob-kit-row">
+          <span class="ob-kit-label">Overview</span>
+          <div class="ob-kit-chips">
+            <span class="ob-kit-chip">Dashboard</span>
+            <span class="ob-kit-chip">Monthly Budget</span>
+            <span class="ob-kit-chip">Month Archive</span>
+          </div>
+        </div>
+        <div class="ob-kit-row">
+          <span class="ob-kit-label">Tracking</span>
+          <div class="ob-kit-chips">
+            <span class="ob-kit-chip">Spending Log</span>
+            <span class="ob-kit-chip">Savings Funds</span>
+            <span class="ob-kit-chip">Goals</span>
+          </div>
+        </div>
+        <div class="ob-kit-row">
+          <span class="ob-kit-label">Planning</span>
+          <div class="ob-kit-chips">
+            <span class="ob-kit-chip">Growth Planner</span>
+            <span class="ob-kit-chip">Debt Tracker</span>
+            <span class="ob-kit-chip">Subscriptions</span>
+            <span class="ob-kit-chip">Aid &amp; Scholarships</span>
+            <span class="ob-kit-chip">Internships</span>
+            <span class="ob-kit-chip">GPA Calculator</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ob-setup-strip">
+        <svg class="ob-setup-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <div class="ob-setup-text"><strong>Quick setup:</strong> the next two steps take less than a minute. You can edit anything later in Settings.</div>
+      </div>
+
       <div class="ob-actions">
         <div></div>
         <button class="btn btn-primary" onclick="obNext(1)">Let's go →</button>
@@ -712,48 +892,9 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       </div>
     </div>
 
-    <div class="ob-step" id="ob2">
-      <div class="ob-h">Set your monthly income</div>
-      <div class="ob-p">Add your income sources for this starting month, or skip for now. You can edit everything later in the toolkit, and each month can have its own numbers.</div>
-      <div class="ob-row">
-        <div class="ob-field">
-          <label>Parent / family allowance ($)</label>
-          <input type="number" id="setup-allowance" placeholder="0">
-        </div>
-        <div class="ob-field">
-          <label>Part-time job ($)</label>
-          <input type="number" id="setup-job" placeholder="0">
-        </div>
-      </div>
-      <div class="ob-row">
-        <div class="ob-field">
-          <label>Financial aid (monthly) ($)</label>
-          <input type="number" id="setup-aid" placeholder="0">
-        </div>
-        <div class="ob-field">
-          <label>Side hustle / other ($)</label>
-          <input type="number" id="setup-hustle" placeholder="0">
-        </div>
-      </div>
-      <div class="ob-row">
-        <div class="ob-field">
-          <label>Scholarship (monthly) ($)</label>
-          <input type="number" id="setup-scholarship" placeholder="0">
-        </div>
-        <div class="ob-field">
-          <label>Starting savings balance ($)</label>
-          <input type="number" id="setup-savings" placeholder="0">
-        </div>
-      </div>
-      <div class="ob-actions">
-        <button class="btn btn-ghost" onclick="obNext(1)">← Back</button>
-        <button class="btn btn-primary" onclick="obNext(3)">Next →</button>
-      </div>
-    </div>
-
     <div class="ob-step" id="ob3">
-      <div class="ob-h">Pick your color theme</div>
-      <div class="ob-p">Choose a vibe that matches your personality.</div>
+      <div class="ob-h">Last step — your preferences</div>
+      <div class="ob-p">Pick a color theme and confirm your starting month.</div>
       <div class="ob-field">
         <label>Color theme</label>
         <div class="theme-grid">
@@ -807,19 +948,32 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       </div>
       <div class="ob-promise" style="margin-top:1rem"><strong>Heads up:</strong> each month gets its own budget and spending log. Use the arrows in the sidebar to switch months, or open Month Archive to compare.</div>
       <div class="ob-actions">
-        <button class="btn btn-ghost" onclick="obNext(2)">← Back</button>
+        <button class="btn btn-ghost" onclick="obNext(1)">← Back</button>
         <button class="btn btn-primary" onclick="launchApp()">Launch my toolkit →</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- MOBILE HEADER (hidden on desktop via CSS) -->
+<div id="mob-header" style="display:none;">
+  <button id="mob-hamburger" onclick="openMobileNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mob-logo">Campus <span>Cash</span></div>
+  <div class="mob-month" id="mob-month-disp">May 2026</div>
+</div>
+<div id="mob-backdrop" onclick="closeMobileNav()"></div>
+
 <!-- APP -->
 <div id="app" style="display:none;">
   <div id="sidebar">
     <div class="sb-header">
-      <div class="sb-name" id="sb-name-disp">Campus <span>Cash Pro</span></div>
-      <div class="sb-school" id="sb-school-disp">Your College</div>
+      <div style="flex:1;min-width:0;">
+        <div class="sb-name" id="sb-name-disp">Campus <span>Cash Pro</span></div>
+        <div class="sb-school" id="sb-school-disp">Your College</div>
+      </div>
+      <button id="mob-close" onclick="closeMobileNav()" aria-label="Close menu">×</button>
       <div class="sb-month-nav">
         <button class="sb-month-arrow" onclick="shiftMonth(-1)" title="Previous month">‹</button>
         <div class="sb-month-current" id="sb-month-disp" onclick="showPage('archive', document.querySelector('[data-page=archive]'))">May 2026</div>
@@ -833,17 +987,15 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       <div class="sb-item" data-page="archive" onclick="showPage('archive',this)"><span class="si">▦</span> Month Archive</div>
       <div class="sb-section">Tracking</div>
       <div class="sb-item" onclick="showPage('spending',this)"><span class="si">☰</span> Spending Log</div>
-      <div class="sb-item" onclick="showPage('sinking',this)"><span class="si">◉</span> Sinking Funds</div>
-      <div class="sb-item" onclick="showPage('goals',this)"><span class="si">✦</span> Financial Goals</div>
+      <div class="sb-item" onclick="showPage('sinking',this)"><span class="si">◉</span> Savings Funds</div>
+      <div class="sb-item" onclick="showPage('goals',this)"><span class="si">✦</span> Goals</div>
       <div class="sb-section">Planning</div>
-      <div class="sb-item" onclick="showPage('debt',this)"><span class="si">⬦</span> Debt Tracker</div>
-      <div class="sb-item" onclick="showPage('subscriptions',this)"><span class="si">◫</span> Subscriptions</div>
-      <div class="sb-item" onclick="showPage('scholarships',this)"><span class="si">✧</span> Aid & Scholarships</div>
-      <div class="sb-item" onclick="showPage('internships',this)"><span class="si">⧗</span> Internships</div>
-      <div class="sb-item" onclick="showPage('gpa',this)"><span class="si">◐</span> GPA Calculator</div>
-      <div class="sb-section">More</div>
-      <div class="sb-item" onclick="showPage('notes',this)"><span class="si">✎</span> Money Journal</div>
-      <div class="sb-item" onclick="showPage('tips',this)"><span class="si">✦</span> Money Tips</div>
+      <div class="sb-item pro-locked" data-pro-page="debt" onclick="openProGate('debt',this)"><span class="si">⬦</span> Debt Tracker<span class="si-lock">🔒</span></div>
+      <div class="sb-item pro-locked" data-pro-page="subscriptions" onclick="openProGate('subscriptions',this)"><span class="si">◫</span> Subscriptions<span class="si-lock">🔒</span></div>
+      <div class="sb-item pro-locked" data-pro-page="growth" onclick="openProGate('growth',this)"><span class="si">◬</span> Growth Planner<span class="si-lock">🔒</span></div>
+      <div class="sb-item pro-locked" data-pro-page="scholarships" onclick="openProGate('scholarships',this)"><span class="si">✧</span> Aid & Scholarships<span class="si-lock">🔒</span></div>
+      <div class="sb-item pro-locked" data-pro-page="internships" onclick="openProGate('internships',this)"><span class="si">⧗</span> Internships<span class="si-lock">🔒</span></div>
+      <div class="sb-item pro-locked" data-pro-page="gpa" onclick="openProGate('gpa',this)"><span class="si">◐</span> GPA Calculator<span class="si-lock">🔒</span></div>
     </div>
     <div class="sb-budget-pill">
       <div class="sb-budget-label">Month budget</div>
@@ -855,7 +1007,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
     </div>
     <div class="sb-footer">
       <div class="sb-settings" onclick="showPage('settings', null)">⚙ Settings & customize</div>
-      <div class="sb-settings" style="margin-top:8px" onclick="exportData()">⬇ Backup my data</div>
+      <div class="sb-settings" style="margin-top:8px" onclick="isProUnlocked()?exportData():showProModal()">⬇ Backup my data <span style="opacity:0.45;font-size:10px;" id="sb-backup-lock">🔒</span></div>
       <div class="sb-settings" style="margin-top:8px;color:rgba(250,247,242,0.4)" onclick="startWalkthrough()">◎ Take the tour</div>
     </div>
   </div>
@@ -877,9 +1029,12 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         </div>
       </div>
 
+      <!-- WHAT NEEDS ATTENTION -->
+      <div id="dash-wna"></div>
+
       <div class="g2">
         <div class="card">
-          <div class="card-label">Budget health</div>
+          <div class="card-label">This Month's Money Moves</div>
           <div id="dash-budget-bars">
             <div class="empty"><div class="empty-icon">📋</div><div class="empty-text">Set your budget to see spending health.</div></div>
           </div>
@@ -926,6 +1081,14 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
           <div class="metric-val" id="dash-funds-count">0</div>
           <div class="metric-label">Active funds</div>
           <div class="metric-sub" id="dash-funds-pct"></div>
+        </div>
+      </div>
+      <!-- Campus perk tip -->
+      <div class="card" style="margin-top:1rem;background:var(--sage-light);border-color:rgba(74,103,65,0.2)">
+        <div class="card-label" style="color:var(--sage)">💡 Make your tuition work harder</div>
+        <div style="font-size:13px;color:var(--ink3);line-height:1.6">
+          <strong style="color:var(--ink2)">Use every campus perk — they're already paid for.</strong>
+          Your tuition covers free gym access, free counseling, free career center appointments, free software (Microsoft 365, Adobe, Figma), discounted or free transit passes, and events with free food. Most students use fewer than half the perks available to them. Make a list of everything your school offers and use it.
         </div>
       </div>
     </div>
@@ -975,15 +1138,15 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div>
           <div class="card">
             <div class="card-label">Expense limits by category</div>
-            <div class="field"><label>🏠 Rent / housing ($)</label><input type="number" id="lim-rent" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>🍕 Food & dining ($)</label><input type="number" id="lim-food" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>🚌 Transportation ($)</label><input type="number" id="lim-transport" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>📚 School & supplies ($)</label><input type="number" id="lim-school" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>🎉 Fun & going out ($)</label><input type="number" id="lim-fun" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>💊 Health & personal care ($)</label><input type="number" id="lim-health" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>📱 Subscriptions ($)</label><input type="number" id="lim-subscriptions" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>🎁 Clothing & shopping ($)</label><input type="number" id="lim-clothing" placeholder="0" oninput="calcAll()"></div>
-            <div class="field"><label>📦 Other ($)</label><input type="number" id="lim-other" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Rent / housing ($)</label><input type="number" id="lim-rent" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Food & dining ($)</label><input type="number" id="lim-food" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Transportation ($)</label><input type="number" id="lim-transport" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>School & supplies ($)</label><input type="number" id="lim-school" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Fun & going out ($)</label><input type="number" id="lim-fun" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Health & personal care ($)</label><input type="number" id="lim-health" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Subscriptions ($)</label><input type="number" id="lim-subscriptions" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Clothing & shopping ($)</label><input type="number" id="lim-clothing" placeholder="0" oninput="calcAll()"></div>
+            <div class="field"><label>Other ($)</label><input type="number" id="lim-other" placeholder="0" oninput="calcAll()"></div>
           </div>
         </div>
       </div>
@@ -1009,6 +1172,14 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
             Most of your budget stays the same month-to-month. Copy last month's numbers into this month with one tap, then tweak only what changed.
           </p>
           <button class="btn btn-primary btn-sm" onclick="copyPrevMonthBudget()">📋 Copy from previous month</button>
+        </div>
+      </div>
+      <!-- Budget strategy tips -->
+      <div class="card" style="margin-top:1rem;background:var(--gold-light);border-color:rgba(191,140,48,0.2)">
+        <div class="card-label" style="color:var(--gold)">💡 Budgeting tip</div>
+        <div style="font-size:13px;color:var(--ink3);line-height:1.6">
+          <strong style="color:var(--ink2)">The 50/30/20 rule.</strong>
+          50% of take-home income to needs (rent, groceries, utilities), 30% to wants (going out, fun, subscriptions), 20% to savings and debt payoff. In college it's okay to adjust the ratios — but be intentional about which bucket gets cut. Most students accidentally let "wants" creep above 50%.
         </div>
       </div>
     </div>
@@ -1075,24 +1246,25 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="card-label">Log a transaction</div>
         <div class="field-row3">
           <div class="field">
-            <label>Description</label>
+            <label>Description <span class="req-star">*</span></label>
             <input type="text" id="tx-desc" placeholder="e.g. Chipotle, textbook…">
           </div>
           <div class="field">
-            <label>Amount ($)</label>
+            <label>Amount ($) <span class="req-star">*</span></label>
             <input type="number" id="tx-amt" placeholder="0.00" step="0.01">
           </div>
           <div class="field">
             <label>Category</label>
             <select id="tx-cat">
-              <option value="food">🍕 Food & dining</option>
-              <option value="rent">🏠 Rent / housing</option>
-              <option value="transport">🚌 Transport</option>
-              <option value="school">📚 School</option>
-              <option value="fun">🎉 Fun & going out</option>
-              <option value="health">💊 Health</option>
-              <option value="subscriptions">📱 Subscriptions</option>
-              <option value="other">📦 Other</option>
+              <option value="food">Food & dining</option>
+              <option value="rent">Rent / housing</option>
+              <option value="transport">Transport</option>
+              <option value="school">School</option>
+              <option value="fun">Fun & going out</option>
+              <option value="health">Health</option>
+              <option value="subscriptions">Subscriptions</option>
+              <option value="clothing">Clothing &amp; shopping</option>
+              <option value="other">Other</option>
             </select>
           </div>
         </div>
@@ -1142,6 +1314,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
                 <option value="fun">Fun</option>
                 <option value="health">Health</option>
                 <option value="subscriptions">Subscriptions</option>
+                <option value="clothing">Clothing</option>
                 <option value="other">Other</option>
               </select>
               <span class="mono" id="tx-total" style="font-size:13px;color:var(--rust)">$0.00</span>
@@ -1157,19 +1330,27 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
           <div id="tx-monthly-compare" style="font-size:13px;color:var(--ink3)">Log expenses to see month-over-month comparison.</div>
         </div>
       </div>
+      <!-- Spending tips -->
+      <div class="card" style="margin-top:1rem;background:var(--sage-light);border-color:rgba(74,103,65,0.2)">
+        <div class="card-label" style="color:var(--sage)">💡 Spending tips</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Cook 4 nights a week, save $200/month.</strong> At $12 average per meal out vs $4 cooking, switching 4 nights per week saves $160–$210/month. That's $2,000+ per year back in your pocket — from one habit change.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">The grocery list is law.</strong> Write it before you go. Eat before you shop. Stick to the list. Store brands are made in the same factories as name brands — identical quality, 20–40% cheaper. These three habits alone cut grocery spend by 20–30%.</div>
+        </div>
+      </div>
     </div>
 
     <!-- SINKING FUNDS -->
     <div class="page" id="pg-sinking">
-      <div class="ph"><h1>Sinking Funds</h1><p>Save a little each month so big expenses never surprise you.</p></div>
+      <div class="ph"><h1>Savings Funds</h1><p>Active savings buckets for bigger expenses — deposit over time and stay on track.</p></div>
       <div class="card">
         <div class="card-label">Create a new fund</div>
         <div class="field-row">
-          <div class="field"><label>Fund name</label><input type="text" id="f-name" placeholder="e.g. Study Abroad Trip"></div>
+          <div class="field"><label>Fund name <span class="req-star">*</span></label><input type="text" id="f-name" placeholder="e.g. Study Abroad Trip"></div>
           <div class="field"><label>Emoji</label><input type="text" id="f-emoji" placeholder="✈️" maxlength="2"></div>
         </div>
         <div class="field-row">
-          <div class="field"><label>Goal amount ($)</label><input type="number" id="f-goal" placeholder="500"></div>
+          <div class="field"><label>Goal amount ($) <span class="req-star">*</span></label><input type="number" id="f-goal" placeholder="500"></div>
           <div class="field"><label>Already saved ($)</label><input type="number" id="f-saved" placeholder="0"></div>
         </div>
         <div class="field-row">
@@ -1197,15 +1378,23 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="metric"><div class="metric-val pos" id="f-total-saved">$0</div><div class="metric-label">Total saved</div></div>
         <div class="metric"><div class="metric-val" id="f-total-goal">$0</div><div class="metric-label">Total goal</div></div>
       </div>
+      <!-- Savings tips -->
+      <div class="card" style="margin-top:1rem;background:var(--sage-light);border-color:rgba(74,103,65,0.2)">
+        <div class="card-label" style="color:var(--sage)">💡 Savings tips</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Emergency fund comes first.</strong> Before any other savings goal, build $500–$1,000 in an untouched account. One unexpected expense — a car repair, a medical bill, a last-minute flight home — without this cushion means credit card debt. It's the single most protective thing you can do with your first $500.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Pay yourself first.</strong> The day your paycheck hits, move your savings amount out immediately — before you spend anything. What's left is your spending money. Most people do it backwards, spend freely, and wonder why saving feels impossible. Automate it if you can.</div>
+        </div>
+      </div>
     </div>
 
     <!-- FINANCIAL GOALS -->
     <div class="page" id="pg-goals">
-      <div class="ph"><h1>Financial Goals</h1><p>Write it down, make it real.</p></div>
+      <div class="ph"><h1>Goals</h1><p>Track milestones for savings, debt, credit, school, career, and everything else.</p></div>
       <div class="card">
         <div class="card-label">Add a goal</div>
         <div class="field-row">
-          <div class="field" style="flex:2"><label>Goal</label><input type="text" id="goal-text" placeholder="e.g. Pay off my credit card by December"></div>
+          <div class="field" style="flex:2"><label>Goal <span class="req-star">*</span></label><input type="text" id="goal-text" placeholder="e.g. Pay off my credit card by December"></div>
           <div class="field">
             <label>Deadline</label>
             <div class="field-row">
@@ -1237,7 +1426,144 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
           <div class="card-label" style="margin:0">Your goals</div>
           <span id="goals-progress-text" style="font-size:13px;color:var(--ink3)">0 of 0 complete</span>
         </div>
-        <div id="goals-list"><div class="empty"><div class="empty-icon">✦</div><div class="empty-text">No goals yet. Add your first financial goal above.</div></div></div>
+        <div id="goals-list"><div class="empty"><div class="empty-icon">✦</div><div class="empty-text">No goals yet. Add your first milestone above.</div></div></div>
+      </div>
+    </div>
+
+    <!-- GROWTH PLANNER -->
+    <div class="page" id="pg-growth">
+      <div class="ph">
+        <h1>Growth Planner</h1>
+        <p>Add your savings and investment accounts to see how compound growth builds wealth over time.</p>
+      </div>
+
+      <div style="background:var(--gold-light);border:1px solid rgba(191,140,48,0.25);
+border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--ink3);
+line-height:1.55;margin-bottom:1rem;">
+        <strong style="color:var(--gold)">Planning tool only.</strong>
+        Projections are estimates based on assumed rates and are not guaranteed.
+        This is not financial advice. Consult a licensed financial advisor before
+        making investment decisions.
+      </div>
+
+      <!-- Summary strip (hidden until accounts exist) -->
+      <div id="growth-summary-row" class="g4" style="display:none;margin-bottom:1.2rem">
+        <div class="metric"><div class="metric-val" id="gs-balance">$0</div><div class="metric-label">Balance today</div></div>
+        <div class="metric"><div class="metric-val" id="gs-monthly">$0/mo</div><div class="metric-label">Monthly contributions</div></div>
+        <div class="metric"><div class="metric-val pos" id="gs-projected">$0</div><div class="metric-label">Total projected value</div></div>
+        <div class="metric"><div class="metric-val pos" id="gs-growth">+$0</div><div class="metric-label">Est. total growth</div></div>
+      </div>
+
+      <!-- Add account form -->
+      <div class="card">
+        <div class="card-label">Add an account</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Account name <span class="req-star">*</span></label>
+            <input type="text" id="g-name" placeholder="e.g. My Roth IRA">
+          </div>
+          <div class="field">
+            <label>Account type</label>
+            <select id="g-type" onchange="growthTypeChanged()">
+              <option>Roth IRA</option>
+              <option>Brokerage</option>
+              <option>401(k)</option>
+              <option>HYSA</option>
+              <option>Emergency Fund</option>
+              <option>General Savings</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Current balance ($)</label><input type="number" id="g-balance" placeholder="0" min="0"></div>
+          <div class="field"><label>Monthly contribution ($)</label><input type="number" id="g-monthly" placeholder="0" min="0"></div>
+        </div>
+        <div class="field">
+          <label>Expected annual return (%)</label>
+          <div class="growth-preset-pills">
+            <button class="growth-pill" data-rate="4.5"  onclick="growthSetPreset(4.5)">HYSA 4.5%</button>
+            <button class="growth-pill" data-rate="6"    onclick="growthSetPreset(6)">Conservative 6%</button>
+            <button class="growth-pill active" data-rate="8" onclick="growthSetPreset(8)">Market avg 8%</button>
+            <button class="growth-pill" data-rate="10"   onclick="growthSetPreset(10)">Aggressive 10%</button>
+          </div>
+          <input type="number" id="g-rate" value="8" min="0" max="30" step="0.1" placeholder="8"
+            oninput="document.querySelectorAll('.growth-pill').forEach(p=>p.classList.toggle('active',parseFloat(p.dataset.rate)===(+this.value)))">
+        </div>
+        <button class="btn btn-primary" onclick="addGrowthAccount()">+ Add account</button>
+      </div>
+
+      <!-- Global projection horizon slider (hidden until accounts exist) -->
+      <div id="growth-horizon-bar" style="display:none;margin-bottom:1.2rem">
+        <div class="card" style="padding:1rem 1.6rem">
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <span style="font-size:13px;font-weight:700;color:var(--ink2);white-space:nowrap">Projection horizon:</span>
+            <input type="range" id="g-year-slider" min="1" max="50" value="30" step="1"
+              oninput="syncGrowthHorizon(this.value)"
+              style="flex:1;min-width:120px;accent-color:var(--accent,var(--sage));cursor:pointer">
+            <span id="g-year-label" style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;color:var(--accent,var(--sage));white-space:nowrap;min-width:68px;text-align:right">30 years</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account cards -->
+      <div id="growth-container"></div>
+
+      <!-- What-if panel (hidden until accounts exist) -->
+      <div class="card" id="growth-whatsif" style="display:none">
+        <div class="card-label">What-if: extra monthly contributions</div>
+        <div class="debt-extra-row">
+          <div class="field" style="margin:0;flex:1">
+            <label>What if I add <span id="g-extra-label" style="font-weight:700;color:var(--accent,var(--sage));font-family:'JetBrains Mono',monospace">+$0/mo</span> total?</label>
+            <input type="range" id="g-extra-slider" min="0" max="500" value="0" step="10"
+              oninput="syncGrowthSlider(this.value)"
+              style="width:100%;margin-top:8px;accent-color:var(--accent,var(--sage));cursor:pointer;">
+          </div>
+          <div class="field" style="margin:0;width:120px">
+            <label>Or type exact</label>
+            <input type="number" id="g-extra" placeholder="0" min="0" oninput="syncGrowthInput(this.value)">
+          </div>
+        </div>
+        <div id="growth-whatsif-results" style="display:none;margin-top:1.2rem">
+          <div class="g2">
+            <div class="debt-strat-card debt-strat-sage">
+              <div class="debt-strat-title" style="color:var(--accent,var(--sage))">↑ New projected total</div>
+              <div class="debt-strat-sub">With extra monthly contributions added</div>
+              <div class="debt-strat-stats">
+                <div class="debt-strat-stat">
+                  <div class="debt-strat-val pos" id="g-whatsif-new">—</div>
+                  <div class="debt-strat-lbl">Projected value</div>
+                </div>
+                <div class="debt-strat-stat">
+                  <div class="debt-strat-val pos" id="g-whatsif-diff">—</div>
+                  <div class="debt-strat-lbl">Additional growth</div>
+                </div>
+              </div>
+              <div class="debt-strat-rec" id="g-whatsif-insight">Use the slider to explore your options.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Portfolio chart -->
+      <div class="card" id="growth-chart-card" style="display:none">
+        <div class="card-label">Portfolio growth over time</div>
+        <div class="growth-chart-wrap" id="growth-chart-container"></div>
+      </div>
+
+      <!-- Disclaimer -->
+      <p style="font-size:12px;color:var(--ink4);text-align:center;margin-top:0.5rem;padding-bottom:1.5rem">
+        Projections assume a fixed annual return and are for educational purposes only. Not financial advice.
+      </p>
+      <!-- Investing tips -->
+      <div class="card" style="margin-top:1rem;background:var(--blue-light);border-color:rgba(58,96,128,0.2)">
+        <div class="card-label" style="color:var(--blue)">💡 Investing tips for students</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Start a Roth IRA at 18.</strong> If you have any earned income (W-2 job, freelance, 1099, babysitting — anything taxable), you're eligible. Put in even $25–50/month. Money invested at 20 doubles roughly 4 times before retirement. Money invested at 40 doubles twice. Time is the asset — not the amount.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">How compound growth actually works.</strong> At 8% annual returns, money doubles roughly every 9 years (the Rule of 72). $1,000 at age 20 becomes ~$32,000 by 65. The same $1,000 invested at 40 becomes ~$4,000 by 65. The variable that matters most isn't how much you invest — it's when you start.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">HYSA vs. brokerage vs. Roth IRA.</strong> Match the account to the time horizon. HYSA (4–5%): money you might need in 1–3 years — liquid, safe, FDIC-insured. Brokerage: money you won't touch for 5+ years — market risk, no contribution limits. Roth IRA: retirement money — post-tax contributions mean growth and withdrawals are completely tax-free.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">How to open a Roth IRA as a student.</strong> You need earned income (any taxable job counts). You can contribute up to $7,000/year. Fidelity and Schwab have no account minimums and no fees. Opening takes about 20 minutes online. Even $25/month at 20 beats $500/month at 40. The hardest part is just starting — everything else is automatic after that.</div>
+        </div>
       </div>
     </div>
 
@@ -1260,7 +1586,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       <div class="card">
         <div class="card-label">Add a debt</div>
         <div class="field-row">
-          <div class="field"><label>Debt name</label><input type="text" id="d-name" placeholder="e.g. Stafford Loan"></div>
+          <div class="field"><label>Debt name <span class="req-star">*</span></label><input type="text" id="d-name" placeholder="e.g. Stafford Loan"></div>
           <div class="field">
             <label>Type</label>
             <select id="d-type">
@@ -1269,7 +1595,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
           </div>
         </div>
         <div class="field-row3">
-          <div class="field"><label>Current balance ($)</label><input type="number" id="d-bal" placeholder="0"></div>
+          <div class="field"><label>Current balance ($) <span class="req-star">*</span></label><input type="number" id="d-bal" placeholder="0"></div>
           <div class="field"><label>Interest rate (%)</label><input type="number" id="d-rate" placeholder="e.g. 5.5" step="0.1"></div>
           <div class="field"><label>Min payment ($/mo)</label><input type="number" id="d-min" placeholder="0"></div>
         </div>
@@ -1345,6 +1671,14 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         </div>
         <div id="debt-insight" class="debt-insight-bar" style="display:none"></div>
       </div>
+      <!-- Debt and credit tips -->
+      <div class="card" style="margin-top:1rem;background:var(--rust-light);border-color:rgba(196,92,58,0.2)">
+        <div class="card-label" style="color:var(--rust)">💡 Credit and debt tips</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Build credit now, thank yourself at 30.</strong> Get one student credit card. Use it for one small recurring bill — like Spotify. Set autopay to pay the full balance every month. Never carry a balance. In 4 years you'll have a solid credit history before you need a car loan, apartment, or mortgage.</div>
+          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Graduate with zero credit card debt.</strong> This is the one rule that matters most. Pay your full statement balance every single month. Credit card interest runs 20–29% APR — the most expensive debt you can hold. One unpaid month starts a compounding spiral that can follow you for years after graduation.</div>
+        </div>
+      </div>
     </div>
 
     <!-- SUBSCRIPTIONS -->
@@ -1401,7 +1735,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         </div>
 
         <div class="field-row">
-          <div class="field"><label>Service name</label><input type="text" id="sub-name" placeholder="e.g. Spotify, Netflix…"></div>
+          <div class="field"><label>Service name <span class="req-star">*</span></label><input type="text" id="sub-name" placeholder="e.g. Spotify, Netflix…"></div>
           <div class="field"><label>Category</label>
             <select id="sub-cat">
               <option>🎵 Music</option><option>📺 Streaming</option><option>📰 News / reading</option>
@@ -1410,7 +1744,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
           </div>
         </div>
         <div class="field-row">
-          <div class="field"><label>Cost per billing ($)</label><input type="number" id="sub-cost" placeholder="0.00" step="0.01"></div>
+          <div class="field"><label>Cost per billing ($) <span class="req-star">*</span></label><input type="number" id="sub-cost" placeholder="0.00" step="0.01"></div>
           <div class="field"><label>Billing cycle</label>
             <select id="sub-cycle">
               <option value="monthly">Monthly</option><option value="yearly">Yearly</option><option value="weekly">Weekly</option>
@@ -1450,6 +1784,15 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 
       <!-- Category breakdown + budget hint (populated by JS) -->
       <div id="sub-footer-container"></div>
+
+      <!-- Subscription audit tip -->
+      <div class="card" style="margin-top:1rem;background:var(--gold-light);border-color:rgba(191,140,48,0.2)">
+        <div class="card-label" style="color:var(--gold)">💡 Subscription audit tip</div>
+        <div style="font-size:13px;color:var(--ink3);line-height:1.6">
+          <strong style="color:var(--ink2)">The subscription audit trick.</strong>
+          Open your bank statement and highlight every recurring charge. You'll almost always find 2–4 things you forgot you're paying for. Cancel anything you haven't actively used in the last 30 days — no exceptions, no "I'll use it next month." Set a calendar reminder to do this audit every 3 months. Subscriptions are designed to be invisible; make them visible.
+        </div>
+      </div>
 
       <!-- Legacy metrics IDs kept for backward compat (hidden, values still written by JS) -->
       <div style="display:none">
@@ -1539,48 +1882,6 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       </div>
     </div>
 
-    <!-- MONEY JOURNAL -->
-    <div class="page" id="pg-notes">
-      <div class="ph"><h1>Money Journal</h1><p>Track your mindset, wins, and lessons learned with money.</p></div>
-      <div class="card">
-        <div class="card-label">New entry</div>
-        <div class="field-row">
-          <div class="field">
-            <label>Month</label>
-            <select id="note-month">
-              <option value="0">January</option><option value="1">February</option><option value="2">March</option>
-              <option value="3">April</option><option value="4">May</option><option value="5">June</option>
-              <option value="6">July</option><option value="7">August</option><option value="8">September</option>
-              <option value="9">October</option><option value="10">November</option><option value="11">December</option>
-            </select>
-          </div>
-          <div class="field"><label>Day</label><select id="note-day"></select></div>
-          <div class="field"><label>Year</label>
-            <select id="note-year"><option>2024</option><option>2025</option><option selected>2026</option><option>2027</option></select>
-          </div>
-        </div>
-        <div class="field">
-          <label>Prompt (optional)</label>
-          <select id="note-prompt" onchange="usePrompt()">
-            <option value="">— Choose a reflection prompt —</option>
-            <option value="What's one financial win I had this week?">💪 What's one financial win I had this week?</option>
-            <option value="Where did I overspend and why?">🤔 Where did I overspend and why?</option>
-            <option value="What's one habit I want to build this month?">🌱 What's one habit I want to build this month?</option>
-            <option value="Am I on track with my savings goals?">🎯 Am I on track with my savings goals?</option>
-            <option value="What does financial freedom mean to me?">✨ What does financial freedom mean to me?</option>
-            <option value="What would I do differently with my money this month?">🔄 What would I do differently this month?</option>
-          </select>
-        </div>
-        <div class="field"><label>Your entry</label><textarea id="note-text" placeholder="Write freely…" rows="4"></textarea></div>
-        <button class="btn btn-primary" onclick="addNote()">+ Save entry</button>
-      </div>
-      <div class="flex-between" style="margin-bottom:8px;flex-wrap:wrap;gap:8px">
-        <div style="font-size:12px;color:var(--ink4);text-transform:uppercase;letter-spacing:0.6px">Entries</div>
-        <button class="btn btn-ghost btn-xs" id="notes-toggle" onclick="toggleNotesView()">📚 Show all months</button>
-      </div>
-      <div id="notes-list"></div>
-    </div>
-
     <!-- SCHOLARSHIPS & FINANCIAL AID -->
     <div class="page" id="pg-scholarships">
       <div class="ph-row">
@@ -1596,7 +1897,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="card-label">Add scholarship or aid</div>
         <div class="field-row">
           <div class="field" style="flex:2">
-            <label>Name</label>
+            <label>Name <span class="req-star">*</span></label>
             <input type="text" id="sch-name" placeholder="e.g. HOPE Scholarship, Pell Grant, Merit Award…">
           </div>
           <div class="field">
@@ -1615,7 +1916,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         </div>
         <div class="field-row3">
           <div class="field">
-            <label>Award amount ($)</label>
+            <label>Award amount ($) <span class="req-star">*</span></label>
             <input type="number" id="sch-amount" placeholder="0">
           </div>
           <div class="field">
@@ -1735,11 +2036,11 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="card-label">Add internship to tracker</div>
         <div class="field-row">
           <div class="field" style="flex:2">
-            <label>Company</label>
+            <label>Company <span class="req-star">*</span></label>
             <input type="text" id="int-company" placeholder="e.g. Google, Local Marketing Co, NASA…">
           </div>
           <div class="field" style="flex:2">
-            <label>Role / position</label>
+            <label>Role / position <span class="req-star">*</span></label>
             <input type="text" id="int-role" placeholder="e.g. SWE Intern, Marketing Intern, Research Asst…">
           </div>
         </div>
@@ -2011,11 +2312,34 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       </div>
     </div>
 
-    <!-- MONEY TIPS -->
-    <div class="page" id="pg-tips">
-      <div class="ph"><h1>Money Tips</h1><p>Real advice for real college budgets.</p></div>
-      <div id="tips-container"></div>
+    <!-- PRO GATE PAGE -->
+    <div class="page" id="pg-pro-gate">
+      <div style="max-width:480px;margin:4rem auto 0;text-align:center;padding:0 1rem;">
+        <div style="font-size:3.5rem;margin-bottom:1.2rem;line-height:1;">🔒</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent,var(--sage));margin-bottom:0.6rem;">Campus Cash Pro</div>
+        <h1 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--ink);line-height:1.2;margin-bottom:0.8rem;">Unlock the full toolkit</h1>
+        <p style="font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:2rem;">This feature is part of <strong style="color:var(--ink);">Campus Cash Pro</strong>. One payment unlocks the full Planning toolkit, bank CSV import, and Data Export — forever, no subscription.</p>
+        <div style="display:flex;flex-direction:column;gap:0.75rem;max-width:320px;margin:0 auto;">
+          <button class="btn btn-primary" style="font-size:15px;padding:13px 24px;width:100%;justify-content:center;" onclick="showProModal()">🔓 Unlock Pro — $29</button>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center;" onclick="proGateDismiss()">Maybe Later</button>
+        </div>
+        <div style="margin-top:2rem;padding:1.2rem;background:var(--cream2);border-radius:var(--r);border:1px solid var(--border);text-align:left;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink4);margin-bottom:0.7rem;">What you unlock</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> Debt Tracker</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> Subscriptions</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> Growth Planner</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> Aid &amp; Scholarships</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> Internships</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;"><span style="color:var(--accent,var(--sage));">✓</span> GPA Calculator</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;grid-column:1/-1;"><span style="color:var(--accent,var(--sage));">✓</span> Bank CSV Import</div>
+            <div style="font-size:13px;color:var(--ink2);display:flex;align-items:center;gap:6px;grid-column:1/-1;"><span style="color:var(--accent,var(--sage));">✓</span> Data Export &amp; Backup</div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--ink4);margin-top:1.2rem;">Already purchased? <span style="color:var(--accent,var(--sage));cursor:pointer;text-decoration:underline;" onclick="showProModal()">Enter your license key →</span></p>
+      </div>
     </div>
+    <!-- END PRO GATE PAGE -->
 
     <!-- SETTINGS -->
     <div class="page" id="pg-settings">
@@ -2065,9 +2389,14 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="settings-section">
           <h3>Your data</h3>
           <p style="font-size:14px;color:var(--ink3);margin-bottom:1rem;line-height:1.6">Your data saves automatically to this browser. Use the backup button to download a copy you can restore on any device or browser.</p>
-          <div class="flex-gap">
-            <button class="btn btn-primary" onclick="exportData()">⬇ Download backup (.json)</button>
-            <button class="btn btn-ghost" onclick="importData()">⬆ Restore from backup</button>
+          <div id="settings-export-wrap">
+            <div class="flex-gap">
+              <button class="btn btn-primary" onclick="isProUnlocked()?exportData():showProModal()">⬇ Download backup (.json)</button>
+              <button class="btn btn-ghost" onclick="isProUnlocked()?importData():showProModal()">⬆ Restore from backup</button>
+            </div>
+            <div id="settings-pro-note" style="display:none;margin-top:10px;font-size:13px;color:var(--ink3);">
+              🔒 Data export is a <span style="color:var(--accent,var(--sage));cursor:pointer;text-decoration:underline;" onclick="showProModal()">Pro feature</span>. Unlock once to enable permanent backups.
+            </div>
           </div>
           <div style="margin-top:1.2rem;padding:1rem;background:var(--rust-light);border-radius:var(--r);border:1px solid rgba(196,92,58,0.2)">
             <div style="font-weight:700;font-size:13px;color:var(--rust);margin-bottom:4px">⚠ Danger zone</div>
@@ -2075,11 +2404,84 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
             <button class="btn btn-danger btn-sm" onclick="resetAll()">Reset all data</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 </div><!-- end app -->
+
+<!-- PRO LICENSE MODAL -->
+<div id="pro-modal" style="display:none;position:fixed;inset:0;background:rgba(28,25,22,0.65);z-index:1100;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(3px);">
+  <div style="background:var(--cream);border-radius:var(--r-lg);padding:2rem;max-width:440px;width:100%;box-shadow:var(--shadow-lg);animation:fadeUp .3s ease;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.4rem;">
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:var(--accent,var(--sage));margin-bottom:4px;">Campus Cash Pro</div>
+        <h2 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);">Unlock your license</h2>
+      </div>
+      <button onclick="closeProModal()" style="background:none;border:none;font-size:22px;color:var(--ink4);cursor:pointer;padding:0 4px;line-height:1;" title="Close">×</button>
+    </div>
+
+    <div id="pro-modal-buy" style="margin-bottom:1.4rem;padding:1rem 1.1rem;background:var(--accent-light,var(--sage-light));border-radius:var(--r);border:1px solid rgba(74,103,65,0.18);">
+      <div style="font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:4px;">Don't have a license yet?</div>
+      <div style="font-size:13px;color:var(--ink3);margin-bottom:10px;line-height:1.5;">One-time $29 — unlocks everything, forever. No subscription.</div>
+      <a href="https://campuscashpro.lemonsqueezy.com/buy" target="_blank" rel="noopener" style="display:inline-block;">
+        <button class="btn btn-primary" style="font-size:13px;">Buy on Lemon Squeezy →</button>
+      </a>
+    </div>
+
+    <div style="margin-bottom:0.6rem;">
+      <label style="font-size:13px;font-weight:700;color:var(--ink2);display:block;margin-bottom:6px;">License key</label>
+      <input id="pro-key-input" type="text" placeholder="CCP-XXXX-YYYY-ZZZZ"
+        style="width:100%;padding:10px 13px;border:1.5px solid var(--border2);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:14px;background:white;color:var(--ink);outline:none;transition:border-color .15s;letter-spacing:0.5px;"
+        oninput="document.getElementById('pro-key-err').style.display='none';" />
+      <div id="pro-key-err" style="display:none;margin-top:6px;font-size:12.5px;color:var(--rust);"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:1rem;">
+      <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="validateAndUnlock()">Activate license</button>
+      <button class="btn btn-ghost" onclick="closeProModal()">Cancel</button>
+    </div>
+    <p style="font-size:12px;color:var(--ink4);margin-top:1rem;text-align:center;">Your key was emailed to you after purchase. Check your spam folder if you don't see it.</p>
+  </div>
+</div>
+<!-- END PRO LICENSE MODAL -->
 
 <div id="toast"></div>
 
 <script>
+// ── PRO LICENSE ───────────────────────────────
+const PRO_KEY_STORE = 'ccp_pro_unlocked';
+const PRO_PAGES = new Set(['debt','subscriptions','growth','scholarships','internships','gpa']);
+
+// Key format: CCP-XXXX-YYYY-ZZZZ  (uppercase alphanumeric segments)
+// Validation: ((a * 0x4CCA) + (b * 0x7F3D)) % 0xFFFF === c
+//   where a = parseInt(XXXX, 36), b = parseInt(YYYY, 36), c = parseInt(ZZZZ, 36)
+// To generate valid keys offline: pick any XXXX and YYYY (base-36 encoded),
+//   compute c = ((parseInt(XXXX,36)*0x4CCA)+(parseInt(YYYY,36)*0x7F3D)) % 0xFFFF,
+//   then encode c back to base-36 uppercase padded to 4 chars.
+function validateLicense(raw) {
+  const key = (raw || '').trim().toUpperCase();
+  const m = key.match(/^CCP-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})$/);
+  if (!m) return false;
+  try {
+    const a = parseInt(m[1], 36);
+    const b = parseInt(m[2], 36);
+    const c = parseInt(m[3], 36);
+    return ((a * 0x4CCA) + (b * 0x7F3D)) % 0xFFFF === c;
+  } catch(e) { return false; }
+}
+
+function isProUnlocked() {
+  return localStorage.getItem(PRO_KEY_STORE) === '1';
+}
+
+function savePro() {
+  localStorage.setItem(PRO_KEY_STORE, '1');
+}
+
+// Stores the feature the user tried to open before hitting the gate.
+let _gateReturnPage = 'dashboard';
+let _postUnlockAction = null;
+
 // ── STATE ─────────────────────────────────────
 const SAVE_KEY = 'campuscash_v2';
 
@@ -2088,7 +2490,7 @@ const defaultState = {
   income:0, theme:'sage', currency:'$',
   currentMonth: new Date().getMonth(),
   currentYear: new Date().getFullYear(),
-  transactions:[], funds:[], debts:[], courses:[], goals:[], notes:[], subs:[], scholarships:[], internships:[],
+  transactions:[], funds:[], debts:[], courses:[], goals:[], notes:[], subs:[], scholarships:[], internships:[], growthAccounts:[],
   budgetInputs:{},
   months:{}, // ← per-month database: { 'YYYY-M': { budgetInputs: {...} } }
   onboardingDone: false,
@@ -2146,20 +2548,46 @@ function persist(msg) {
   if(msg) toast('✓ '+msg+' — saved');
 }
 
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[ch]));
+}
+
+function safeHref(value) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return '';
+  try {
+    const url = new URL(/^[a-z][a-z0-9+.-]*:/i.test(raw) ? raw : 'https://' + raw);
+    if (url.protocol !== 'http:' && url.protocol !== 'https:') return '';
+    return escapeHTML(url.href);
+  } catch(e) {
+    return '';
+  }
+}
+
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const CAT_COLORS = {food:'#E76F51',rent:'#4A6741',transport:'#3A6080',school:'#7B5EA7',fun:'#BF8C30',health:'#2A9D8F',subscriptions:'#E9C46A',other:'#7A7265',income:'#52B788'};
-const CAT_LABELS = {food:'🍕 Food',rent:'🏠 Rent',transport:'🚌 Transport',school:'📚 School',fun:'🎉 Fun',health:'💊 Health',subscriptions:'📱 Subscriptions',other:'📦 Other',income:'💵 Income'};
+const CAT_COLORS = {food:'#E76F51',rent:'#4A6741',transport:'#3A6080',school:'#7B5EA7',fun:'#BF8C30',health:'#2A9D8F',subscriptions:'#E9C46A',clothing:'#D4845A',other:'#7A7265',income:'#52B788'};
+const CAT_LABELS = {food:'Food',rent:'Rent',transport:'Transport',school:'School',fun:'Fun',health:'Health',subscriptions:'Subscriptions',clothing:'Clothing',other:'Other',income:'Income'};
 // All income input ids (used by getTotalIncome, saveState, onMonthChange, archive, etc.)
 const INCOME_IDS = ['inc-family','inc-job','inc-aid','inc-hustle','inc-scholarship','inc-other','inc-imported'];
 
 // ── ONBOARDING ────────────────────────────────
 let obCurrent = 0;
 function obNext(n) {
-  document.getElementById('ob'+obCurrent).classList.remove('active');
-  document.getElementById('dot'+obCurrent).classList.add('done');
+  const curStep = document.getElementById('ob'+obCurrent) || (obCurrent===2 ? document.getElementById('ob3') : null);
+  if(curStep) curStep.classList.remove('active');
+  const curDot = document.getElementById('dot'+obCurrent);
+  if(curDot) curDot.classList.add('done');
   obCurrent = n;
-  document.getElementById('ob'+n).classList.add('active');
-  if(n < 4) document.getElementById('dot'+n).classList.add('done');
+  const nextStep = document.getElementById('ob'+n) || (n===2 ? document.getElementById('ob3') : null);
+  if(nextStep) nextStep.classList.add('active');
+  const nextDot = document.getElementById('dot'+n);
+  if(nextDot) nextDot.classList.add('done');
 }
 function selectTheme(t, el) {
   state.theme = t;
@@ -2183,23 +2611,9 @@ function launchApp() {
   state.school = document.getElementById('setup-school').value || 'Your College';
   state.year = document.getElementById('setup-year').value;
   state.major = document.getElementById('setup-major').value;
-  state.income =
-    (+document.getElementById("setup-allowance").value||0)+
-    (+document.getElementById("setup-job").value||0)+
-    (+document.getElementById("setup-aid").value||0)+
-    (+document.getElementById("setup-hustle").value||0)+
-    (+document.getElementById("setup-scholarship").value||0);
-  state.startingSavings = +document.getElementById("setup-savings").value||0;
   state.currentMonth = +document.getElementById('setup-month').value;
   state.currentYear = +document.getElementById('setup-year-num').value;
   const theme = state.theme;
-
-  // pre-fill income fields
-  document.getElementById('inc-family').value = document.getElementById('setup-allowance').value||'';
-  document.getElementById('inc-job').value = document.getElementById('setup-job').value||'';
-  document.getElementById('inc-aid').value = document.getElementById('setup-aid').value||'';
-  document.getElementById('inc-hustle').value = document.getElementById('setup-hustle').value||'';
-  document.getElementById('inc-scholarship').value = document.getElementById('setup-scholarship').value||'';
 
   // pre-fill settings
   document.getElementById('set-name').value = state.name;
@@ -2209,6 +2623,11 @@ function launchApp() {
 
   document.getElementById('onboard-overlay').style.display='none';
   document.getElementById('app').style.display='flex';
+  // Show mobile header now that onboarding is done
+  if (window.innerWidth <= 640) {
+    const mh = document.getElementById('mob-header');
+    if (mh) mh.style.display = 'flex';
+  }
 
   // only set defaults if truly new user
   if(!state.funds.length) {
@@ -2219,7 +2638,7 @@ function launchApp() {
   }
   if(!state.goals.length) {
     state.goals = [
-      {text:'Build a $500 emergency fund',cat:'💰 Savings',month:11,year:state.currentYear,done:false},
+      {text:'Land a summer internship',cat:'💼 Career',month:3,year:state.currentYear+1,done:false},
       {text:'Track every expense this month',cat:'🎯 Other',month:state.currentMonth,year:state.currentYear,done:false}
     ];
   }
@@ -2239,9 +2658,7 @@ function bootApp() {
   // set date dropdowns
   populateDays('tx-month','tx-day','tx-year');
   populateDays('sub-month','sub-day','sub-year');
-  populateDays('note-month','note-day','note-year');
   document.getElementById('tx-month').value = state.currentMonth;
-  document.getElementById('note-month').value = state.currentMonth;
   document.getElementById('budget-month-sel').value = state.currentMonth;
   document.getElementById('budget-year-sel').value = state.currentYear;
   // restore settings fields
@@ -2262,15 +2679,16 @@ function bootApp() {
   refreshImportedIncomeVisibility();
   renderFunds();
   renderDebts();
+  renderGrowthAccounts();
   renderGoals();
-  renderNotes();
   renderSubs();
   renderScholarships();
   renderInternships();
   gpaYearDropdown();
   renderCourses();
-  renderTips();
   renderDashboard();
+  applyProStateToSidebar();
+  if (!isProUnlocked()) { const n = document.getElementById('settings-pro-note'); if(n) n.style.display='block'; const bl = document.getElementById('sb-backup-lock'); if(bl) bl.style.opacity='0.45'; }
   updateEmptyMonthBanner();
   populateDays('sch-month','sch-day','sch-year');
   populateDays('int-month','int-day','int-year');
@@ -2312,24 +2730,151 @@ function populateDays(monthId, dayId, yearId) {
 }
 
 // ── NAV ───────────────────────────────────────
-function showPage(id, el) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
-  document.getElementById('pg-'+id).classList.add('active');
-  if(el) el.classList.add('active');
-  if(id==='dashboard') renderDashboard();
-  if(id==='archive') renderMonthArchive();
-  if(id==='budget') updateEmptyMonthBanner();
-  if(id==='internships') renderInternships();
-  if(id==='scholarships') renderScholarships();
-  if(id==='gpa') renderCourses();
+function openProGate(id, el) {
+  if (isProUnlocked()) {
+    showPage(id, el);
+    return;
+  }
+  _gateReturnPage = id;
+  _postUnlockAction = null;
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-pro-gate').classList.add('active');
 }
+
+function showPage(id, el) {
+  if (PRO_PAGES.has(id) && !isProUnlocked()) {
+    openProGate(id, el);
+    return;
+  }
+  // Normal navigation.
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('pg-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  if (id === 'dashboard') renderDashboard();
+  if (id === 'archive') renderMonthArchive();
+  if (id === 'budget') updateEmptyMonthBanner();
+  if (id === 'internships') renderInternships();
+  if (id === 'scholarships') renderScholarships();
+  if (id === 'gpa') renderCourses();
+  if (id === 'growth') renderGrowthAccounts();
+  // Close mobile drawer after any navigation tap
+  if (isMobile()) closeMobileNav();
+}
+
+// ── MOBILE NAV ────────────────────────────────
+function isMobile() {
+  return window.innerWidth <= 640;
+}
+function openMobileNav() {
+  document.getElementById('sidebar').classList.add('mob-open');
+  document.getElementById('mob-backdrop').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileNav() {
+  document.getElementById('sidebar').classList.remove('mob-open');
+  document.getElementById('mob-backdrop').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ── PRO MODAL & UNLOCK ────────────────────────
+function showProModal() {
+  const modal = document.getElementById('pro-modal');
+  if (modal.parentElement !== document.body) document.body.appendChild(modal);
+  modal.style.display = 'flex';
+  document.getElementById('pro-key-input').value = '';
+  document.getElementById('pro-key-err').style.display = 'none';
+  setTimeout(() => document.getElementById('pro-key-input').focus(), 80);
+}
+
+function closeProModal() {
+  document.getElementById('pro-modal').style.display = 'none';
+}
+
+function proGateDismiss() {
+  // Navigate back to dashboard.
+  _postUnlockAction = null;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('pg-dashboard').classList.add('active');
+  const dashItem = document.querySelector('.sb-item[onclick*="dashboard"]');
+  if (dashItem) dashItem.classList.add('active');
+  renderDashboard();
+}
+
+function validateAndUnlock() {
+  const raw = document.getElementById('pro-key-input').value;
+  const errEl = document.getElementById('pro-key-err');
+  if (!raw.trim()) {
+    errEl.textContent = 'Please enter your license key.';
+    errEl.style.display = 'block';
+    return;
+  }
+  if (!validateLicense(raw)) {
+    errEl.textContent = 'That key doesn\'t look right. Check for typos and make sure you\'re using the key that was emailed to you (format: CCP-XXXX-YYYY-ZZZZ).';
+    errEl.style.display = 'block';
+    return;
+  }
+  // Valid — persist and reload UI.
+  savePro();
+  closeProModal();
+  // Remove pro-locked class from sidebar items now that they're unlocked.
+  document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
+    el.classList.remove('pro-locked');
+    const lockSpan = el.querySelector('.si-lock');
+    if (lockSpan) lockSpan.remove();
+  });
+  // Hide backup lock badge and settings pro note.
+  const bl = document.getElementById('sb-backup-lock');
+  if (bl) bl.style.display = 'none';
+  const sn = document.getElementById('settings-pro-note');
+  if (sn) sn.style.display = 'none';
+  toast('🎉 Campus Cash Pro unlocked! All features are now available.');
+  if (_postUnlockAction === 'import') {
+    _postUnlockAction = null;
+    openImport();
+    return;
+  }
+  // Navigate to whatever the user was trying to open.
+  const dest = (_gateReturnPage && _gateReturnPage !== 'pro-gate') ? _gateReturnPage : 'dashboard';
+  const destEl = document.querySelector('.sb-item[onclick*="' + dest + '"]') || null;
+  showPage(dest, destEl);
+}
+
+// On page load, if already unlocked, remove lock badges from sidebar immediately.
+function applyProStateToSidebar() {
+  if (isProUnlocked()) {
+    document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
+      el.classList.remove('pro-locked');
+      const lockSpan = el.querySelector('.si-lock');
+      if (lockSpan) lockSpan.remove();
+      const page = el.dataset.proPage;
+      if (page) el.setAttribute('onclick', "showPage('" + page + "',this)");
+    });
+    const bl = document.getElementById('sb-backup-lock');
+    if (bl) bl.style.display = 'none';
+    const sn = document.getElementById('settings-pro-note');
+    if (sn) sn.style.display = 'none';
+  }
+}
+
+document.addEventListener('click', function(e) {
+  const lockedItem = e.target.closest && e.target.closest('.sb-item.pro-locked[data-pro-page]');
+  if (!lockedItem || isProUnlocked()) return;
+  e.preventDefault();
+  e.stopPropagation();
+  openProGate(lockedItem.dataset.proPage, lockedItem);
+}, true);
 
 // ── HEADER UPDATE ─────────────────────────────
 function updateHeader() {
-  document.getElementById('sb-name-disp').innerHTML = state.name+"'s <span>Cash Pro</span>";
+  document.getElementById('sb-name-disp').innerHTML = escapeHTML(state.name)+"'s <span>Cash Pro</span>";
   document.getElementById('sb-school-disp').textContent = state.year+' · '+state.school;
   document.getElementById('sb-month-disp').textContent = MONTHS[state.currentMonth]+' '+state.currentYear;
+  const mobM = document.getElementById('mob-month-disp');
+  if (mobM) mobM.textContent = MONTHS[state.currentMonth]+' '+state.currentYear;
   document.getElementById('wb-name').textContent = state.name+' 👋';
   document.getElementById('wb-school-banner').textContent = state.year+(state.major?' · '+state.major:'')+' · '+state.school;
   const hr = new Date().getHours();
@@ -2353,6 +2898,20 @@ function syncMonth() {
   const newY = +document.getElementById('budget-year-sel').value;
 
   switchToMonth(newM, newY);
+}
+
+function setCurrentMonthFromToday() {
+  const today = new Date();
+  state.currentMonth = today.getMonth();
+  state.currentYear = today.getFullYear();
+}
+
+function setOnboardingMonthToToday() {
+  const today = new Date();
+  const monthSel = document.getElementById('setup-month');
+  const yearSel = document.getElementById('setup-year-num');
+  if(monthSel) monthSel.value = today.getMonth();
+  if(yearSel) yearSel.value = today.getFullYear();
 }
 
 // Generic month switcher — used by sidebar arrows, archive page, and budget selectors
@@ -2385,15 +2944,15 @@ function switchToMonth(newM, newY) {
   const bms = document.getElementById('budget-month-sel'); if(bms) bms.value = newM;
   const bys = document.getElementById('budget-year-sel'); if(bys) bys.value = newY;
   const txM = document.getElementById('tx-month'); if(txM) txM.value = newM;
-  const nM = document.getElementById('note-month'); if(nM) nM.value = newM;
 
   // update sidebar display
   document.getElementById('sb-month-disp').textContent = MONTHS[state.currentMonth]+' '+state.currentYear;
+  const mobM = document.getElementById('mob-month-disp');
+  if (mobM) mobM.textContent = MONTHS[state.currentMonth]+' '+state.currentYear;
 
   // re-render everything that depends on current month
   calcAll();
   renderTx();
-  renderNotes();
   renderDashboard();
   renderMonthArchive();
   updateEmptyMonthBanner();
@@ -2500,15 +3059,15 @@ function calcAll() {
 
   // budget bars
   const catDefs = [
-    {id:'rent',label:'🏠 Rent / housing'},
-    {id:'food',label:'🍕 Food & dining'},
-    {id:'transport',label:'🚌 Transport'},
-    {id:'school',label:'📚 School'},
-    {id:'fun',label:'🎉 Fun'},
-    {id:'health',label:'💊 Health'},
-    {id:'subscriptions',label:'📱 Subscriptions'},
-    {id:'clothing',label:'🎁 Clothing'},
-    {id:'other',label:'📦 Other'}
+    {id:'rent',label:'Rent / housing'},
+    {id:'food',label:'Food & dining'},
+    {id:'transport',label:'Transport'},
+    {id:'school',label:'School'},
+    {id:'fun',label:'Fun'},
+    {id:'health',label:'Health'},
+    {id:'subscriptions',label:'Subscriptions'},
+    {id:'clothing',label:'Clothing'},
+    {id:'other',label:'Other'}
   ];
   let html = '';
   catDefs.forEach(c=>{
@@ -2567,6 +3126,7 @@ const IMP_CAT_KEYWORDS = {
   school: ['amazon kindle','chegg','textbook','course hero','quizlet','duolingo','university','college','tuition','bookstore','barnes and noble','barnes & noble','vitalsource','pearson','mcgraw hill','cengage','wiley','scantron','bluebook','library fee','lab fee','student fee'],
   subscriptions: ['netflix','spotify','hulu','disney+','disney plus','apple.com/bill','apple services','google one','google storage','dropbox','adobe','hbo max','hbomax','max.com','microsoft 365','microsoft sub','onedrive','icloud','youtube premium','amazon prime','twitch','patreon','substack','chatgpt','openai','anthropic','claude.ai','crunchyroll','funimation','paramount+','peacock','apple tv','apple music','tidal','pandora','audible','kindle unlimited','linkedin learning','coursera','masterclass','skillshare','headspace','calm','duolingo plus','grammarly','canva','notion','figma','github copilot','vpn','nordvpn','expressvpn'],
   health: ['cvs','walgreens','rite aid','pharmacy','doctor','hospital','medical','dental','optical','vision','planet fitness','la fitness','gym','equinox','24 hour fitness','crunch fitness','orange theory','orangetheory','peloton','classpass','soulcycle','barre','pilates','yoga','therapist','therapy','urgent care','clinic','quest diagnostic','labcorp','goodrx','one medical','teladoc'],
+  clothing: ['shein','zara','h&m','hm.com','forever 21','forever21','urban outfitter','urbanoutfitter','lululemon','lulus','asos','fashionnova','fashion nova','boohoo','princess polly','revolve','anthropologie','free people','madewell','uniqlo','gap.com','old navy','banana republic','hollister','abercrombie','ae.com','american eagle','j.crew','pacsun','zumiez','tillys','hot topic','nordstrom','bloomingdales','macys','saks','neiman','dsw','foot locker','finish line','journeys','shoe carnival','nike.com','adidas.com','underarmour','under armour','new balance','converse','vans.com','reebok'],
   fun: ['amc','regal','cinemark','theater','cinema','movie','bar &','bar/','tavern','pub','brewery','lounge','nightclub','club','ticketmaster','stubhub','axs','seatgeek','steam','playstation','xbox','nintendo','epic games','riot games','battle.net','blizzard','spotify concert','live nation','sephora','ulta','barber','salon','nail','massage','spa','manicure','pedicure','golf','bowling','arcade','dave & buster','dave and buster','top golf','escape room','six flags','disney world','disneyland','universal studio','aquarium','zoo','museum','concert','festival','etsy','amazon.com','target.com','aliexpress','shein','zara','h&m','forever 21','urban outfitter','lululemon','nike','adidas','tj maxx','marshall','ross','dollar tree','dollar general','dollar store'],
   rent: ['rent ','rent-','rentpayment','lease','property mgmt','property management','apartment','landlord','realty','student living','american campus','greystar','equity residential','airbnb','vrbo']
 };
@@ -2657,6 +3217,12 @@ function setImportAccountType(type) {
 }
 
 function openImport() {
+  if (!isProUnlocked()) {
+    _gateReturnPage = 'spending';
+    _postUnlockAction = 'import';
+    showProModal();
+    return;
+  }
   document.getElementById('import-overlay').classList.add('open');
   resetImport();
 }
@@ -2676,7 +3242,7 @@ function resetImport() {
 }
 
 function showImportError(msg) {
-  document.getElementById('imp-error-banner').innerHTML = `<div class="imp-error"><strong>Couldn't read this</strong>${msg}</div>`;
+  document.getElementById('imp-error-banner').innerHTML = `<div class="imp-error"><strong>Couldn't read this</strong>${escapeHTML(msg)}</div>`;
 }
 
 function handleImportFile(event) {
@@ -2835,12 +3401,13 @@ function renderImportPreview() {
   list.innerHTML = impParsed.map((r, i) => {
     const dateStr = MONTHS[r.m].slice(0,3) + ' ' + r.d;
     const cats = ['food','rent','transport','school','fun','health','subscriptions','other','income'];
-    const catLabels = {food:'🍕 Food',rent:'🏠 Rent',transport:'🚌 Transport',school:'📚 School',fun:'🎉 Fun',health:'💊 Health',subscriptions:'📱 Subs',other:'📦 Other',income:'💵 Income'};
+    const catLabels = {food:'Food',rent:'Rent',transport:'Transport',school:'School',fun:'Fun',health:'Health',subscriptions:'Subs',other:'Other',income:'Income'};
     const dupeBadge = r.isDuplicate ? `<span class="imp-dupe-badge" title="Matches a transaction already in your log">Duplicate</span>` : '';
+    const safeDesc = escapeHTML(r.desc || '');
     return `<div class="imp-row ${r.selected?'':'excluded'} ${r.isExpense?'':'income'} ${r.isDuplicate?'duplicate':''}" id="imp-row-${i}">
       <input type="checkbox" ${r.selected?'checked':''} onchange="impToggleRow(${i})">
       <div class="imp-row-date">${dateStr}</div>
-      <div class="imp-row-desc" title="${(r.desc||'').replace(/"/g,'&quot;')}">${r.desc}${dupeBadge}</div>
+      <div class="imp-row-desc" title="${safeDesc}">${safeDesc}${dupeBadge}</div>
       <div class="imp-row-amt ${r.isExpense?'expense':'income-amt'}">${r.isExpense?'-':'+'}${state.currency}${r.amt.toFixed(2)}</div>
       <select class="imp-row-cat" onchange="impChangeCat(${i}, this.value)">
         ${cats.map(c => `<option value="${c}"${r.cat===c?' selected':''}>${catLabels[c]}</option>`).join('')}
@@ -2996,9 +3563,11 @@ function renderTx() {
   list.innerHTML = txs.map((t,i)=>{
     const idx = state.transactions.indexOf(t);
     const isIncome = t.cat==='income';
+    const safeDesc = escapeHTML(t.desc);
+    const safeNote = escapeHTML(t.note);
     return `<div class="tx-row">
       <div class="tx-dot" style="background:${CAT_COLORS[t.cat]||'#999'}"></div>
-      <div class="tx-desc">${t.desc}${t.note?'<span class="tx-note">'+t.note+'</span>':''}</div>
+      <div class="tx-desc">${safeDesc}${t.note?'<span class="tx-note">'+safeNote+'</span>':''}</div>
       <div class="tx-cat">${CAT_LABELS[t.cat]||t.cat}</div>
       <div class="tx-date">${MONTHS[t.m]?.slice(0,3)} ${t.d}, ${t.y}</div>
       <div class="tx-amt" style="color:${isIncome?'var(--sage)':'var(--rust)'}">${isIncome?'+':'-'}${state.currency}${t.amt.toFixed(2)}</div>
@@ -3068,7 +3637,7 @@ function renderFunds() {
     c.innerHTML=`<div style="padding:1.8rem 1rem">
       <div style="font-size:1.4rem;margin-bottom:8px">🎯</div>
       <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Save for what matters — without the stress</div>
-      <div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:1.2rem">A sinking fund lets you set aside a little each month so a big one-time expense never hits you out of nowhere. Study abroad, a new laptop, spring break, car repairs — start a fund for each.</div>
+      <div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:1.2rem">A savings fund lets you set aside a little each month so a big one-time expense never hits you out of nowhere. Study abroad, a new laptop, spring break, car repairs — start a fund for each.</div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink4);margin-bottom:8px">Quick-start templates</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
         <button class="sub-chip" onclick="applyFundTemplate('Study Abroad','✈️',2000,150)">✈️ Study Abroad</button>
@@ -3089,6 +3658,9 @@ function renderFunds() {
   let total=0, goalTotal=0;
   c.innerHTML = state.funds.map((f,i)=>{
     total+=f.saved; goalTotal+=f.goal;
+    const safeName = escapeHTML(f.name);
+    const safeEmoji = escapeHTML(f.emoji);
+    const safeWhy = escapeHTML(f.why);
     const pct      = Math.min(Math.round((f.saved/f.goal)*100),100);
     const left     = Math.max(0, f.goal - f.saved);
     const done     = f.saved >= f.goal;
@@ -3138,10 +3710,10 @@ function renderFunds() {
     return `<div class="fund-card ${statusClass}">
       <div class="fund-top">
         <div class="fund-name-row">
-          <span class="fund-emoji">${f.emoji}</span>
+          <span class="fund-emoji">${safeEmoji}</span>
           <div>
-            <div class="fund-title">${f.name} ${statusBadge}</div>
-            ${f.why?`<div class="fund-subtitle">${f.why}</div>`:''}
+            <div class="fund-title">${safeName} ${statusBadge}</div>
+            ${f.why?`<div class="fund-subtitle">${safeWhy}</div>`:''}
           </div>
         </div>
         <div class="fund-nums"><strong>${state.currency}${f.saved.toFixed(0)}</strong> / ${state.currency}${f.goal.toFixed(0)}<br>
@@ -3175,7 +3747,7 @@ function renderFunds() {
   fmtEl('f-total-saved', total);
   fmtEl('f-total-goal', goalTotal);
   document.getElementById('dash-funds-count').textContent = state.funds.length;
-  document.getElementById('dash-funds-pct').textContent = goalTotal>0?Math.round((total/goalTotal)*100)+'% of goals funded':'';
+  document.getElementById('dash-funds-pct').textContent = goalTotal>0?Math.round((total/goalTotal)*100)+'% of fund targets saved':'';
 }
 
 function applyFundTemplate(name, emoji, goal, monthly) {
@@ -3218,12 +3790,12 @@ function renderGoals() {
   if(!state.goals.length){
     c.innerHTML=`<div style="padding:1.8rem 1rem">
       <div style="font-size:1.4rem;margin-bottom:8px">✦</div>
-      <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Set your first financial goal</div>
-      <div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:1.2rem">Goals keep the big picture visible. Add a dollar target and track your progress — or just write it down and check it off when you get there.</div>
+      <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Set your first goal</div>
+      <div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:1.2rem">Goals keep bigger milestones visible. Add a dollar target if it helps, or just write it down and check it off when you get there.</div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink4);margin-bottom:8px">Quick-start examples</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        <button class="sub-chip" onclick="applyGoalTemplate('Build a \\$1,000 emergency fund','💰 Savings',1000)">💰 Emergency Fund</button>
         <button class="sub-chip" onclick="applyGoalTemplate('Pay off my credit card balance','📉 Debt',0)">📉 Pay Off Debt</button>
+        <button class="sub-chip" onclick="applyGoalTemplate('Land a summer internship','💼 Career',0)">💼 Summer Internship</button>
         <button class="sub-chip" onclick="applyGoalTemplate('Save for spring break trip','💰 Savings',500)">✈️ Spring Break</button>
       </div>
     </div>`;
@@ -3240,6 +3812,8 @@ function renderGoals() {
   };
 
   c.innerHTML = state.goals.map((g,i) => {
+    const safeText = escapeHTML(g.text);
+    const safeCat = escapeHTML(g.cat);
     const moRemain = (g.year - todayYear)*12 + (g.month - todayMonth);
     const isOverdue = moRemain < 0 && !g.done;
     const isSoon   = !g.done && moRemain >= 0 && moRemain <= 2;
@@ -3270,16 +3844,21 @@ function renderGoals() {
           <button class="btn btn-ghost btn-xs" onclick="updateGoalSaved(${i})">Update</button>
         </div>
       </div>` : (amt > 0 && g.done ? `<div style="font-size:11px;color:var(--sage);margin-top:4px;font-family:'JetBrains Mono',monospace">✓ ${state.currency}${amt.toLocaleString()} goal reached</div>` : '');
+    const savingsFundHint = g.cat === '💰 Savings' && amt > 0 ? `
+      <div style="margin-top:8px;padding:7px 9px;background:var(--cream2);border:1px solid var(--border);border-radius:6px;font-size:11.5px;color:var(--ink3);line-height:1.45">
+        Want to actively save toward this? Create a Savings Fund to deposit money and track contributions.
+      </div>` : '';
 
     return `<div class="goal-item ${catClass}${g.done?' goal-item-done':''}">
       <div class="goal-check ${g.done?'done':''}" onclick="toggleGoal(${i})">${g.done?'✓':''}</div>
       <div style="flex:1;min-width:0">
-        <div class="goal-text ${g.done?'done-text':''}">${g.text}</div>
+        <div class="goal-text ${g.done?'done-text':''}">${safeText}</div>
         <div style="font-size:11px;margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-          <span style="color:var(--ink4)">${g.cat}</span>
+          <span style="color:var(--ink4)">${safeCat}</span>
           <span style="color:${deadlineColor};font-family:'JetBrains Mono',monospace">${deadlineLabel}</span>
         </div>
         ${progHtml}
+        ${savingsFundHint}
       </div>
       <button class="btn btn-danger btn-xs" onclick="delGoal(${i})" title="Remove goal" style="flex-shrink:0;margin-top:1px">×</button>
     </div>`;
@@ -3420,6 +3999,8 @@ function renderDebts() {
   strat.style.display='block'; summary.style.display='grid';
 
   c.innerHTML = state.debts.map((d,i) => {
+    const safeName = escapeHTML(d.name);
+    const safeType = escapeHTML(d.type);
     const origBal = d.originalBal || d.bal;
     const paid = origBal - d.bal;
     const pctPaid = origBal > 0 ? Math.min(100, Math.round((paid / origBal)*100)) : 0;
@@ -3431,8 +4012,8 @@ function renderDebts() {
     return `<div class="debt-item${isPaidOff?' debt-paid':''}">
       <div class="debt-header">
         <div>
-          <div class="debt-name-title">${d.name}${isPaidOff?' <span style="color:var(--sage);font-size:12px">✓ Paid off!</span>':''}</div>
-          <div class="debt-type-tag">${d.type}</div>
+          <div class="debt-name-title">${safeName}${isPaidOff?' <span style="color:var(--sage);font-size:12px">✓ Paid off!</span>':''}</div>
+          <div class="debt-type-tag">${safeType}</div>
         </div>
         <div class="debt-right">
           <span class="debt-rate-badge">${d.rate}% APR</span>
@@ -3529,12 +4110,12 @@ function calcDebt() {
   const byBal  = [...state.debts].filter(d=>d.bal>0).sort((a,b)=>a.bal-b.bal)[0];
   if (byRate) {
     el('av-rec').innerHTML = extra > 0
-      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${byRate.name}</strong> (${byRate.rate}% APR) — highest interest rate, costs most to carry.`
+      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${escapeHTML(byRate.name)}</strong> (${byRate.rate}% APR) — highest interest rate, costs most to carry.`
       : 'Use the slider above to see how extra payments accelerate your payoff.';
   }
   if (byBal) {
     el('sb-rec').innerHTML = extra > 0
-      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${byBal.name}</strong> (${state.currency}${Math.round(byBal.bal).toLocaleString()} balance) — smallest debt, fastest first win.`
+      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${escapeHTML(byBal.name)}</strong> (${state.currency}${Math.round(byBal.bal).toLocaleString()} balance) — smallest debt, fastest first win.`
       : 'Use the slider above to see how extra payments accelerate your payoff.';
   }
 
@@ -3651,7 +4232,7 @@ function renderSubs() {
   strip.classList.add('visible');
   document.getElementById('sub-monthly-total').textContent = state.currency + monthlyTotal.toFixed(2);
   document.getElementById('sub-yearly-total').textContent  = state.currency + (monthlyTotal*12).toFixed(2);
-  document.getElementById('sub-cancel-total').textContent  = cancelSave > 0 ? state.currency + cancelSave.toFixed(2)+'/mo' : state.currency+'0';
+  document.getElementById('sub-cancel-total').textContent  = cancelSave > 0 ? state.currency + (cancelSave*12).toFixed(2)+'/yr' : state.currency+'0';
   document.getElementById('sub-cancel-count').textContent  = cancelSubs.length > 0 ? 'across '+cancelSubs.length+' subscription'+(cancelSubs.length>1?'s':'') : 'all keeping';
   const soonEl = document.getElementById('sub-renewing-soon');
   soonEl.textContent = soonCount;
@@ -3677,18 +4258,22 @@ function renderSubs() {
     const mo   = subMonthlyCost(s);
     const days = subDaysUntil(s);
     const color = subCatColor(s.cat);
-    return `<div class="sub-card worth-${s.worth}">
+    const safeName = escapeHTML(s.name);
+    const safeCat = escapeHTML(s.cat);
+    return `<div class="sub-card worth-${escapeHTML(s.worth)}">
       <div class="sub-card-top">
         <div class="sub-card-left">
           <div class="sub-cat-dot" style="background:${color}"></div>
           <div>
-            <div class="sub-card-name">${s.name}</div>
-            <div class="sub-card-cat">${s.cat}</div>
+            <div class="sub-card-name">${safeName}</div>
+            <div class="sub-card-cat">${safeCat}</div>
           </div>
         </div>
         <div class="sub-card-right">
-          <div class="sub-card-cost">${state.currency}${s.cost.toFixed(2)}<span style="font-size:12px;font-weight:400;color:var(--ink4)">${cycleLabel[s.cycle]||'/mo'}</span></div>
-          ${s.cycle!=='monthly' ? `<div class="sub-card-cycle">${state.currency}${mo.toFixed(2)}/mo equiv</div>` : ''}
+          ${s.worth==='yes'
+            ? `<div class="sub-card-cost">${state.currency}${s.cost.toFixed(2)}<span style="font-size:12px;font-weight:400;color:var(--ink4)">${cycleLabel[s.cycle]||'/mo'}</span></div>${s.cycle!=='monthly' ? `<div class="sub-card-cycle">${state.currency}${mo.toFixed(2)}/mo equiv</div>` : ''}`
+            : `<div class="sub-card-cost">${state.currency}${(mo*12).toFixed(2)}<span style="font-size:12px;font-weight:400;color:var(--ink4)"> / yr</span></div><div class="sub-card-cycle">${state.currency}${mo.toFixed(2)}/mo</div>`
+          }
         </div>
       </div>
       <div class="sub-card-bottom">
@@ -3716,7 +4301,7 @@ function renderSubs() {
       <div class="card-label">By category</div>
       ${catEntries.map(([cat,amt])=>`
         <div class="sub-cat-bar-row">
-          <div class="sub-cat-bar-label">${cat}</div>
+          <div class="sub-cat-bar-label">${escapeHTML(cat)}</div>
           <div class="sub-cat-bar-track">
             <div class="sub-cat-bar-fill" style="width:${Math.round((amt/maxCat)*100)}%;background:${subCatColor(cat)}"></div>
           </div>
@@ -3786,7 +4371,7 @@ function renderGpaSemPills() {
   const allActive = gpaActiveSem === null;
   html += `<button class="gpa-sem-pill${allActive?' active':''}" onclick="setGpaSem(null)">All semesters</button>`;
   keys.forEach(k => {
-    html += `<button class="gpa-sem-pill${gpaActiveSem===k?' active':''}" onclick="setGpaSem('${k}')">${k}</button>`;
+    html += `<button class="gpa-sem-pill${gpaActiveSem===k?' active':''}" onclick="setGpaSem('${escapeHTML(k)}')">${escapeHTML(k)}</button>`;
   });
   bar.innerHTML = html;
 }
@@ -3907,14 +4492,14 @@ function renderCourses() {
     const gGpa   = gTotal > 0 ? (gPts / gTotal).toFixed(2) : '—';
     const isActive = gpaActiveSem === key;
 
-    tableHtml += `<tr class="sem-group-head"><td colspan="5" style="${isActive?'color:var(--accent,var(--sage));background:var(--accent-light,var(--sage-light))':''}">${key} · <span style="font-family:'JetBrains Mono',monospace">${gGpa}</span> GPA · ${gTotal} credits</td></tr>`;
+    tableHtml += `<tr class="sem-group-head"><td colspan="5" style="${isActive?'color:var(--accent,var(--sage));background:var(--accent-light,var(--sage-light))':''}">${escapeHTML(key)} · <span style="font-family:'JetBrains Mono',monospace">${gGpa}</span> GPA · ${gTotal} credits</td></tr>`;
 
     group.forEach((c, gi) => {
       const realIdx = state.courses.findIndex((sc, si) => sc === c);
       tableHtml += `<tr>
-        <td style="font-weight:700">${c.name}</td>
+        <td style="font-weight:700">${escapeHTML(c.name)}</td>
         <td class="mono">${c.credits}</td>
-        <td><span class="badge ${c.grade>=3.5?'badge-green':c.grade>=2.0?'badge-gold':'badge-red'}">${c.gradeLabel}</span></td>
+        <td><span class="badge ${c.grade>=3.5?'badge-green':c.grade>=2.0?'badge-gold':'badge-red'}">${escapeHTML(c.gradeLabel)}</span></td>
         <td class="mono">${(c.grade*c.credits).toFixed(1)}</td>
         <td><button class="tx-del" onclick="delCourse(${realIdx})" title="Remove course">×</button></td>
       </tr>`;
@@ -3974,8 +4559,8 @@ function renderGpaSchAlerts(cumGpa) {
     <div class="gpa-sch-alert alert-${a.type}">
       <span class="gpa-sch-alert-icon">${a.icon}</span>
       <div class="gpa-sch-alert-text">
-        <strong>${a.title}</strong>
-        <span>${a.body} · <span class="gpa-sch-link" onclick="showPage('scholarships',null)">Go to Scholarships →</span></span>
+        <strong>${escapeHTML(a.title)}</strong>
+        <span>${escapeHTML(a.body)} · <span class="gpa-sch-link" onclick="showPage('scholarships',null)">Go to Scholarships →</span></span>
       </div>
     </div>`).join('');
 }
@@ -4003,55 +4588,6 @@ function calcTarget() {
   }
 }
 
-// ── NOTES ────────────────────────────────────
-function usePrompt(){
-  const p = document.getElementById('note-prompt').value;
-  if(p) document.getElementById('note-text').value = p+'\n\n';
-}
-function addNote() {
-  const text = document.getElementById('note-text').value.trim();
-  if(!text){toast('Write something first');return;}
-  state.notes.unshift({
-    text,
-    m:+document.getElementById('note-month').value,
-    d:+document.getElementById('note-day').value,
-    y:+document.getElementById('note-year').value
-  });
-  document.getElementById('note-text').value='';
-  document.getElementById('note-prompt').value='';
-  renderNotes(); persist('Entry saved');
-}
-function delNote(i){state.notes.splice(i,1);renderNotes();persist();}
-function renderNotes() {
-  const c = document.getElementById('notes-list');
-  const showAll = state._notesShowAll === true;
-  const filtered = showAll
-    ? state.notes
-    : state.notes.filter(n => n.m === state.currentMonth && n.y === state.currentYear);
-  const toggleBtn = document.getElementById('notes-toggle');
-  if (toggleBtn) {
-    toggleBtn.textContent = showAll
-      ? '📅 Show only '+MONTHS[state.currentMonth]+' '+state.currentYear
-      : '📚 Show all months ('+state.notes.length+' entries)';
-  }
-  if(!filtered.length){
-    c.innerHTML='<div class="empty"><div class="empty-icon">✍️</div><div class="empty-text">No entries '+(showAll?'yet':'for '+MONTHS[state.currentMonth]+' '+state.currentYear)+'. Write your first one above.</div></div>';
-    return;
-  }
-  c.innerHTML = filtered.map((n)=>{
-    const i = state.notes.indexOf(n);
-    return `<div class="note-card">
-      <div class="note-date">${MONTHS[n.m]} ${n.d}, ${n.y}</div>
-      <div class="note-text">${n.text.replace(/\n/g,'<br>')}</div>
-      <button class="note-del" onclick="delNote(${i})">×</button>
-    </div>`;
-  }).join('');
-}
-function toggleNotesView() {
-  state._notesShowAll = !state._notesShowAll;
-  renderNotes();
-}
-
 // ── MONTH ARCHIVE ─────────────────────────────
 // Build a per-month summary from saved budgets + transactions
 function summarizeMonth(m, y) {
@@ -4074,15 +4610,13 @@ function summarizeMonth(m, y) {
   return { m, y, income, limits, spent, txCount, free, savingsRate, overUnder, hasData: income>0||limits>0||txCount>0 };
 }
 
-// Collect all months that have ANY data (saved budget OR transactions OR notes)
+// Collect all months that have ANY data (saved budget OR transactions)
 function getTrackedMonths() {
   const set = new Set();
   // from saved budget buckets
   Object.keys(state.months || {}).forEach(k => set.add(k));
   // from transactions
   state.transactions.forEach(t => { if(t.m!==undefined&&t.y!==undefined) set.add(monthKey(t.m,t.y)); });
-  // from notes
-  (state.notes||[]).forEach(n => { if(n.m!==undefined&&n.y!==undefined) set.add(monthKey(n.m,n.y)); });
   // always include current
   set.add(curKey());
 
@@ -4236,7 +4770,7 @@ function jumpFromArchive() {
 }
 
 function deleteMonth(m, y) {
-  if (!confirm('Delete the saved budget for '+MONTHS[m]+' '+y+'? Transactions and notes for this month are kept; only the budget numbers are erased.')) return;
+  if (!confirm('Delete the saved budget for '+MONTHS[m]+' '+y+'? Transactions for this month are kept; only the budget numbers are erased.')) return;
   delete state.months[monthKey(m,y)];
   saveState();
   renderMonthArchive();
@@ -4345,6 +4879,7 @@ function renderScholarships() {
   const renewalDue = renewalSorted.length > 0 ? renewalSorted[0].s : null;
   const renewalDaysLeft = renewalSorted.length > 0 ? renewalSorted[0].daysLeft : null;
   if(renewalDue) {
+    const renewalLink = safeHref(renewalDue.link);
     const deadlineStr = renewalDue.year
       ? ` · Due ${MONTHS[renewalDue.month]?.slice(0,3)} ${renewalDue.day}, ${renewalDue.year}`
         + (renewalDaysLeft !== null && renewalDaysLeft !== Infinity && renewalDaysLeft >= 0
@@ -4355,9 +4890,9 @@ function renderScholarships() {
     urgentBanner.innerHTML = `
       <div class="sch-urgent-icon">⚠️</div>
       <div class="sch-urgent-text">
-        <strong>Renewal due</strong> · ${renewalDue.name} (${state.currency}${renewalDue.amount.toLocaleString()})${deadlineStr}${renewalDue.nextStep ? ' — ' + renewalDue.nextStep : (renewalDue.notes ? ' — ' + renewalDue.notes : '')}
+        <strong>Renewal due</strong> · ${escapeHTML(renewalDue.name)} (${state.currency}${renewalDue.amount.toLocaleString()})${deadlineStr}${renewalDue.nextStep ? ' — ' + escapeHTML(renewalDue.nextStep) : (renewalDue.notes ? ' — ' + escapeHTML(renewalDue.notes) : '')}
       </div>
-      ${renewalDue.link ? `<a class="btn btn-primary btn-sm" href="${renewalDue.link.startsWith('http')?renewalDue.link:'https://'+renewalDue.link}" target="_blank" rel="noopener">Open scholarship →</a>` : ''}
+      ${renewalLink ? `<a class="btn btn-primary btn-sm" href="${renewalLink}" target="_blank" rel="noopener">Open scholarship →</a>` : ''}
     `;
   } else {
     urgentBanner.style.display = 'none';
@@ -4390,13 +4925,14 @@ function renderScholarships() {
     const isLost = s.status === 'lost';
     const amtClass = s.status==='awarded'?'':isLost?'lost':'pending';
     const deadlineClass = pastDeadline ? 'expired' : (!urgentDeadline ? 'safe' : '');
-    return `<div class="sch-card status-${s.status}">
+    const safeLink = safeHref(s.link);
+    return `<div class="sch-card status-${escapeHTML(s.status)}">
       <div class="sch-head">
         <div style="flex:1;min-width:0">
-          <div class="sch-name">${s.name}</div>
+          <div class="sch-name">${escapeHTML(s.name)}</div>
           <div class="sch-meta">
             ${statusMap[s.status]||''}
-            <span class="badge badge-gray">${s.type}</span>
+            <span class="badge badge-gray">${escapeHTML(s.type)}</span>
             <span class="badge badge-gray">${renewMap[s.renewable]||''}</span>
             ${s.gpaReq?`<span class="badge badge-gold">GPA ${s.gpaReq}+ required</span>`:''}
           </div>
@@ -4406,14 +4942,14 @@ function renderScholarships() {
           <div style="font-size:11px;color:var(--ink4)">${periodMap[s.period]||''}</div>
         </div>
       </div>
-      ${s.notes?`<div class="sch-notes-text">${s.notes}</div>`:''}
-      ${s.nextStep?`<div class="sch-nextstep"><strong>Next step</strong>${s.nextStep}</div>`:''}
+      ${s.notes?`<div class="sch-notes-text">${escapeHTML(s.notes)}</div>`:''}
+      ${s.nextStep?`<div class="sch-nextstep"><strong>Next step</strong>${escapeHTML(s.nextStep)}</div>`:''}
       ${deadline && !isLost ?`<div class="sch-deadline ${deadlineClass}">
         ${pastDeadline?'⚠ Deadline passed: ':'📅 Deadline: '}${MONTHS[s.month]?.slice(0,3)} ${s.day}, ${s.year}
         ${urgentDeadline?`<strong>(${daysLeft} days left!)</strong>`:''}
         ${pastDeadline?'<strong>(expired)</strong>':''}
       </div>`:''}
-      ${s.link ? `<a class="sch-link" href="${s.link.startsWith('http')?s.link:'https://'+s.link}" target="_blank" rel="noopener">🔗 Open scholarship</a>` : ''}
+      ${safeLink ? `<a class="sch-link" href="${safeLink}" target="_blank" rel="noopener">🔗 Open scholarship</a>` : ''}
       <div class="sch-actions">
         <select class="sch-status-select" onchange="setSchStatus(${realIdx}, this.value)">
           ${Object.entries({awarded:'✅ Awarded',applied:'📝 Applied',eligible:'🔍 Not applied',renewal:'🔄 Renewal due',lost:'❌ Lost'})
@@ -4556,14 +5092,15 @@ function renderInternships() {
 
   if (withDeadlines.length) {
     const u = withDeadlines[0];
+    const urgentLink = safeHref(u.link);
     urgentBanner.style.display = 'flex';
     urgentBanner.className = 'int-urgent';
     urgentBanner.innerHTML = `
       <div class="int-urgent-icon">⚠️</div>
       <div class="int-urgent-text">
-        <strong>${u.daysLeft === 0 ? 'DUE TODAY' : u.daysLeft + ' day' + (u.daysLeft===1?'':'s') + ' left'}</strong> · ${u.company} (${u.role})${u.nextStep ? ' — ' + u.nextStep : ''}
+        <strong>${u.daysLeft === 0 ? 'DUE TODAY' : u.daysLeft + ' day' + (u.daysLeft===1?'':'s') + ' left'}</strong> · ${escapeHTML(u.company)} (${escapeHTML(u.role)})${u.nextStep ? ' — ' + escapeHTML(u.nextStep) : ''}
       </div>
-      ${u.link ? `<a class="btn btn-primary btn-sm" href="${u.link.startsWith('http')?u.link:'https://'+u.link}" target="_blank" rel="noopener">Open application →</a>` : ''}
+      ${urgentLink ? `<a class="btn btn-primary btn-sm" href="${urgentLink}" target="_blank" rel="noopener">Open application →</a>` : ''}
     `;
   } else {
     urgentBanner.style.display = 'none';
@@ -4606,28 +5143,29 @@ function renderInternships() {
     const payStr = formatPayString(it);
     const totalVal = computeInternshipValue(it);
     const isPaid = it.payType !== 'unpaid' && it.payType !== 'credit' && it.rate > 0;
+    const safeLink = safeHref(it.link);
 
-    return `<div class="int-card status-${it.status}">
+    return `<div class="int-card status-${escapeHTML(it.status)}">
       <div class="int-head">
         <div style="flex:1;min-width:0">
-          <div class="int-company">${it.company}</div>
-          <div class="int-role">${it.role} · ${it.field}</div>
+          <div class="int-company">${escapeHTML(it.company)}</div>
+          <div class="int-role">${escapeHTML(it.role)} · ${escapeHTML(it.field)}</div>
         </div>
         <div class="int-pay">
-          <div>${payStr}</div>
+          <div>${escapeHTML(payStr)}</div>
           ${isPaid ? `<div class="int-pay-sub">≈ ${state.currency}${totalVal.toLocaleString()} total</div>` : ''}
         </div>
       </div>
       <div class="int-meta">
         ${statusMap[it.status] || ''}
-        <span class="badge badge-gray">${it.term}</span>
-        ${it.location ? `<span class="badge badge-gray">📍 ${it.location}</span>` : ''}
+        <span class="badge badge-gray">${escapeHTML(it.term)}</span>
+        ${it.location ? `<span class="badge badge-gray">📍 ${escapeHTML(it.location)}</span>` : ''}
         ${it.mode && it.mode !== 'unknown' ? `<span class="badge badge-gray">${modeMap[it.mode]}</span>` : ''}
-        ${it.referral ? `<span class="badge badge-blue">🤝 ${it.referral}</span>` : ''}
+        ${it.referral ? `<span class="badge badge-blue">🤝 ${escapeHTML(it.referral)}</span>` : ''}
       </div>
       ${it.nextStep && isPending ? `
         <div class="int-nextstep">
-          <strong>Next step</strong>${it.nextStep}
+          <strong>Next step</strong>${escapeHTML(it.nextStep)}
         </div>
       ` : ''}
       ${isPending ? `
@@ -4639,8 +5177,8 @@ function renderInternships() {
               : '📅 Deadline: '+MONTHS[it.m]?.slice(0,3)+' '+it.d+', '+it.y}
         </div>
       ` : ''}
-      ${it.notes ? `<div class="int-notes-text">${it.notes}</div>` : ''}
-      ${it.link ? `<a class="int-link" href="${it.link.startsWith('http')?it.link:'https://'+it.link}" target="_blank" rel="noopener">🔗 Open application</a>` : ''}
+      ${it.notes ? `<div class="int-notes-text">${escapeHTML(it.notes)}</div>` : ''}
+      ${safeLink ? `<a class="int-link" href="${safeLink}" target="_blank" rel="noopener">🔗 Open application</a>` : ''}
       <div class="int-actions">
         <select class="int-status-select" onchange="setIntStatus(${realIdx}, this.value)">
           ${Object.entries({saved:'🔖 Saved',applied:'📤 Applied',assessment:'📝 Assessment',interview:'💬 Interview',offer:'🎉 Offer',accepted:'✅ Accepted',rejected:'❌ Rejected',ghosted:'👻 Ghosted',withdrew:'🚪 Withdrew'})
@@ -4675,25 +5213,25 @@ const WT_STEPS = [
   {
     icon:'▦',
     title:'Month Archive',
-    body:'Every month gets its own bucket — budget, spending, notes. Switch between months with the sidebar arrows, copy a previous budget forward, and compare your habits over time.',
+    body:'Every month gets its own bucket — budget and spending. Switch between months with the sidebar arrows, copy a previous budget forward, and compare your habits over time.',
     page:'archive'
   },
   {
     icon:'☰',
     title:'Spending Log',
-    body:'Every time you spend money, log it here. Use the month/day/year dropdowns for accurate dating. Watch your categories fill up — and see exactly where the cash went.',
+    body:'Every time you spend money, log it here. Or skip the manual entry — use Import Bank CSV to pull in transactions straight from your bank statement. Watch your categories fill up and see exactly where the cash went.',
     page:'spending'
   },
   {
     icon:'◉',
-    title:'Sinking Funds',
-    body:'Got a trip, a laptop, or a car repair coming up? Create a fund, set a goal, and deposit anytime — preset chips or any custom amount. No more financial surprises.',
+    title:'Savings Funds',
+    body:'Got a trip, a laptop, or a car repair coming up? Create a fund, set a target, and deposit anytime — preset chips or any custom amount. No more financial surprises.',
     page:'sinking'
   },
   {
     icon:'✦',
-    title:'Financial Goals',
-    body:'Bigger-picture targets — pay off a card, build a $1,000 emergency fund, save for a semester abroad. Check them off as you hit milestones.',
+    title:'Goals',
+    body:'Bigger-picture milestones — pay off a card, raise your credit score, apply to scholarships, or land an internship. Check them off as you make progress.',
     page:'goals'
   },
   {
@@ -4705,8 +5243,14 @@ const WT_STEPS = [
   {
     icon:'◫',
     title:'Subscriptions',
-    body:'Track every recurring charge — Spotify, Netflix, gym, software. See your total monthly burn and catch zombie subscriptions before they drain you.',
+    body:'Track every recurring charge — Spotify, Netflix, gym, software. Flag anything you\'re not using and see the yearly cost impact. Catch the subscriptions quietly draining you before the next billing cycle hits.',
     page:'subscriptions'
+  },
+  {
+    icon:'◬',
+    title:'Growth Planner',
+    body:'Add your real savings and investment accounts — Roth IRA, HYSA, brokerage, and more. See how compound growth builds over time, and test what happens when you contribute more each month.',
+    page:'growth'
   },
   {
     icon:'✧',
@@ -4725,18 +5269,6 @@ const WT_STEPS = [
     title:'GPA Calculator',
     body:'Add your courses with credits and letter grades to compute your semester GPA. Drop in past semesters and you also get a running cumulative GPA.',
     page:'gpa'
-  },
-  {
-    icon:'✎',
-    title:'Money Journal',
-    body:'Quick date-stamped notes on financial decisions, lessons learned, and money wins. Builds self-awareness about your habits over time.',
-    page:'notes'
-  },
-  {
-    icon:'◈',
-    title:'Money Tips',
-    body:'Bite-sized real advice on budgeting, saving, credit, investing, and college-specific tricks. Browse anytime you need a quick gut check.',
-    page:'tips'
   },
   {
     icon:'⬇',
@@ -4774,8 +5306,7 @@ function renderWtStep() {
 
   // navigate to the relevant page
   if(step.page) {
-    const pgEl = document.querySelector('[onclick*="showPage(\''+step.page+'\'"]');
-    showPage(step.page, pgEl);
+    navToPage(step.page);
   }
 
   // position tooltip near sidebar for page steps, center otherwise
@@ -4806,37 +5337,6 @@ function renderWtStep() {
     nextBtn.onclick = ()=>wtStep(1);
   }
 }
-const TIPS = [
-  {icon:'🔄',title:'The 50/30/20 rule',cat:'Budgeting',text:'50% to needs (rent, groceries, utilities), 30% to wants (going out, fun), 20% to savings and debt. In college it\'s okay to adjust — just be intentional about which bucket gets cut.'},
-  {icon:'🍳',title:'Cook 4x a week, save $200/month',cat:'Food',text:'Eating out 7 nights vs cooking 4 nights. At $12 average per meal out vs $4 cooking, you save roughly $168–$210/month. That\'s $2,000+ per year back in your pocket.'},
-  {icon:'📱',title:'The subscription audit trick',cat:'Spending',text:'Open your bank statement, highlight every recurring charge. You\'ll find 2–4 things you forgot you\'re paying for. Cancel anything you haven\'t used in 30 days — no exceptions.'},
-  {icon:'💳',title:'Build credit now, thank yourself at 30',cat:'Credit',text:'Get one student credit card. Use it for ONE small recurring bill — like your Spotify. Set autopay in full. Never carry a balance. In 4 years you\'ll have a solid credit score before you need a car loan or apartment.'},
-  {icon:'📚',title:'Never buy a new textbook',cat:'School',text:'Rent from Amazon, Chegg, or VitalSource. Check your library. Find a PDF. Ask a classmate from last semester. New textbooks markup is often 500%. The content is identical.'},
-  {icon:'🛡️',title:'Your emergency fund comes first',cat:'Savings',text:'Before any savings goal, build $500–$1,000 in an untouched account. One unexpected expense — a car repair, a medical bill, a flight home — without this fund means credit card debt.'},
-  {icon:'🏦',title:'High-yield savings: free money',cat:'Banking',text:'Regular bank savings accounts pay 0.01–0.10% interest. High-yield savings accounts (Ally, Marcus, Discover) pay 4–5%. Same FDIC protection. Your $1,000 emergency fund earns $40–50/year instead of pennies.'},
-  {icon:'✧',title:'Use every campus perk',cat:'Free stuff',text:'Your tuition already paid for: free gym, free counseling, free career center, free software (Microsoft 365, Adobe, Figma), free events with free food, discounted transit passes. Use all of it.'},
-  {icon:'📈',title:'Start a Roth IRA at 18',cat:'Investing',text:'If you have any earned income (job, 1099, anything), open a Roth IRA. Put in even $25–50/month. Money invested at 20 doubles roughly 4 times before retirement. Money invested at 40 doubles twice. Time is the asset.'},
-  {icon:'🛒',title:'The grocery list is law',cat:'Food',text:'Write it before you go. Eat before you shop. Never go hungry. Stick to the list. Store brands are made in the same factories as name brands. These three habits cut grocery spend by 20–30%.'},
-  {icon:'💸',title:'Pay yourself first',cat:'Savings',text:'The day your paycheck comes in, move your savings amount out immediately — before you spend anything. What\'s left is your spending money. Most people do this backwards and wonder why they can\'t save.'},
-  {icon:'🎯',title:'Graduate with zero credit card debt',cat:'Debt',text:'This is the one rule that matters most. Pay your full balance every single month. Credit card interest is 20–29% — the most expensive debt you can hold. One unpaid month starts a spiral that follows you for years.'}
-];
-function renderTips() {
-  const c = document.getElementById('tips-container');
-  c.innerHTML = TIPS.map(t=>`
-    <div class="card" style="margin-bottom:10px">
-      <div class="flex-between" style="margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:1.5rem">${t.icon}</span>
-          <div>
-            <div style="font-weight:700;font-size:15px;color:var(--ink)">${t.title}</div>
-            <span class="badge badge-gray" style="margin-top:3px">${t.cat}</span>
-          </div>
-        </div>
-      </div>
-      <p style="font-size:14px;color:var(--ink3);line-height:1.6">${t.text}</p>
-    </div>`).join('');
-}
-
 // ── DASHBOARD ────────────────────────────────
 function renderDashboard() {
   const income = getTotalIncome()||state.income;
@@ -4857,21 +5357,97 @@ function renderDashboard() {
   const vmEl = document.getElementById('wb-month');
   if (vmEl) vmEl.textContent = MONTHS[state.currentMonth]+' '+state.currentYear;
 
-  // budget bars for dashboard — month-filtered tx
-  const CATS = [{id:'rent',label:'🏠 Rent'},{id:'food',label:'🍕 Food'},{id:'transport',label:'🚌 Transport'},{id:'school',label:'📚 School'},{id:'fun',label:'🎉 Fun'},{id:'health',label:'💊 Health'}];
-  let dbHtml='';
-  CATS.forEach(c=>{
+  // This Month's Money Moves — ranked action list across core money tools
+  const CATS = [
+    {id:'rent',         label:'Rent'},
+    {id:'food',         label:'Food'},
+    {id:'transport',    label:'Transport'},
+    {id:'school',       label:'School'},
+    {id:'fun',          label:'Fun'},
+    {id:'health',       label:'Health'},
+    {id:'subscriptions',label:'Subscriptions'},
+    {id:'clothing',     label:'Clothing'},
+    {id:'other',        label:'Other'}
+  ];
+
+  const hasLimits = CATS.some(c => (+document.getElementById('lim-'+c.id).value||0) > 0);
+  const spendTx   = monthTx.filter(t => t.cat !== 'income');
+  const hasTx     = spendTx.length > 0;
+  const moves = [];
+  const moneyMove = (priority, icon, title, meta, navTarget, badgeText, badgeClass='wna-days-ok') => {
+    moves.push({ priority, icon, title, meta, navTarget, badgeText, badgeClass });
+  };
+
+  if (!hasLimits) {
+    moneyMove(20, '◎', 'Set monthly limits to unlock budget tracking', 'Monthly Budget turns spending into targets.', 'budget', 'Set limits', 'wna-days-soon');
+  }
+  if (!hasTx) {
+    moneyMove(30, '☰', 'Log or import this month\'s transactions', 'Spending Log powers the dashboard, heatmap, and trends.', 'spending', 'Add data', 'wna-days-ok');
+  }
+
+  CATS.forEach(c => {
     const lim = +document.getElementById('lim-'+c.id).value||0;
-    if(!lim) return;
-    const txSpent = monthTx.filter(t=>t.cat===c.id).reduce((s,t)=>s+t.amt,0);
-    const p = Math.min(Math.round((txSpent/lim)*100),100);
-    const over = txSpent>lim;
-    dbHtml+=`<div class="prog-wrap">
-      <div class="prog-row"><span class="prog-name">${c.label}</span><span class="prog-pct">${state.currency}${txSpent.toFixed(0)}/${state.currency}${lim}</span></div>
-      <div class="prog-bar"><div class="prog-fill ${over?'fill-rust':'fill-sage'}" style="width:${p}%"></div></div>
-    </div>`;
+    if (!lim) return;
+    const txSpent = spendTx.filter(t => t.cat === c.id).reduce((s,t) => s+t.amt, 0);
+    if (txSpent > lim) {
+      moneyMove(1, '!', `${c.label} is ${state.currency}${(txSpent-lim).toFixed(0)} over limit`, `${state.currency}${txSpent.toFixed(0)} spent of ${state.currency}${lim} planned.`, 'spending', 'Over', 'wna-days-urgent');
+    } else if (txSpent >= lim * 0.85) {
+      moneyMove(5, '!', `${c.label} is close to its limit`, `${state.currency}${txSpent.toFixed(0)} spent of ${state.currency}${lim} planned.`, 'spending', 'Close', 'wna-days-soon');
+    }
   });
-  document.getElementById('dash-budget-bars').innerHTML = dbHtml||'<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">Set your budget to see spending health.</div></div>';
+
+  if (!hasLimits && hasTx) {
+    const catTotals = {};
+    spendTx.forEach(t => { catTotals[t.cat] = (catTotals[t.cat]||0) + t.amt; });
+    const top = Object.entries(catTotals).sort((a,b) => b[1]-a[1])[0];
+    if (top) {
+      moneyMove(10, '☰', `${CAT_LABELS[top[0]] || top[0]} is your top spend`, `${state.currency}${top[1].toFixed(0)} this month. Set limits to track it against a target.`, 'budget', 'Top spend', 'wna-days-ok');
+    }
+  }
+
+  const subBudgetEl = document.getElementById('lim-subscriptions');
+  const subBudget = subBudgetEl ? (+subBudgetEl.value || 0) : 0;
+  const subMonthly = (state.subs||[]).reduce((s,sub) => s + subMonthlyCost(sub), 0);
+  if (subMonthly > 0 && Math.abs(subMonthly - subBudget) > 0.5) {
+    moneyMove(7, '◫', 'Subscription tracker and budget do not match', `${state.currency}${subMonthly.toFixed(0)}/mo tracked, ${state.currency}${subBudget.toFixed(0)} budgeted.`, 'subscriptions', 'Sync', 'wna-days-soon');
+  }
+
+  const today = new Date();
+  const behindFund = (state.funds||[]).filter(f => f.goal > 0 && f.saved < f.goal).map(f => {
+    const left = Math.max(0, f.goal - f.saved);
+    const moRemain = (f.targetYear - today.getFullYear()) * 12 + (f.targetMonth - today.getMonth());
+    const needed = moRemain > 0 ? Math.ceil(left / moRemain) : left;
+    const behind = moRemain <= 0 || !f.monthly || f.monthly < needed;
+    return { f, left, moRemain, needed, behind };
+  }).filter(x => x.behind).sort((a,b) => b.needed - a.needed)[0];
+  if (behindFund) {
+    moneyMove(8, '◉', `${escapeHTML(behindFund.f.name)} needs a savings check-in`, `Needs about ${state.currency}${behindFund.needed.toFixed(0)}/mo to stay on track.`, 'sinking', 'Review', 'wna-days-soon');
+  }
+
+  const riskyDebt = (state.debts||[]).filter(d => d.bal > 0).find(d => {
+    const monthlyInterest = d.bal * ((d.rate||0) / 100 / 12);
+    return !d.min || d.min <= monthlyInterest + 0.01;
+  });
+  if (riskyDebt) {
+    moneyMove(6, '⬦', `${escapeHTML(riskyDebt.name)} needs a stronger payment plan`, `Minimum payment may not beat monthly interest.`, 'debt', 'Debt', 'wna-days-urgent');
+  }
+
+  if (income > 0 && spent > income) {
+    moneyMove(0, '!', `Spending is ${state.currency}${(spent-income).toFixed(0)} above income`, `${state.currency}${spent.toFixed(0)} spent against ${state.currency}${income.toFixed(0)} income.`, 'spending', 'Overspent', 'wna-days-urgent');
+  }
+
+  const moveHtml = moves.sort((a,b) => a.priority - b.priority).slice(0, 5).map(item => `
+    <div class="wna-item" onclick="navToPage('${item.navTarget}')">
+      <div class="wna-item-icon">${item.icon}</div>
+      <div class="wna-item-body">
+        <div class="wna-item-name">${item.title}</div>
+        <div class="wna-item-meta"><span class="wna-item-sub">${item.meta}</span></div>
+      </div>
+      <div class="wna-days-pill ${item.badgeClass}">${item.badgeText}</div>
+    </div>`).join('');
+
+  document.getElementById('dash-budget-bars').innerHTML = moveHtml ||
+    '<div class="empty"><div class="empty-icon">✓</div><div class="empty-text">No urgent money moves right now. Keep tracking this month.</div></div>';
 
   // Donut — month-filtered tx
   const cats={};
@@ -4895,6 +5471,9 @@ function renderDashboard() {
 
   // refresh the spending heatmap
   renderHeatmap();
+
+  // surface upcoming deadlines
+  renderWhatNeedsAttention();
 }
 
 // ── DAILY SPENDING HEATMAP ───────────────────
@@ -4985,6 +5564,651 @@ function renderHeatmap() {
   }
 }
 
+// ── WHAT NEEDS ATTENTION ────────────────────────
+// Navigate to a section and mark the correct sidebar item active.
+function navToPage(id) {
+  const sbEl = [...document.querySelectorAll('.sb-item')]
+    .find(e => (e.getAttribute('onclick') || '').includes("'" + id + "'"));
+  showPage(id, sbEl || null);
+}
+
+function renderWhatNeedsAttention() {
+  const el = document.getElementById('dash-wna');
+  if (!el) return;
+
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const WINDOW_DAYS = 30;
+  const items = [];
+
+  // ── Scholarships (deadline fields: month / day / year) ──────────
+  const SCH_ACTIVE = ['applied', 'eligible', 'renewal'];
+  const SCH_STATUS_LABEL  = { applied: 'Applied', eligible: 'Eligible', renewal: 'Renewal due' };
+  const SCH_STATUS_BADGE  = { applied: 'badge-blue', eligible: 'badge-gold', renewal: 'badge-red' };
+
+  (state.scholarships || []).forEach(s => {
+    if (!SCH_ACTIVE.includes(s.status)) return;
+    if (!s.year) return;                              // no deadline stored
+    const deadline = new Date(s.year, s.month, s.day || 1);
+    const daysLeft = Math.ceil((deadline - today) / 86400000);
+    if (daysLeft < 0 || daysLeft > WINDOW_DAYS) return;
+    items.push({
+      type:        'scholarship',
+      icon:        '✧',
+      name:        s.name,
+      status:      s.status,
+      statusLabel: SCH_STATUS_LABEL[s.status] || s.status,
+      statusBadge: SCH_STATUS_BADGE[s.status]  || 'badge-gray',
+      valueLine:   s.amount ? state.currency + s.amount.toLocaleString() : '',
+      daysLeft,
+      month:       s.month,
+      day:         s.day,
+      year:        s.year,
+      navTarget:   'scholarships'
+    });
+  });
+
+  // ── Internships (deadline fields: m / d / y) ─────────────────────
+  const INT_ACTIVE = ['saved', 'applied', 'assessment', 'interview'];
+  const INT_STATUS_LABEL  = { saved: 'Saved', applied: 'Applied', assessment: 'Assessment', interview: 'Interview' };
+  const INT_STATUS_BADGE  = { saved: 'badge-gray', applied: 'badge-blue', assessment: 'badge-gold', interview: 'badge-green' };
+
+  (state.internships || []).forEach(it => {
+    if (!INT_ACTIVE.includes(it.status)) return;
+    if (!it.y) return;                                // no deadline stored
+    const deadline = new Date(it.y, it.m, it.d || 1);
+    const daysLeft = Math.ceil((deadline - today) / 86400000);
+    if (daysLeft < 0 || daysLeft > WINDOW_DAYS) return;
+    const payStr = (it.payType && it.payType !== 'unpaid' && it.payType !== 'credit' && it.rate)
+      ? formatPayString(it) : '';
+    items.push({
+      type:        'internship',
+      icon:        '⧗',
+      name:        it.company + (it.role ? ' — ' + it.role : ''),
+      status:      it.status,
+      statusLabel: INT_STATUS_LABEL[it.status] || it.status,
+      statusBadge: INT_STATUS_BADGE[it.status]  || 'badge-gray',
+      valueLine:   payStr,
+      daysLeft,
+      month:       it.m,
+      day:         it.d,
+      year:        it.y,
+      navTarget:   'internships'
+    });
+  });
+
+  // Nothing qualifies — hide the container entirely
+  if (!items.length) { el.innerHTML = ''; return; }
+
+  // Sort soonest first
+  items.sort((a, b) => a.daysLeft - b.daysLeft);
+
+  const shown    = items.slice(0, 5);
+  const overflow = items.length - 5;
+
+  // Build each row
+  const rowsHtml = shown.map(item => {
+    // Days pill styling
+    let pillClass, pillText;
+    if (item.daysLeft === 0) {
+      pillClass = 'wna-days-today';  pillText = 'Today';
+    } else if (item.daysLeft <= 7) {
+      pillClass = 'wna-days-urgent'; pillText = item.daysLeft + 'd left';
+    } else if (item.daysLeft <= 21) {
+      pillClass = 'wna-days-soon';   pillText = item.daysLeft + 'd left';
+    } else {
+      pillClass = 'wna-days-ok';     pillText = item.daysLeft + 'd left';
+    }
+
+    const dateStr = (MONTHS[item.month] ? MONTHS[item.month].slice(0, 3) : '?') +
+                    ' ' + (item.day || 1) + ', ' + item.year;
+
+    const valueBit = item.valueLine
+      ? `<span class="wna-item-sub">${escapeHTML(item.valueLine)}</span>`
+      : '';
+
+    return `<div class="wna-item" onclick="navToPage('${item.navTarget}')">
+      <div class="wna-item-icon">${item.icon}</div>
+      <div class="wna-item-body">
+        <div class="wna-item-name">${escapeHTML(item.name)}</div>
+        <div class="wna-item-meta">
+          <span class="badge ${item.statusBadge}" style="font-size:10px;padding:2px 8px">${item.statusLabel}</span>
+          ${valueBit}
+          <span class="wna-item-sub">${dateStr}</span>
+        </div>
+      </div>
+      <div class="wna-days-pill ${pillClass}">${pillText}</div>
+    </div>`;
+  }).join('');
+
+  // "See all" footer only when there are overflow items
+  const overflowNavTarget = overflow > 0
+    ? (shown.some(i => i.navTarget === 'scholarships') && shown.some(i => i.navTarget === 'internships')
+        ? 'scholarships'                     // mixed — default to scholarships
+        : shown[0].navTarget)
+    : null;
+
+  const footerHtml = overflow > 0
+    ? `<div class="wna-footer">
+        +${overflow} more deadline${overflow > 1 ? 's' : ''} &nbsp;·&nbsp;
+        <span class="wna-see-all" onclick="navToPage('${overflowNavTarget}')">See all →</span>
+       </div>`
+    : '';
+
+  el.innerHTML = `<div class="wna-card">
+    <div class="card-label" style="margin-bottom:0.75rem">What needs attention</div>
+    ${rowsHtml}
+    ${footerHtml}
+  </div>`;
+}
+
+// ── GROWTH PLANNER ───────────────────────────
+
+const GROWTH_RATE_PRESETS = {
+  'Roth IRA': 8, 'Brokerage': 8, '401(k)': 7,
+  'HYSA': 4.5, 'Emergency Fund': 4.5, 'General Savings': 2, 'Other': 0
+};
+
+// Ephemeral one-time deposit amounts per account index — never written to state.
+// Survives re-renders; cleared when account is deleted or amount is applied to balance.
+let growthOneTimeScratch = [];
+
+// Global projection horizon in years — driven by the year slider, default 30.
+// Replaces per-account a.horizon for all display calculations; saved a.horizon is preserved.
+let growthHorizon = 30;
+
+// Core compound-growth formula (safe for rate = 0)
+function growthFV(balance, monthly, annualRate, years) {
+  const n  = Math.round((years || 0) * 12);
+  const r  = (annualRate || 0) / 100 / 12;
+  const b  = balance  || 0;
+  const m  = monthly  || 0;
+  if (r === 0) return b + m * n;
+  const g = Math.pow(1 + r, n);
+  return b * g + m * (g - 1) / r;
+}
+
+// Format large dollar values compactly for the chart axis
+function fmtChartK(v) {
+  if (v >= 1e6) return state.currency + (v / 1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return state.currency + Math.round(v / 1e3) + 'K';
+  return state.currency + Math.round(v);
+}
+
+// Auto-fill rate when account type dropdown changes
+function growthTypeChanged() {
+  const type = document.getElementById('g-type').value;
+  const rate = GROWTH_RATE_PRESETS[type] !== undefined ? GROWTH_RATE_PRESETS[type] : 0;
+  document.getElementById('g-rate').value = rate;
+  document.querySelectorAll('.growth-pill').forEach(p =>
+    p.classList.toggle('active', parseFloat(p.dataset.rate) === rate)
+  );
+}
+
+// Preset pill clicked → fill rate input
+function growthSetPreset(rate) {
+  document.getElementById('g-rate').value = rate;
+  document.querySelectorAll('.growth-pill').forEach(p =>
+    p.classList.toggle('active', parseFloat(p.dataset.rate) === rate)
+  );
+}
+
+// Add a new growth account to state
+function addGrowthAccount() {
+  const name = document.getElementById('g-name').value.trim();
+  if (!name) { toast('Account name required'); return; }
+  state.growthAccounts.push({
+    name,
+    type:    document.getElementById('g-type').value,
+    balance: +document.getElementById('g-balance').value  || 0,
+    monthly: +document.getElementById('g-monthly').value  || 0,
+    rate:    +document.getElementById('g-rate').value     || 0,
+    horizon: growthHorizon  // saved for reference; growthHorizon global controls display
+  });
+  // Reset form
+  ['g-name','g-balance','g-monthly'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('g-type').value    = 'Roth IRA';
+  growthTypeChanged();
+  renderGrowthAccounts();
+  persist('Account added!');
+}
+
+// Delete a growth account by index
+function delGrowthAccount(i) {
+  state.growthAccounts.splice(i, 1);
+  growthOneTimeScratch.splice(i, 1); // keep scratch indices aligned
+  renderGrowthAccounts();
+  persist();
+}
+
+// Main render function — cards, summary strip, what-if panel, chart
+function renderGrowthAccounts() {
+  const container  = document.getElementById('growth-container');
+  const summaryRow = document.getElementById('growth-summary-row');
+  const whatsif    = document.getElementById('growth-whatsif');
+  const chartCard  = document.getElementById('growth-chart-card');
+  if (!container) return;
+
+  if (!state.growthAccounts.length) {
+    container.innerHTML = '<div class="empty"><div class="empty-icon">◬</div><div class="empty-text">No accounts yet. Add your first one above to see projected growth.</div></div>';
+    summaryRow.style.display = 'none';
+    whatsif.style.display    = 'none';
+    chartCard.style.display  = 'none';
+    const hBar = document.getElementById('growth-horizon-bar');
+    if (hBar) hBar.style.display = 'none';
+    return;
+  }
+
+  summaryRow.style.display = 'grid';
+  whatsif.style.display    = 'block';
+  chartCard.style.display  = 'block';
+  const hBar = document.getElementById('growth-horizon-bar');
+  if (hBar) hBar.style.display = 'block';
+
+  // Render each account card
+  container.innerHTML = state.growthAccounts.map((a, i) => {
+    const safeName = escapeHTML(a.name);
+    const safeType = escapeHTML(a.type);
+    const h          = growthHorizon;
+    const fv         = growthFV(a.balance, a.monthly, a.rate, h);
+    const contributed = (a.balance || 0) + (a.monthly || 0) * h * 12;
+    const gain       = Math.max(0, fv - contributed);
+    // Two-tone bar: width of contributed segment vs gain segment
+    const contribPct = fv > 0 ? Math.min(100, Math.round((contributed / fv) * 100)) : 100;
+    const gainPct    = 100 - contribPct;
+
+    return `<div class="growth-acct">
+      <div class="growth-acct-header">
+        <div>
+          <div class="growth-acct-name">${safeName}</div>
+          <div style="margin-top:4px"><span class="badge badge-gray">${safeType}</span></div>
+        </div>
+        <div class="growth-acct-right">
+          <span class="growth-rate-badge" id="growth-rate-badge-${i}" onclick="toggleGrowthRateEditor(${i})" title="Click to edit rate">${a.rate}% / yr ✎</span>
+          <span class="growth-balance">${state.currency}${(a.balance || 0).toLocaleString()}</span>
+          <button class="tx-del" onclick="delGrowthAccount(${i})">×</button>
+        </div>
+      </div>
+      <div id="growth-rate-editor-${i}" style="display:none;margin-bottom:10px;padding:10px 12px;background:var(--cream2);border-radius:var(--r);border:1px solid var(--border);">
+        <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Annual return</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <button class="growth-pill${a.rate===4.5?' active':''}" data-rate="4.5" onclick="growthRatePreset(${i},4.5)">HYSA 4.5%</button>
+          <button class="growth-pill${a.rate===6  ?' active':''}" data-rate="6"   onclick="growthRatePreset(${i},6)">Conservative 6%</button>
+          <button class="growth-pill${a.rate===8  ?' active':''}" data-rate="8"   onclick="growthRatePreset(${i},8)">Market avg 8%</button>
+          <button class="growth-pill${a.rate===10 ?' active':''}" data-rate="10"  onclick="growthRatePreset(${i},10)">Aggressive 10%</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input type="number" class="debt-pay-input" id="growth-rate-input-${i}"
+            placeholder="e.g. 8" min="0" max="30" step="0.1" style="width:90px;"
+            value="${a.rate || ''}"
+            oninput="growthRateInput(${i}, this.value)">
+          <span style="font-size:12px;color:var(--ink4);">% / yr</span>
+          <button class="btn btn-ghost btn-xs" onclick="toggleGrowthRateEditor(${i})" style="margin-left:auto;">Done</button>
+        </div>
+      </div>
+      <div class="growth-bar-wrap">
+        <div class="flex-between" style="margin-bottom:4px">
+          <span id="growth-card-contrib-pct-${i}" style="font-size:11px;color:var(--ink4)">Contributions ${contribPct}%</span>
+          <span id="growth-card-gain-pct-${i}" style="font-size:11px;color:var(--accent,var(--sage));font-weight:700">Growth ${gainPct}%</span>
+        </div>
+        <div class="growth-bar-track">
+          <div class="growth-bar-contributed" id="growth-card-bar-c-${i}" style="width:${contribPct}%"></div>
+          <div class="growth-bar-gain"        id="growth-card-bar-g-${i}" style="width:${gainPct}%"></div>
+        </div>
+      </div>
+      <div class="debt-meta-row">
+        <div class="debt-meta-cell">
+          <div class="debt-meta-val" id="growth-card-s-contrib-${i}">${state.currency}${Math.round(contributed).toLocaleString()}</div>
+          <div class="debt-meta-lbl">Total contributed</div>
+        </div>
+        <div class="debt-meta-cell">
+          <div class="debt-meta-val ok" id="growth-card-s-gain-${i}">${state.currency}${Math.round(gain).toLocaleString()}</div>
+          <div class="debt-meta-lbl">Est. growth</div>
+        </div>
+        <div class="debt-meta-cell">
+          <div class="debt-meta-val pos" id="growth-card-s-fv-${i}">${state.currency}${Math.round(fv).toLocaleString()}</div>
+          <div class="debt-meta-lbl">Projected value</div>
+        </div>
+      </div>
+      <div class="growth-acct-footer">
+        ${h}-yr projection horizon
+      </div>
+      <div class="growth-acct-onetime">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">Monthly contribution</div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" class="debt-pay-input" id="growth-mo-input-${i}"
+                placeholder="0" min="0" style="flex:1;min-width:0"
+                value="${a.monthly || ''}"
+                oninput="growthMonthlyInput(${i}, this.value)">
+              <span style="font-size:12px;color:var(--ink4);white-space:nowrap;">/mo</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--ink4);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:6px;">One-time deposit</div>
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <input type="number" class="debt-pay-input" id="growth-ot-input-${i}"
+                placeholder="e.g. 1000" min="0" style="flex:1;min-width:0"
+                value="${growthOneTimeScratch[i] || ''}"
+                oninput="growthOneTimeInput(${i}, this.value)">
+              <button class="btn btn-ghost btn-xs" onclick="applyGrowthOneTime(${i})" style="white-space:nowrap">Apply to balance</button>
+            </div>
+          </div>
+        </div>
+        <div id="growth-ot-out-${i}" class="growth-ot-out" style="${(growthOneTimeScratch[i]||0)>0?'':'display:none'}">
+          ${(growthOneTimeScratch[i]||0)>0 ? growthOneTimeOutputHTML(i, growthOneTimeScratch[i]) : ''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateGrowthSummaryStrip();
+  calcGrowthWhatsIf();
+  renderGrowthChart();
+}
+
+// Live-update what-if panel without touching saved state
+function calcGrowthWhatsIf() {
+  if (!state.growthAccounts.length) return;
+  const extra  = +document.getElementById('g-extra').value || 0;
+  // Base includes any one-time scratch amounts already entered
+  const baseFV = state.growthAccounts.reduce((s, a, i) => {
+    const ot = growthOneTimeScratch[i] || 0;
+    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, growthHorizon);
+  }, 0);
+
+  if (extra <= 0) {
+    document.getElementById('growth-whatsif-results').style.display = 'none';
+    return;
+  }
+
+  // Distribute extra proportionally to existing monthly; if all zero, distribute evenly
+  const totMo  = state.growthAccounts.reduce((s, a) => s + (a.monthly || 0), 0);
+  const extraFV = state.growthAccounts.reduce((s, a, i) => {
+    const ot    = growthOneTimeScratch[i] || 0;
+    const share = totMo > 0
+      ? extra * ((a.monthly || 0) / totMo)
+      : extra / state.growthAccounts.length;
+    return s + growthFV((a.balance || 0) + ot, (a.monthly || 0) + share, a.rate, growthHorizon);
+  }, 0);
+
+  const diff = Math.round(extraFV - baseFV);
+
+  document.getElementById('g-whatsif-new').textContent     = state.currency + Math.round(extraFV).toLocaleString();
+  document.getElementById('g-whatsif-diff').textContent    = '+' + state.currency + diff.toLocaleString();
+  document.getElementById('g-whatsif-insight').textContent =
+    `Adding ${state.currency}${extra}/month could mean about ${state.currency}${diff.toLocaleString()} more by year ${growthHorizon}.`;
+  document.getElementById('growth-whatsif-results').style.display = 'block';
+}
+
+// Slider ↔ input sync (same pattern as Debt Tracker)
+function syncGrowthSlider(val) {
+  document.getElementById('g-extra').value              = val;
+  document.getElementById('g-extra-label').textContent  = '+' + state.currency + val + '/mo';
+  calcGrowthWhatsIf();
+}
+function syncGrowthInput(val) {
+  const v      = Math.max(0, +val || 0);
+  const slider = document.getElementById('g-extra-slider');
+  if (slider) { slider.max = Math.max(500, v); slider.value = v; }
+  document.getElementById('g-extra-label').textContent = '+' + state.currency + v + '/mo';
+  calcGrowthWhatsIf();
+}
+
+// Global projection horizon slider — updates all calculations and redraws everything
+function syncGrowthHorizon(val) {
+  growthHorizon = Math.max(1, Math.min(50, +val || 30));
+  const label = document.getElementById('g-year-label');
+  if (label) label.textContent = growthHorizon + ' year' + (growthHorizon === 1 ? '' : 's');
+  renderGrowthAccounts();
+}
+
+// Inline SVG portfolio growth chart — no external libraries
+function renderGrowthChart() {
+  const container = document.getElementById('growth-chart-container');
+  if (!container) return;
+  if (!state.growthAccounts.length) { container.innerHTML = ''; return; }
+
+  const maxH = growthHorizon;
+
+  // Build data points year by year
+  const pts = [];
+  for (let t = 0; t <= maxH; t++) {
+    let contrib = 0, value = 0;
+    state.growthAccounts.forEach((a, i) => {
+      const n   = t * 12;                                            // all accounts run full horizon
+      const r   = (a.rate || 0) / 100 / 12;
+      const b   = (a.balance || 0) + (growthOneTimeScratch[i] || 0);
+      const m   = a.monthly || 0;
+      if (r === 0) { value += b + m * n; }
+      else         { const g = Math.pow(1+r,n); value += b*g + m*(g-1)/r; }
+      contrib += b + m * t * 12;
+    });
+    pts.push({ t, contrib, value });
+  }
+
+  const maxVal = Math.max(...pts.map(p => p.value), 1);
+
+  // SVG layout constants (H trimmed to 196 — legend lives in HTML below the SVG)
+  const W = 560, H = 196, ML = 65, MR = 20, MT = 12, MB = 24;
+  const CW = W - ML - MR, CH = H - MT - MB;
+  const sx = t => ML + (t / maxH) * CW;
+  const sy = v => MT + CH * (1 - v / maxVal);
+
+  // Contribution area polygon (floor = $0)
+  const cPts = `${sx(0).toFixed(1)},${sy(0).toFixed(1)} ` +
+    pts.map(p => `${sx(p.t).toFixed(1)},${sy(p.contrib).toFixed(1)}`).join(' ') +
+    ` ${sx(maxH).toFixed(1)},${sy(0).toFixed(1)}`;
+
+  // Growth band polygon (between contrib line and value line)
+  const gPts =
+    pts.map(p => `${sx(p.t).toFixed(1)},${sy(p.value).toFixed(1)}`).join(' ') + ' ' +
+    [...pts].reverse().map(p => `${sx(p.t).toFixed(1)},${sy(p.contrib).toFixed(1)}`).join(' ');
+
+  // Value line
+  const vLine = pts.map(p => `${sx(p.t).toFixed(1)},${sy(p.value).toFixed(1)}`).join(' ');
+
+  // Y-axis ticks (5 levels)
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map(f => ({
+    y: sy(f * maxVal).toFixed(1),
+    label: fmtChartK(f * maxVal)
+  }));
+
+  // X-axis ticks
+  const xStep  = maxH <= 15 ? 5 : maxH <= 30 ? 10 : 20;
+  const xTicks = [];
+  for (let t = 0; t <= maxH; t += xStep) {
+    xTicks.push({ x: sx(t).toFixed(1), label: t === 0 ? 'Now' : 'Yr\u00a0' + t });
+  }
+
+  // Final-year dollar totals for the legend
+  const lastPt       = pts[pts.length - 1];
+  const legendContrib = Math.round(lastPt.contrib);
+  const legendGrowth  = Math.max(0, Math.round(lastPt.value - lastPt.contrib));
+
+  container.innerHTML = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+    ${yTicks.map(tk => `
+      <line x1="${ML}" y1="${tk.y}" x2="${W-MR}" y2="${tk.y}" stroke="var(--border)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="${ML-6}" y="${(parseFloat(tk.y)+4).toFixed(1)}" text-anchor="end" font-size="10" fill="var(--ink4)" font-family="JetBrains Mono,monospace">${tk.label}</text>
+    `).join('')}
+    <polygon points="${cPts}" fill="var(--cream3)"/>
+    <polygon points="${gPts}" fill="var(--accent,var(--sage))" opacity="0.38"/>
+    <polyline points="${vLine}" fill="none" stroke="var(--accent,var(--sage))" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="${ML}" y1="${(MT+CH).toFixed(1)}" x2="${W-MR}" y2="${(MT+CH).toFixed(1)}" stroke="var(--border2)" stroke-width="1"/>
+    ${xTicks.map(tk => `<text x="${tk.x}" y="${(MT+CH+16).toFixed(1)}" text-anchor="middle" font-size="10" fill="var(--ink4)" font-family="JetBrains Mono,monospace">${tk.label}</text>`).join('')}
+  </svg>
+  <div style="display:flex;justify-content:center;align-items:center;gap:20px;margin-top:8px;flex-wrap:wrap;">
+    <span style="display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);">
+      <span style="display:inline-block;width:10px;height:8px;background:var(--cream3);border:1px solid var(--cream3);border-radius:2px;flex-shrink:0;"></span>
+      Contributions: ${state.currency}${legendContrib.toLocaleString()}
+    </span>
+    <span style="display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);">
+      <span style="display:inline-block;width:10px;height:8px;background:var(--accent,var(--sage));opacity:0.5;border-radius:2px;flex-shrink:0;"></span>
+      Compound growth: ${state.currency}${legendGrowth.toLocaleString()}
+    </span>
+  </div>`;
+}
+
+// Update summary strip numbers — includes any one-time scratch amounts in projections.
+// "Balance today" stays as actual saved balance (scratch is a scenario, not a real deposit yet).
+function updateGrowthSummaryStrip() {
+  if (!state.growthAccounts.length) return;
+  const totBal   = state.growthAccounts.reduce((s, a)    => s + (a.balance || 0), 0);
+  const totMo    = state.growthAccounts.reduce((s, a)    => s + (a.monthly || 0), 0);
+  const totFV    = state.growthAccounts.reduce((s, a, i) => {
+    const ot = growthOneTimeScratch[i] || 0;
+    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, growthHorizon);
+  }, 0);
+  const totContr = state.growthAccounts.reduce((s, a, i) => {
+    const ot = growthOneTimeScratch[i] || 0;
+    return s + (a.balance || 0) + ot + (a.monthly || 0) * growthHorizon * 12;
+  }, 0);
+  const totGain  = Math.max(0, totFV - totContr);
+  const gEl = id => document.getElementById(id);
+  if (gEl('gs-balance'))   gEl('gs-balance').textContent   = state.currency + Math.round(totBal).toLocaleString();
+  if (gEl('gs-monthly'))   gEl('gs-monthly').textContent   = state.currency + totMo.toLocaleString() + '/mo';
+  if (gEl('gs-projected')) gEl('gs-projected').textContent = state.currency + Math.round(totFV).toLocaleString();
+  if (gEl('gs-growth'))    gEl('gs-growth').textContent    = '+' + state.currency + Math.round(totGain).toLocaleString();
+}
+
+// Build the scenario output HTML for an account's one-time deposit line
+function growthOneTimeOutputHTML(i, oneTime) {
+  const a = state.growthAccounts[i];
+  if (!a || !(oneTime > 0)) return '';
+  const baseFV = growthFV(a.balance || 0, a.monthly, a.rate, growthHorizon);
+  const newFV  = growthFV((a.balance || 0) + oneTime, a.monthly, a.rate, growthHorizon);
+  const diff   = Math.round(newFV - baseFV);
+  return `<span style="color:var(--accent,var(--sage));font-weight:700">With this deposit: ${state.currency}${Math.round(newFV).toLocaleString()}</span>`
+       + `<span style="color:var(--ink3)"> &nbsp;(+${state.currency}${diff.toLocaleString()} at yr ${growthHorizon})</span>`;
+}
+
+// Update just the scenario output line for a single account card — no full re-render
+function updateGrowthOneTimeLine(i) {
+  const outEl = document.getElementById('growth-ot-out-' + i);
+  if (!outEl) return;
+  const amt = growthOneTimeScratch[i] || 0;
+  if (amt <= 0) { outEl.style.display = 'none'; outEl.innerHTML = ''; return; }
+  outEl.style.display = 'block';
+  outEl.innerHTML = growthOneTimeOutputHTML(i, amt);
+}
+
+// Toggle the per-card rate editor open/closed
+function toggleGrowthRateEditor(i) {
+  const el = document.getElementById('growth-rate-editor-' + i);
+  if (!el) return;
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// Preset pill clicked inside a card rate editor
+function growthRatePreset(i, rate) {
+  const inp = document.getElementById('growth-rate-input-' + i);
+  if (inp) inp.value = rate;
+  const editor = document.getElementById('growth-rate-editor-' + i);
+  if (editor) editor.querySelectorAll('.growth-pill').forEach(p =>
+    p.classList.toggle('active', parseFloat(p.dataset.rate) === rate)
+  );
+  growthRateInput(i, rate);
+}
+
+// Called on every keystroke in a per-card rate input — saves directly to state
+function growthRateInput(i, val) {
+  const a = state.growthAccounts[i];
+  if (!a) return;
+  a.rate = Math.max(0, Math.min(30, +val || 0));
+  persist();
+
+  // Update badge text
+  const badge = document.getElementById('growth-rate-badge-' + i);
+  if (badge) badge.textContent = a.rate + '% / yr \u270E';
+
+  const h           = growthHorizon;
+  const fv          = growthFV(a.balance, a.monthly, a.rate, h);
+  const contributed = (a.balance || 0) + (a.monthly || 0) * h * 12;
+  const gain        = Math.max(0, fv - contributed);
+  const contribPct  = fv > 0 ? Math.min(100, Math.round((contributed / fv) * 100)) : 100;
+  const gainPct     = 100 - contribPct;
+
+  const barC = document.getElementById('growth-card-bar-c-' + i);
+  const barG = document.getElementById('growth-card-bar-g-' + i);
+  const cpEl = document.getElementById('growth-card-contrib-pct-' + i);
+  const gpEl = document.getElementById('growth-card-gain-pct-' + i);
+  if (barC) barC.style.width = contribPct + '%';
+  if (barG) barG.style.width = gainPct + '%';
+  if (cpEl) cpEl.textContent = 'Contributions ' + contribPct + '%';
+  if (gpEl) gpEl.textContent = 'Growth ' + gainPct + '%';
+
+  const sc = document.getElementById('growth-card-s-contrib-' + i);
+  const sg = document.getElementById('growth-card-s-gain-' + i);
+  const sf = document.getElementById('growth-card-s-fv-' + i);
+  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString();
+  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString();
+  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString();
+
+  updateGrowthSummaryStrip();
+  renderGrowthChart();
+  calcGrowthWhatsIf();
+}
+
+// Called on every keystroke in a per-account monthly input — saves directly to state
+function growthMonthlyInput(i, val) {
+  const a = state.growthAccounts[i];
+  if (!a) return;
+  a.monthly = Math.max(0, +val || 0);
+  persist();
+
+  const h           = growthHorizon;
+  const fv          = growthFV(a.balance, a.monthly, a.rate, h);
+  const contributed = (a.balance || 0) + a.monthly * h * 12;
+  const gain        = Math.max(0, fv - contributed);
+  const contribPct  = fv > 0 ? Math.min(100, Math.round((contributed / fv) * 100)) : 100;
+  const gainPct     = 100 - contribPct;
+
+  // In-place bar update
+  const barC = document.getElementById('growth-card-bar-c-' + i);
+  const barG = document.getElementById('growth-card-bar-g-' + i);
+  const cpEl = document.getElementById('growth-card-contrib-pct-' + i);
+  const gpEl = document.getElementById('growth-card-gain-pct-' + i);
+  if (barC) barC.style.width = contribPct + '%';
+  if (barG) barG.style.width = gainPct + '%';
+  if (cpEl) cpEl.textContent = 'Contributions ' + contribPct + '%';
+  if (gpEl) gpEl.textContent = 'Growth ' + gainPct + '%';
+
+  // In-place stat update
+  const sc = document.getElementById('growth-card-s-contrib-' + i);
+  const sg = document.getElementById('growth-card-s-gain-' + i);
+  const sf = document.getElementById('growth-card-s-fv-' + i);
+  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString();
+  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString();
+  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString();
+
+  updateGrowthSummaryStrip();  // portfolio totals strip
+  renderGrowthChart();         // chart + legend
+  calcGrowthWhatsIf();         // what-if panel
+  updateGrowthOneTimeLine(i);  // refresh one-time scenario if active
+}
+
+// Called on every keystroke in a per-account one-time input
+function growthOneTimeInput(i, val) {
+  growthOneTimeScratch[i] = Math.max(0, +val || 0);
+  updateGrowthOneTimeLine(i);   // update this card's scenario line in-place (no focus loss)
+  updateGrowthSummaryStrip();   // update portfolio totals
+  renderGrowthChart();          // update chart
+  calcGrowthWhatsIf();          // keep what-if slider in sync
+}
+
+// Permanently fold a one-time scratch amount into the account's saved balance
+function applyGrowthOneTime(i) {
+  const amt = growthOneTimeScratch[i] || 0;
+  if (!amt) { toast('Enter a one-time deposit amount first'); return; }
+  const a = state.growthAccounts[i];
+  a.balance = (a.balance || 0) + amt;
+  growthOneTimeScratch[i] = 0;
+  renderGrowthAccounts();
+  persist(`${state.currency}${Math.round(amt).toLocaleString()} added to ${a.name}`);
+}
+
 // ── HELPERS ───────────────────────────────────
 function fmtEl(id, val, signed=false) {
   const el = document.getElementById(id);
@@ -5035,18 +6259,29 @@ function resetAll() {
 
 // ── BOOT ─────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
+  // Hide mobile header until onboarding is complete
+  if (window.innerWidth <= 640) {
+    const mh = document.getElementById('mob-header');
+    if (mh) mh.style.display = 'none';
+  }
   populateDays('sub-month','sub-day','sub-year');
-  populateDays('note-month','note-day','note-year');
   populateDays('sch-month','sch-day','sch-year');
   populateDays('int-month','int-day','int-year');
   gpaYearDropdown();
   initImportDropZone();
+  setOnboardingMonthToToday();
 
   if(state.onboardingDone) {
     // returning user — skip onboarding, go straight to app
+    setCurrentMonthFromToday();
     document.getElementById('onboard-overlay').style.display = 'none';
     document.getElementById('app').style.display = 'flex';
+    if (window.innerWidth <= 640) {
+      const mh = document.getElementById('mob-header');
+      if (mh) mh.style.display = 'flex';
+    }
     bootApp();
+    applyProStateToSidebar();
   }
   // else: onboarding overlay is already visible by default
 });

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Cash Pro — License</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --cream2: #F2EDE4;
+  --cream3: #E8E0D4;
+  --ink: #1C1916;
+  --ink2: #3D3830;
+  --ink3: #7A7265;
+  --ink4: #B0A898;
+  --sage: #4A6741;
+  --sage2: #6B9362;
+  --sage-light: #E8F0E6;
+  --border: rgba(28,25,22,0.10);
+  --border2: rgba(28,25,22,0.18);
+  --shadow: 0 2px 16px rgba(28,25,22,0.07);
+  --shadow-lg: 0 8px 40px rgba(28,25,22,0.12);
+  --r: 10px;
+  --r-lg: 18px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ── HEADER ── */
+.doc-header {
+  background: var(--ink);
+  padding: 3rem 2rem 2.4rem;
+  text-align: center;
+}
+.doc-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--cream);
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.doc-logo em {
+  color: var(--sage2);
+  font-style: italic;
+}
+.doc-tagline {
+  font-size: 12px;
+  color: rgba(250,247,242,0.45);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+.doc-badge-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.doc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  color: rgba(250,247,242,0.65);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+
+/* ── LAYOUT ── */
+.doc-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+}
+
+/* ── SECTION LABELS ── */
+.doc-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--sage);
+  margin-bottom: 6px;
+}
+.doc-h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  line-height: 1.25;
+}
+.doc-lead {
+  font-size: 15px;
+  color: var(--ink3);
+  margin-bottom: 2rem;
+  max-width: 580px;
+  line-height: 1.7;
+}
+
+/* ── DIVIDER ── */
+.doc-divider {
+  border: none;
+  border-top: 1.5px solid var(--cream3);
+  margin: 2.8rem 0;
+}
+
+/* ── SUMMARY CARD (big highlight at top) ── */
+.summary-card {
+  background: var(--sage-light);
+  border: 1.5px solid rgba(74,103,65,0.25);
+  border-radius: var(--r-lg);
+  padding: 1.8rem 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+.summary-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--sage);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1.5rem;
+}
+.summary-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.5;
+}
+.summary-check {
+  color: var(--sage);
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.summary-cross {
+  color: #C45C3A;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── LICENSE BLOCK ── */
+.license-block {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1.6rem 1.8rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.2rem;
+}
+.license-block-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--cream3);
+}
+.license-block p {
+  font-size: 14px;
+  color: var(--ink2);
+  line-height: 1.7;
+  margin-bottom: 0.6rem;
+}
+.license-block p:last-child { margin-bottom: 0; }
+
+/* ── RULE LIST ── */
+.rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+.rule {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--ink2);
+  line-height: 1.55;
+}
+.rule-icon { flex-shrink: 0; margin-top: 1px; }
+.rule-icon.allow { color: var(--sage); }
+.rule-icon.deny  { color: #C45C3A; }
+
+/* ── DISCLAIMER BOX ── */
+.disclaimer {
+  background: var(--cream2);
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  padding: 1rem 1.2rem;
+  font-size: 13px;
+  color: var(--ink3);
+  line-height: 1.65;
+  margin-top: 1rem;
+}
+.disclaimer strong { color: var(--ink2); }
+
+/* ── COPYRIGHT FOOTER CARD ── */
+.copyright-card {
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: 1.8rem 2rem;
+  text-align: center;
+  margin-top: 2.5rem;
+}
+.copyright-card p {
+  font-size: 13.5px;
+  color: rgba(250,247,242,0.5);
+  line-height: 1.6;
+}
+.copyright-card strong {
+  color: rgba(250,247,242,0.85);
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.copyright-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--sage2);
+  display: block;
+  margin-top: 8px;
+  letter-spacing: 0.3px;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 2rem;
+  font-size: 12px;
+  color: var(--ink4);
+  border-top: 1px solid var(--cream3);
+}
+
+@media (max-width: 600px) {
+  .doc-wrap { padding: 2rem 1.2rem 4rem; }
+  .doc-h2 { font-size: 1.35rem; }
+  .summary-grid { grid-template-columns: 1fr; }
+  .license-block { padding: 1.2rem 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="doc-logo">Campus Cash <em>Pro</em></div>
+  <div class="doc-tagline">Single-User License Agreement</div>
+  <div class="doc-badge-row">
+    <span class="doc-badge">Personal Use Only</span>
+    <span class="doc-badge">Non-Transferable</span>
+    <span class="doc-badge">&#169; 2026 Julian D.</span>
+  </div>
+</header>
+
+<main class="doc-wrap">
+
+  <!-- AT A GLANCE -->
+  <div class="doc-section-label">License Summary</div>
+  <h2 class="doc-h2">What you can and can't do</h2>
+  <p class="doc-lead">This is a plain-language summary of your license. The full terms are below. When in doubt, the full terms apply.</p>
+
+  <div class="summary-card">
+    <div class="summary-card-title">At a glance</div>
+    <div class="summary-grid">
+      <div class="summary-item">
+        <span class="summary-check">&#10003;</span>
+        <span>Use the app on your personal devices</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-cross">&#10007;</span>
+        <span>Share or give the file to others</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-check">&#10003;</span>
+        <span>Manage your own personal finances</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-cross">&#10007;</span>
+        <span>Resell or redistribute the file</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-check">&#10003;</span>
+        <span>Export and back up your own data</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-cross">&#10007;</span>
+        <span>Upload to file-sharing platforms</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-check">&#10003;</span>
+        <span>Keep your copy permanently</span>
+      </div>
+      <div class="summary-item">
+        <span class="summary-cross">&#10007;</span>
+        <span>Use for commercial or client work</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- GRANT OF LICENSE -->
+  <div class="doc-section-label">Section 1</div>
+  <h2 class="doc-h2">Grant of License</h2>
+
+  <div class="license-block">
+    <div class="license-block-title">Single-user, personal-use license</div>
+    <p>When you purchase Campus Cash Pro, you receive a single-user, non-exclusive, non-transferable license to use the product for your own personal financial management. One purchase covers one person.</p>
+    <p>You may install and use the file on multiple personal devices that belong to you (for example, your laptop and your desktop computer), as long as you are the only person using it on those devices.</p>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- WHAT YOU MAY DO -->
+  <div class="doc-section-label">Section 2</div>
+  <h2 class="doc-h2">Permitted uses</h2>
+
+  <div class="license-block">
+    <div class="rule-list">
+      <div class="rule">
+        <span class="rule-icon allow">&#10003;</span>
+        <span>Use Campus Cash Pro on your own personal devices for personal financial tracking.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon allow">&#10003;</span>
+        <span>Keep your copy of the file permanently — your license does not expire.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon allow">&#10003;</span>
+        <span>Export, back up, and restore your personal data using the built-in export feature.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon allow">&#10003;</span>
+        <span>Contact the creator for support or to report issues.</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- WHAT YOU MAY NOT DO -->
+  <div class="doc-section-label">Section 3</div>
+  <h2 class="doc-h2">Restrictions</h2>
+
+  <div class="license-block">
+    <p>The following are not permitted under this license:</p>
+    <div class="rule-list" style="margin-top: 0.8rem;">
+      <div class="rule">
+        <span class="rule-icon deny">&#10007;</span>
+        <span><strong>Sharing:</strong> You may not share, give, lend, or otherwise transfer the file or your license to any other person.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon deny">&#10007;</span>
+        <span><strong>Redistribution:</strong> You may not redistribute, re-upload, or make the file available for download anywhere — including file-sharing sites, cloud drives, or personal websites.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon deny">&#10007;</span>
+        <span><strong>Resale:</strong> You may not resell, sublicense, or offer the product for sale or as part of a bundle, paid or free.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon deny">&#10007;</span>
+        <span><strong>Commercial use:</strong> You may not use Campus Cash Pro to manage finances for a business, organization, clients, or any third party.</span>
+      </div>
+      <div class="rule">
+        <span class="rule-icon deny">&#10007;</span>
+        <span><strong>Modification for redistribution:</strong> You may not modify the file and distribute the modified version to others.</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- FINANCIAL DISCLAIMER -->
+  <div class="doc-section-label">Section 4</div>
+  <h2 class="doc-h2">Financial disclaimer</h2>
+
+  <div class="license-block">
+    <p>Campus Cash Pro is a personal budgeting and organizational tool. It is designed to help you track your own finances, not to provide financial advice.</p>
+    <p>Any projections, estimates, goal calculations, or debt payoff schedules shown in the app are for <strong>educational and planning purposes only</strong>. They are not financial, investment, tax, or legal advice.</p>
+    <p>Always consult a qualified financial professional before making significant financial decisions.</p>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- AS-IS -->
+  <div class="doc-section-label">Section 5</div>
+  <h2 class="doc-h2">Product provided as-is</h2>
+
+  <div class="license-block">
+    <p>Campus Cash Pro is provided <strong>"as-is"</strong> without warranty of any kind, express or implied. The creator makes reasonable efforts to ensure the product works correctly, but cannot guarantee it will be error-free or meet every use case.</p>
+    <p>By using Campus Cash Pro, you accept responsibility for maintaining backups of your data using the built-in export feature. The creator is not liable for any loss of data resulting from browser storage being cleared, device failure, or user error.</p>
+    <p>The creator is not liable for any financial decisions made based on information displayed by the app.</p>
+  </div>
+
+  <hr class="doc-divider">
+
+  <!-- COPYRIGHT -->
+  <div class="doc-section-label">Copyright</div>
+  <h2 class="doc-h2">Intellectual property</h2>
+
+  <div class="license-block">
+    <p>All content, design, code, and assets included in Campus Cash Pro are the intellectual property of <strong>Julian D.</strong> and are protected by copyright law.</p>
+    <p>Purchasing this product grants you a license to use it — it does not transfer ownership of the product or its underlying code to you.</p>
+  </div>
+
+  <!-- COPYRIGHT FOOTER CARD -->
+  <div class="copyright-card">
+    <strong>Campus Cash Pro</strong>
+    <p>Single-User Personal License &mdash; Non-Transferable</p>
+    <span class="copyright-mono">&copy; 2026 Julian D. &mdash; All rights reserved.</span>
+  </div>
+
+</main>
+
+<footer>
+  Questions about this license? Contact <a href="mailto:jrdud11@gmail.com" style="color: var(--sage); text-decoration: none;">jrdud11@gmail.com</a>
+</footer>
+
+</body>
+</html>
