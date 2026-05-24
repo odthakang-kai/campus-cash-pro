@@ -236,6 +236,10 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 @media(max-width:640px){
   .g2,.g3,.g4{grid-template-columns:1fr;}
   .page{padding:1rem 1rem 5rem;}
+  body{overflow-x:hidden;}
+  .welcome-banner{padding:1.4rem 1.2rem;}
+  .wb-stats{gap:1rem;}
+  .wna-item{margin-left:0;margin-right:0;}
   #sidebar{
     position:fixed;
     top:0;
@@ -321,12 +325,22 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 #mob-close:hover{color:rgba(250,247,242,0.8);}
 @media(max-width:640px){
   #mob-header{display:flex;}
-  #mob-close{display:block;}
+  #mob-close{
+    display:block;
+    position:absolute;
+    top:1rem;
+    right:0.8rem;
+  }
   .sb-header{
     display:flex;
-    align-items:flex-start;
-    gap:8px;
-    padding-right:0.5rem;
+    flex-direction:column;
+    gap:6px;
+    position:relative;
+    padding-right:2.5rem;
+  }
+  .sb-month-nav{
+    margin:0 !important;
+    width:100%;
   }
 }
 
@@ -1006,8 +1020,8 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       </div>
     </div>
     <div class="sb-footer">
-      <div class="sb-settings" onclick="showPage('settings', null)">⚙ Settings & customize</div>
-      <div class="sb-settings" style="margin-top:8px" onclick="isProUnlocked()?exportData():showProModal()">⬇ Backup my data <span style="opacity:0.45;font-size:10px;" id="sb-backup-lock">🔒</span></div>
+      <div class="sb-settings" onclick="showPage('settings', null)">◇ Settings & customize</div>
+      <div class="sb-settings" style="margin-top:8px" onclick="isProUnlocked()?exportData():showProModal()">↓ Backup my data <span style="opacity:0.45;font-size:10px;" id="sb-backup-lock">🔒</span></div>
       <div class="sb-settings" style="margin-top:8px;color:rgba(250,247,242,0.4)" onclick="startWalkthrough()">◎ Take the tour</div>
     </div>
   </div>
@@ -5311,7 +5325,8 @@ function renderWtStep() {
 
   // position tooltip near sidebar for page steps, center otherwise
   const box = document.getElementById('wt-box');
-  if(step.page) {
+  const isMobile = window.innerWidth <= 640;
+  if(step.page && !isMobile) {
     box.style.left='250px'; box.style.top='50%'; box.style.transform='translateY(-50%)';
     box.style.right='auto'; box.style.bottom='auto';
   } else {
