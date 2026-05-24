@@ -2458,7 +2458,7 @@ line-height:1.55;margin-bottom:1rem;">
     </div>
 
     <div style="display:flex;gap:8px;margin-top:1rem;">
-      <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="validateAndUnlock()">Activate license</button>
+      <button id="pro-activate-btn" class="btn btn-primary" style="flex:1;justify-content:center;" onclick="validateAndUnlock()">Activate license</button>
       <button class="btn btn-ghost" onclick="closeProModal()">Cancel</button>
     </div>
     <p style="font-size:12px;color:var(--ink4);margin-top:1rem;text-align:center;">Your key was emailed to you after purchase. Check your spam folder if you don't see it.</p>
@@ -2473,30 +2473,21 @@ line-height:1.55;margin-bottom:1rem;">
 const PRO_KEY_STORE = 'ccp_pro_unlocked';
 const PRO_PAGES = new Set(['debt','subscriptions','growth','scholarships','internships','gpa']);
 
-// Key format: CCP-XXXX-YYYY-ZZZZ  (uppercase alphanumeric segments)
-// Validation: ((a * 0x4CCA) + (b * 0x7F3D)) % 0xFFFF === c
-//   where a = parseInt(XXXX, 36), b = parseInt(YYYY, 36), c = parseInt(ZZZZ, 36)
-// To generate valid keys offline: pick any XXXX and YYYY (base-36 encoded),
-//   compute c = ((parseInt(XXXX,36)*0x4CCA)+(parseInt(YYYY,36)*0x7F3D)) % 0xFFFF,
-//   then encode c back to base-36 uppercase padded to 4 chars.
-function validateLicense(raw) {
-  const key = (raw || '').trim().toUpperCase();
-  const m = key.match(/^CCP-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})$/);
-  if (!m) return false;
+function isProUnlocked() {
   try {
-    const a = parseInt(m[1], 36);
-    const b = parseInt(m[2], 36);
-    const c = parseInt(m[3], 36);
-    return ((a * 0x4CCA) + (b * 0x7F3D)) % 0xFFFF === c;
+    const raw = localStorage.getItem(PRO_KEY_STORE);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    return !!(data && data.token && data.ts && data.v === 1);
   } catch(e) { return false; }
 }
 
-function isProUnlocked() {
-  return localStorage.getItem(PRO_KEY_STORE) === '1';
-}
-
-function savePro() {
-  localStorage.setItem(PRO_KEY_STORE, '1');
+function savePro(token) {
+  localStorage.setItem(PRO_KEY_STORE, JSON.stringify({
+    token: token,
+    ts: Date.now(),
+    v: 1
+  }));
 }
 
 // Stores the feature the user tried to open before hitting the gate.
@@ -2561,7 +2552,9 @@ function saveState() {
   });
   // keep top-level mirror for backward compat
   state.budgetInputs = bucket.budgetInputs;
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e) {}
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(state)); } catch(e) {
+    toast('⚠️ Storage full — your data could not be saved. Download a backup now.');
+  }
 }
 
 // auto-save on every state mutation — called at end of all add/del/update fns
@@ -2813,6 +2806,8 @@ function showProModal() {
   modal.style.display = 'flex';
   document.getElementById('pro-key-input').value = '';
   document.getElementById('pro-key-err').style.display = 'none';
+  const btn = document.getElementById('pro-activate-btn');
+  if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
   setTimeout(() => document.getElementById('pro-key-input').focus(), 80);
 }
 
@@ -2831,43 +2826,62 @@ function proGateDismiss() {
   renderDashboard();
 }
 
-function validateAndUnlock() {
+async function validateAndUnlock() {
   const raw = document.getElementById('pro-key-input').value;
   const errEl = document.getElementById('pro-key-err');
+  const btn = document.getElementById('pro-activate-btn');
+
   if (!raw.trim()) {
     errEl.textContent = 'Please enter your license key.';
     errEl.style.display = 'block';
     return;
   }
-  if (!validateLicense(raw)) {
-    errEl.textContent = 'That key doesn\'t look right. Check for typos and make sure you\'re using the key that was emailed to you (format: CCP-XXXX-YYYY-ZZZZ).';
+
+  if (btn) { btn.textContent = 'Validating…'; btn.disabled = true; }
+  errEl.style.display = 'none';
+
+  try {
+    const res = await fetch('/.netlify/functions/validate-license', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: raw.trim() })
+    });
+
+    const data = await res.json();
+
+    if (!data.valid) {
+      errEl.textContent = 'That key couldn\'t be verified. Check for typos or contact support at jrdud11@gmail.com.';
+      errEl.style.display = 'block';
+      if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
+      return;
+    }
+
+    // Valid — store token and unlock UI.
+    savePro(data.token);
+    closeProModal();
+    document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
+      el.classList.remove('pro-locked');
+      const lockSpan = el.querySelector('.si-lock');
+      if (lockSpan) lockSpan.remove();
+    });
+    const bl = document.getElementById('sb-backup-lock');
+    if (bl) bl.style.display = 'none';
+    const sn = document.getElementById('settings-pro-note');
+    if (sn) sn.style.display = 'none';
+    toast('🎉 Campus Cash Pro unlocked! All features are now available.');
+    if (_postUnlockAction === 'import') {
+      _postUnlockAction = null;
+      openImport();
+      return;
+    }
+    const dest = (_gateReturnPage && _gateReturnPage !== 'pro-gate') ? _gateReturnPage : 'dashboard';
+    const destEl = document.querySelector('.sb-item[onclick*="' + dest + '"]') || null;
+    showPage(dest, destEl);
+  } catch(e) {
+    errEl.textContent = 'Network error — check your connection and try again.';
     errEl.style.display = 'block';
-    return;
+    if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
   }
-  // Valid — persist and reload UI.
-  savePro();
-  closeProModal();
-  // Remove pro-locked class from sidebar items now that they're unlocked.
-  document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
-    el.classList.remove('pro-locked');
-    const lockSpan = el.querySelector('.si-lock');
-    if (lockSpan) lockSpan.remove();
-  });
-  // Hide backup lock badge and settings pro note.
-  const bl = document.getElementById('sb-backup-lock');
-  if (bl) bl.style.display = 'none';
-  const sn = document.getElementById('settings-pro-note');
-  if (sn) sn.style.display = 'none';
-  toast('🎉 Campus Cash Pro unlocked! All features are now available.');
-  if (_postUnlockAction === 'import') {
-    _postUnlockAction = null;
-    openImport();
-    return;
-  }
-  // Navigate to whatever the user was trying to open.
-  const dest = (_gateReturnPage && _gateReturnPage !== 'pro-gate') ? _gateReturnPage : 'dashboard';
-  const destEl = document.querySelector('.sb-item[onclick*="' + dest + '"]') || null;
-  showPage(dest, destEl);
 }
 
 // On page load, if already unlocked, remove lock badges from sidebar immediately.
@@ -3103,7 +3117,7 @@ function calcAll() {
     const p = income>0?Math.min(Math.round((val/income)*100),100):0;
     const over = p>35;
     html+=`<div class="prog-wrap">
-      <div class="prog-row"><span class="prog-name">${c.label}</span><span class="prog-pct">${state.currency}${val.toLocaleString()} · ${p}%</span></div>
+      <div class="prog-row"><span class="prog-name">${c.label}</span><span class="prog-pct">${state.currency}${val.toLocaleString('en-US')} · ${p}%</span></div>
       <div class="prog-bar"><div class="prog-fill ${over?'fill-rust':'fill-sage'}" style="width:${p}%"></div></div>
     </div>`;
   });
@@ -3115,7 +3129,7 @@ function calcAll() {
   document.getElementById('sb-fill').style.width = spentPct+'%';
   document.getElementById('sb-fill').style.background = spentPct>90?'#C45C3A':'var(--sage2)';
   document.getElementById('sb-spent-disp').textContent = state.currency+spent.toFixed(0)+' spent';
-  document.getElementById('sb-total-disp').textContent = state.currency+income.toLocaleString();
+  document.getElementById('sb-total-disp').textContent = state.currency+income.toLocaleString('en-US');
 
   renderDashboard();
   saveState();
@@ -3277,6 +3291,10 @@ function handleImportFile(event) {
   if(!file) return;
   if(!file.name.toLowerCase().endsWith('.csv')) {
     showImportError('Please upload a CSV file. Most banks let you export your activity as CSV — look for "Download", "Export", or a ↓ icon on your activity page.');
+    return;
+  }
+  if(file.size > 512000) {
+    showImportError('This file is larger than 500 KB. Most bank exports are well under this — try exporting a shorter date range (e.g. last 90 days) for a smaller file.');
     return;
   }
   // Clear any prior errors
@@ -3862,15 +3880,15 @@ function renderGoals() {
     const progHtml = hasProg ? `
       <div class="goal-prog-wrap">
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace">
-          <span>${pct}% · ${state.currency}${sv.toLocaleString()} of ${state.currency}${amt.toLocaleString()}</span>
-          <span>${state.currency}${Math.max(0,amt-sv).toLocaleString()} left</span>
+          <span>${pct}% · ${state.currency}${sv.toLocaleString('en-US')} of ${state.currency}${amt.toLocaleString('en-US')}</span>
+          <span>${state.currency}${Math.max(0,amt-sv).toLocaleString('en-US')} left</span>
         </div>
         <div class="goal-prog-bar"><div class="goal-prog-fill" style="width:${pct}%"></div></div>
         <div class="goal-saved-row">
           <input type="number" id="goal-saved-input-${i}" class="goal-saved-input" placeholder="Update saved ($)" min="0" value="${sv||''}">
           <button class="btn btn-ghost btn-xs" onclick="updateGoalSaved(${i})">Update</button>
         </div>
-      </div>` : (amt > 0 && g.done ? `<div style="font-size:11px;color:var(--sage);margin-top:4px;font-family:'JetBrains Mono',monospace">✓ ${state.currency}${amt.toLocaleString()} goal reached</div>` : '');
+      </div>` : (amt > 0 && g.done ? `<div style="font-size:11px;color:var(--sage);margin-top:4px;font-family:'JetBrains Mono',monospace">✓ ${state.currency}${amt.toLocaleString('en-US')} goal reached</div>` : '');
     const savingsFundHint = g.cat === '💰 Savings' && amt > 0 ? `
       <div style="margin-top:8px;padding:7px 9px;background:var(--cream2);border:1px solid var(--border);border-radius:6px;font-size:11.5px;color:var(--ink3);line-height:1.45">
         Want to actively save toward this? Create a Savings Fund to deposit money and track contributions.
@@ -3941,7 +3959,7 @@ function debtFreeLabel(monthsFromNow) {
 }
 function fmt$(n) {
   if (n === null || !isFinite(n)) return '—';
-  return state.currency + Math.round(n).toLocaleString();
+  return state.currency + Math.round(n).toLocaleString('en-US');
 }
 
 // Full portfolio simulation (avalanche or snowball with roll-over)
@@ -4044,7 +4062,7 @@ function renderDebts() {
         </div>
         <div class="debt-right">
           <span class="debt-rate-badge">${d.rate}% APR</span>
-          <span class="debt-amount">${state.currency}${d.bal.toLocaleString()}</span>
+          <span class="debt-amount">${state.currency}${d.bal.toLocaleString('en-US')}</span>
           <button class="tx-del" onclick="delDebt(${i})">×</button>
         </div>
       </div>
@@ -4052,7 +4070,7 @@ function renderDebts() {
       <div class="debt-progress-wrap">
         <div class="debt-progress-labels">
           <span>${pctPaid}% paid off</span>
-          <span>${state.currency}${Math.round(paid).toLocaleString()} of ${state.currency}${Math.round(origBal).toLocaleString()}</span>
+          <span>${state.currency}${Math.round(paid).toLocaleString('en-US')} of ${state.currency}${Math.round(origBal).toLocaleString('en-US')}</span>
         </div>
         <div class="debt-progress-bar"><div class="debt-progress-fill${danger?' danger':''}" style="width:${pctPaid}%"></div></div>
       </div>
@@ -4142,7 +4160,7 @@ function calcDebt() {
   }
   if (byBal) {
     el('sb-rec').innerHTML = extra > 0
-      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${escapeHTML(byBal.name)}</strong> (${state.currency}${Math.round(byBal.bal).toLocaleString()} balance) — smallest debt, fastest first win.`
+      ? `Put <strong>${state.currency}${extra}</strong> extra toward <strong>${escapeHTML(byBal.name)}</strong> (${state.currency}${Math.round(byBal.bal).toLocaleString('en-US')} balance) — smallest debt, fastest first win.`
       : 'Use the slider above to see how extra payments accelerate your payoff.';
   }
 
@@ -4151,7 +4169,7 @@ function calcDebt() {
   if (extra > 0 && avSaved > 0) {
     const monthsSaved = baseline.months - av.months;
     insight.style.display = 'block';
-    insight.innerHTML = `💡 Paying <strong>${state.currency}${extra}/mo</strong> extra saves you <strong>${fmt$(avSaved)}</strong> in interest (avalanche) and gets you debt-free <strong>${monthsSaved} month${monthsSaved!==1?'s':''} sooner</strong>. Over a year that's just ${state.currency}${(extra*12).toLocaleString()} — and it returns ${fmt$(avSaved)} back.`;
+    insight.innerHTML = `💡 Paying <strong>${state.currency}${extra}/mo</strong> extra saves you <strong>${fmt$(avSaved)}</strong> in interest (avalanche) and gets you debt-free <strong>${monthsSaved} month${monthsSaved!==1?'s':''} sooner</strong>. Over a year that's just ${state.currency}${(extra*12).toLocaleString('en-US')} — and it returns ${fmt$(avSaved)} back.`;
   } else {
     insight.style.display = 'none';
   }
@@ -4668,8 +4686,8 @@ function renderMonthArchive() {
     if (s.income > 0) { ratesSum += s.savingsRate; rateCount++; }
   });
   document.getElementById('arch-months-count').textContent = months.filter(({m,y})=>summarizeMonth(m,y).hasData).length;
-  document.getElementById('arch-total-income').textContent = state.currency + totalIncome.toLocaleString();
-  document.getElementById('arch-total-spent').textContent = state.currency + totalSpent.toLocaleString();
+  document.getElementById('arch-total-income').textContent = state.currency + totalIncome.toLocaleString('en-US');
+  document.getElementById('arch-total-spent').textContent = state.currency + totalSpent.toLocaleString('en-US');
   document.getElementById('arch-avg-savings').textContent = (rateCount ? Math.round(ratesSum/rateCount) : 0) + '%';
 
   // PER-MONTH CARDS
@@ -4706,11 +4724,11 @@ function renderMonthArchive() {
       ` : `
         <div class="archive-stats">
           <div class="archive-stat">
-            <div class="archive-stat-val pos">${state.currency}${s.income.toLocaleString()}</div>
+            <div class="archive-stat-val pos">${state.currency}${s.income.toLocaleString('en-US')}</div>
             <div class="archive-stat-lbl">Income</div>
           </div>
           <div class="archive-stat">
-            <div class="archive-stat-val ${overspent?'neg':''}">${state.currency}${s.spent.toLocaleString()}</div>
+            <div class="archive-stat-val ${overspent?'neg':''}">${state.currency}${s.spent.toLocaleString('en-US')}</div>
             <div class="archive-stat-lbl">Spent</div>
           </div>
           <div class="archive-stat">
@@ -4718,14 +4736,14 @@ function renderMonthArchive() {
             <div class="archive-stat-lbl">Savings rate</div>
           </div>
           <div class="archive-stat">
-            <div class="archive-stat-val ${s.overUnder<0?'neg':'pos'}">${s.overUnder<0?'-':''}${state.currency}${Math.abs(s.overUnder).toLocaleString()}</div>
+            <div class="archive-stat-val ${s.overUnder<0?'neg':'pos'}">${s.overUnder<0?'-':''}${state.currency}${Math.abs(s.overUnder).toLocaleString('en-US')}</div>
             <div class="archive-stat-lbl">${s.overUnder<0?'Over budget':'Under budget'}</div>
           </div>
         </div>
         <div class="prog-bar" style="margin-top:10px"><div class="prog-fill ${overspent?'fill-rust':'fill-sage'}" style="width:${Math.min(spendPct,100)}%"></div></div>
         <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:11px;color:var(--ink4);font-family:'JetBrains Mono',monospace">
           <span>${spendPct}% of income spent</span>
-          <span>${state.currency}${s.income.toLocaleString()} budget</span>
+          <span>${state.currency}${s.income.toLocaleString('en-US')} budget</span>
         </div>
       `}
     </div>`;
@@ -4764,7 +4782,7 @@ function renderCompare() {
   const sB = summarizeMonth(bM, bY);
   const row = (label, valA, valB, fmt) => {
     const delta = valB - valA;
-    const fmtFn = fmt || (v => state.currency + v.toLocaleString());
+    const fmtFn = fmt || (v => state.currency + v.toLocaleString('en-US'));
     // For income/savings, up is good; for spending, up is bad
     const upIsBad = label.includes('Spent') || label.includes('allocated') || label.includes('Transactions');
     const deltaGood = upIsBad ? delta < 0 : delta > 0;
@@ -4889,7 +4907,7 @@ function renderScholarships() {
   const totalPending = pending.reduce((s,a)=>s+a.amount,0);
 
   fmtEl('sch-total-awarded', annualAwarded);
-  document.getElementById('sch-total-pending').textContent = state.currency+totalPending.toLocaleString();
+  document.getElementById('sch-total-pending').textContent = state.currency+totalPending.toLocaleString('en-US');
 
   if(state.scholarships.length) {
     sg.style.display='grid';
@@ -4928,7 +4946,7 @@ function renderScholarships() {
     urgentBanner.innerHTML = `
       <div class="sch-urgent-icon">⚠️</div>
       <div class="sch-urgent-text">
-        <strong>Renewal due</strong> · ${escapeHTML(renewalDue.name)} (${state.currency}${renewalDue.amount.toLocaleString()})${deadlineStr}${renewalDue.nextStep ? ' — ' + escapeHTML(renewalDue.nextStep) : (renewalDue.notes ? ' — ' + escapeHTML(renewalDue.notes) : '')}
+        <strong>Renewal due</strong> · ${escapeHTML(renewalDue.name)} (${state.currency}${renewalDue.amount.toLocaleString('en-US')})${deadlineStr}${renewalDue.nextStep ? ' — ' + escapeHTML(renewalDue.nextStep) : (renewalDue.notes ? ' — ' + escapeHTML(renewalDue.notes) : '')}
       </div>
       ${renewalLink ? `<a class="btn btn-primary btn-sm" href="${renewalLink}" target="_blank" rel="noopener">Open scholarship →</a>` : ''}
     `;
@@ -4976,7 +4994,7 @@ function renderScholarships() {
           </div>
         </div>
         <div style="text-align:right;padding-left:12px">
-          <div class="sch-amount-disp ${amtClass}">${state.currency}${s.amount.toLocaleString()}</div>
+          <div class="sch-amount-disp ${amtClass}">${state.currency}${s.amount.toLocaleString('en-US')}</div>
           <div style="font-size:11px;color:var(--ink4)">${periodMap[s.period]||''}</div>
         </div>
       </div>
@@ -5078,9 +5096,9 @@ function computeInternshipValue(it) {
 function formatPayString(it) {
   switch (it.payType) {
     case 'hourly':  return state.currency + (it.rate||0) + '/hr';
-    case 'weekly':  return state.currency + (it.rate||0).toLocaleString() + '/wk';
-    case 'monthly': return state.currency + (it.rate||0).toLocaleString() + '/mo';
-    case 'total':   return state.currency + (it.rate||0).toLocaleString() + ' total';
+    case 'weekly':  return state.currency + (it.rate||0).toLocaleString('en-US') + '/wk';
+    case 'monthly': return state.currency + (it.rate||0).toLocaleString('en-US') + '/mo';
+    case 'total':   return state.currency + (it.rate||0).toLocaleString('en-US') + ' total';
     case 'unpaid':  return 'Unpaid';
     case 'credit':  return 'Credit only';
     default: return '';
@@ -5111,7 +5129,7 @@ function renderInternships() {
     document.getElementById('int-applied-total').textContent = all.filter(x => x.status !== 'saved').length;
     document.getElementById('int-interview-count').textContent = interviewing.length;
     const totalOfferValue = offers.reduce((s, o) => s + computeInternshipValue(o), 0);
-    document.getElementById('int-offer-value').textContent = state.currency + totalOfferValue.toLocaleString();
+    document.getElementById('int-offer-value').textContent = state.currency + totalOfferValue.toLocaleString('en-US');
     // Best paying offer rate displayed
     if (offers.length) {
       const best = [...offers].sort((a,b) => computeInternshipValue(b) - computeInternshipValue(a))[0];
@@ -5199,7 +5217,7 @@ function renderInternships() {
         </div>
         <div class="int-pay">
           <div>${escapeHTML(payStr)}</div>
-          ${isPaid ? `<div class="int-pay-sub">≈ ${state.currency}${totalVal.toLocaleString()} total</div>` : ''}
+          ${isPaid ? `<div class="int-pay-sub">≈ ${state.currency}${totalVal.toLocaleString('en-US')} total</div>` : ''}
         </div>
       </div>
       <div class="int-meta">
@@ -5399,11 +5417,11 @@ function renderDashboard() {
   const left = Math.max(income-spent,0);
   const savingsRate = income>0?Math.round(((income-spent)/income)*100):0;
 
-  document.getElementById('wb-balance').textContent = state.currency+left.toLocaleString();
+  document.getElementById('wb-balance').textContent = state.currency+left.toLocaleString('en-US');
   document.getElementById('wb-spent').textContent = state.currency+spent.toFixed(0);
   document.getElementById('wb-saved').textContent = state.currency+fundsSaved.toFixed(0);
-  document.getElementById('wb-income').textContent = state.currency+income.toLocaleString();
-  document.getElementById('dash-left').textContent = state.currency+left.toLocaleString();
+  document.getElementById('wb-income').textContent = state.currency+income.toLocaleString('en-US');
+  document.getElementById('dash-left').textContent = state.currency+left.toLocaleString('en-US');
   document.getElementById('dash-savings-rate').textContent = savingsRate+'%';
   // viewing-month badge in welcome banner
   const vmEl = document.getElementById('wb-month');
@@ -5631,6 +5649,12 @@ function renderWhatNeedsAttention() {
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const WINDOW_DAYS = 30;
   const items = [];
+  const withAttentionType = (name, type) => {
+    const base = String(name || '').trim();
+    const fallback = type.charAt(0).toUpperCase() + type.slice(1);
+    if (!base) return fallback;
+    return new RegExp('\\b' + type + 's?\\b', 'i').test(base) ? base : base + ' ' + type;
+  };
 
   // ── Scholarships (deadline fields: month / day / year) ──────────
   const SCH_ACTIVE = ['applied', 'eligible', 'renewal'];
@@ -5646,11 +5670,11 @@ function renderWhatNeedsAttention() {
     items.push({
       type:        'scholarship',
       icon:        '✧',
-      name:        s.name,
+      name:        withAttentionType(s.name, 'scholarship'),
       status:      s.status,
       statusLabel: SCH_STATUS_LABEL[s.status] || s.status,
       statusBadge: SCH_STATUS_BADGE[s.status]  || 'badge-gray',
-      valueLine:   s.amount ? state.currency + s.amount.toLocaleString() : '',
+      valueLine:   s.amount ? state.currency + s.amount.toLocaleString('en-US') : '',
       daysLeft,
       month:       s.month,
       day:         s.day,
@@ -5675,7 +5699,7 @@ function renderWhatNeedsAttention() {
     items.push({
       type:        'internship',
       icon:        '⧗',
-      name:        it.company + (it.role ? ' — ' + it.role : ''),
+      name:        withAttentionType(it.company + (it.role ? ' — ' + it.role : ''), 'internship'),
       status:      it.status,
       statusLabel: INT_STATUS_LABEL[it.status] || it.status,
       statusBadge: INT_STATUS_BADGE[it.status]  || 'badge-gray',
@@ -5877,7 +5901,7 @@ function renderGrowthAccounts() {
         </div>
         <div class="growth-acct-right">
           <span class="growth-rate-badge" id="growth-rate-badge-${i}" onclick="toggleGrowthRateEditor(${i})" title="Click to edit rate">${a.rate}% / yr ✎</span>
-          <span class="growth-balance">${state.currency}${(a.balance || 0).toLocaleString()}</span>
+          <span class="growth-balance">${state.currency}${(a.balance || 0).toLocaleString('en-US')}</span>
           <button class="tx-del" onclick="delGrowthAccount(${i})">×</button>
         </div>
       </div>
@@ -5910,15 +5934,15 @@ function renderGrowthAccounts() {
       </div>
       <div class="debt-meta-row">
         <div class="debt-meta-cell">
-          <div class="debt-meta-val" id="growth-card-s-contrib-${i}">${state.currency}${Math.round(contributed).toLocaleString()}</div>
+          <div class="debt-meta-val" id="growth-card-s-contrib-${i}">${state.currency}${Math.round(contributed).toLocaleString('en-US')}</div>
           <div class="debt-meta-lbl">Total contributed</div>
         </div>
         <div class="debt-meta-cell">
-          <div class="debt-meta-val ok" id="growth-card-s-gain-${i}">${state.currency}${Math.round(gain).toLocaleString()}</div>
+          <div class="debt-meta-val ok" id="growth-card-s-gain-${i}">${state.currency}${Math.round(gain).toLocaleString('en-US')}</div>
           <div class="debt-meta-lbl">Est. growth</div>
         </div>
         <div class="debt-meta-cell">
-          <div class="debt-meta-val pos" id="growth-card-s-fv-${i}">${state.currency}${Math.round(fv).toLocaleString()}</div>
+          <div class="debt-meta-val pos" id="growth-card-s-fv-${i}">${state.currency}${Math.round(fv).toLocaleString('en-US')}</div>
           <div class="debt-meta-lbl">Projected value</div>
         </div>
       </div>
@@ -5987,10 +6011,10 @@ function calcGrowthWhatsIf() {
 
   const diff = Math.round(extraFV - baseFV);
 
-  document.getElementById('g-whatsif-new').textContent     = state.currency + Math.round(extraFV).toLocaleString();
-  document.getElementById('g-whatsif-diff').textContent    = '+' + state.currency + diff.toLocaleString();
+  document.getElementById('g-whatsif-new').textContent     = state.currency + Math.round(extraFV).toLocaleString('en-US');
+  document.getElementById('g-whatsif-diff').textContent    = '+' + state.currency + diff.toLocaleString('en-US');
   document.getElementById('g-whatsif-insight').textContent =
-    `Adding ${state.currency}${extra}/month could mean about ${state.currency}${diff.toLocaleString()} more by year ${state.growthHorizon}.`;
+    `Adding ${state.currency}${extra}/month could mean about ${state.currency}${diff.toLocaleString('en-US')} more by year ${state.growthHorizon}.`;
   document.getElementById('growth-whatsif-results').style.display = 'block';
 }
 
@@ -6094,11 +6118,11 @@ function renderGrowthChart() {
   <div style="display:flex;justify-content:center;align-items:center;gap:20px;margin-top:8px;flex-wrap:wrap;">
     <span style="display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);">
       <span style="display:inline-block;width:10px;height:8px;background:var(--cream3);border:1px solid var(--cream3);border-radius:2px;flex-shrink:0;"></span>
-      Contributions: ${state.currency}${legendContrib.toLocaleString()}
+      Contributions: ${state.currency}${legendContrib.toLocaleString('en-US')}
     </span>
     <span style="display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink3);">
       <span style="display:inline-block;width:10px;height:8px;background:var(--accent,var(--sage));opacity:0.5;border-radius:2px;flex-shrink:0;"></span>
-      Compound growth: ${state.currency}${legendGrowth.toLocaleString()}
+      Compound growth: ${state.currency}${legendGrowth.toLocaleString('en-US')}
     </span>
   </div>`;
 }
@@ -6119,10 +6143,10 @@ function updateGrowthSummaryStrip() {
   }, 0);
   const totGain  = Math.max(0, totFV - totContr);
   const gEl = id => document.getElementById(id);
-  if (gEl('gs-balance'))   gEl('gs-balance').textContent   = state.currency + Math.round(totBal).toLocaleString();
-  if (gEl('gs-monthly'))   gEl('gs-monthly').textContent   = state.currency + totMo.toLocaleString() + '/mo';
-  if (gEl('gs-projected')) gEl('gs-projected').textContent = state.currency + Math.round(totFV).toLocaleString();
-  if (gEl('gs-growth'))    gEl('gs-growth').textContent    = '+' + state.currency + Math.round(totGain).toLocaleString();
+  if (gEl('gs-balance'))   gEl('gs-balance').textContent   = state.currency + Math.round(totBal).toLocaleString('en-US');
+  if (gEl('gs-monthly'))   gEl('gs-monthly').textContent   = state.currency + totMo.toLocaleString('en-US') + '/mo';
+  if (gEl('gs-projected')) gEl('gs-projected').textContent = state.currency + Math.round(totFV).toLocaleString('en-US');
+  if (gEl('gs-growth'))    gEl('gs-growth').textContent    = '+' + state.currency + Math.round(totGain).toLocaleString('en-US');
 }
 
 // Build the scenario output HTML for an account's one-time deposit line
@@ -6132,8 +6156,8 @@ function growthOneTimeOutputHTML(i, oneTime) {
   const baseFV = growthFV(a.balance || 0, a.monthly, a.rate, state.growthHorizon);
   const newFV  = growthFV((a.balance || 0) + oneTime, a.monthly, a.rate, state.growthHorizon);
   const diff   = Math.round(newFV - baseFV);
-  return `<span style="color:var(--accent,var(--sage));font-weight:700">With this deposit: ${state.currency}${Math.round(newFV).toLocaleString()}</span>`
-       + `<span style="color:var(--ink3)"> &nbsp;(+${state.currency}${diff.toLocaleString()} at yr ${state.growthHorizon})</span>`;
+  return `<span style="color:var(--accent,var(--sage));font-weight:700">With this deposit: ${state.currency}${Math.round(newFV).toLocaleString('en-US')}</span>`
+       + `<span style="color:var(--ink3)"> &nbsp;(+${state.currency}${diff.toLocaleString('en-US')} at yr ${state.growthHorizon})</span>`;
 }
 
 // Update just the scenario output line for a single account card — no full re-render
@@ -6194,9 +6218,9 @@ function growthRateInput(i, val) {
   const sc = document.getElementById('growth-card-s-contrib-' + i);
   const sg = document.getElementById('growth-card-s-gain-' + i);
   const sf = document.getElementById('growth-card-s-fv-' + i);
-  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString();
-  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString();
-  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString();
+  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString('en-US');
+  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString('en-US');
+  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString('en-US');
 
   updateGrowthSummaryStrip();
   renderGrowthChart();
@@ -6231,9 +6255,9 @@ function growthMonthlyInput(i, val) {
   const sc = document.getElementById('growth-card-s-contrib-' + i);
   const sg = document.getElementById('growth-card-s-gain-' + i);
   const sf = document.getElementById('growth-card-s-fv-' + i);
-  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString();
-  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString();
-  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString();
+  if (sc) sc.textContent = state.currency + Math.round(contributed).toLocaleString('en-US');
+  if (sg) sg.textContent = state.currency + Math.round(gain).toLocaleString('en-US');
+  if (sf) sf.textContent = state.currency + Math.round(fv).toLocaleString('en-US');
 
   updateGrowthSummaryStrip();  // portfolio totals strip
   renderGrowthChart();         // chart + legend
@@ -6258,14 +6282,14 @@ function applyGrowthOneTime(i) {
   a.balance = (a.balance || 0) + amt;
   growthOneTimeScratch[i] = 0;
   renderGrowthAccounts();
-  persist(`${state.currency}${Math.round(amt).toLocaleString()} added to ${a.name}`);
+  persist(`${state.currency}${Math.round(amt).toLocaleString('en-US')} added to ${a.name}`);
 }
 
 // ── HELPERS ───────────────────────────────────
 function fmtEl(id, val, signed=false) {
   const el = document.getElementById(id);
   if(!el) return;
-  el.textContent = (signed&&val<0?'-':'')+state.currency+Math.abs(val).toLocaleString();
+  el.textContent = (signed&&val<0?'-':'')+state.currency+Math.abs(val).toLocaleString('en-US');
 }
 function toast(msg) {
   const t = document.getElementById('toast');
