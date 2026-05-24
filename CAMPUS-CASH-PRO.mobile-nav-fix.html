@@ -236,10 +236,12 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 @media(max-width:640px){
   .g2,.g3,.g4{grid-template-columns:1fr;}
   .page{padding:1rem 1rem 5rem;}
-  body{overflow-x:hidden;}
+  html,body{overflow-x:hidden;max-width:100%;}
   .welcome-banner{padding:1.4rem 1.2rem;}
   .wb-stats{gap:1rem;}
-  .wna-item{margin-left:0;margin-right:0;}
+  .wna-item{margin:0;gap:8px;}
+  .wna-item-name{white-space:normal;}
+  .wna-days-pill{font-size:10px;padding:2px 8px;flex-shrink:0;}
   #sidebar{
     position:fixed;
     top:0;
@@ -253,7 +255,7 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
     display:flex;
   }
   #sidebar.mob-open{transform:translateX(0);}
-  #main{padding-top:56px;}
+  #main{padding-top:56px;overflow-x:hidden;}
 }
 
 /* ── MOBILE HEADER BAR ── */
@@ -2415,7 +2417,12 @@ line-height:1.55;margin-bottom:1rem;">
           <div style="margin-top:1.2rem;padding:1rem;background:var(--rust-light);border-radius:var(--r);border:1px solid rgba(196,92,58,0.2)">
             <div style="font-weight:700;font-size:13px;color:var(--rust);margin-bottom:4px">⚠ Danger zone</div>
             <p style="font-size:13px;color:var(--ink3);margin-bottom:10px">This permanently deletes all your data and cannot be undone.</p>
-            <button class="btn btn-danger btn-sm" onclick="resetAll()">Reset all data</button>
+            <button class="btn btn-danger btn-sm" id="reset-btn" onclick="document.getElementById('reset-confirm-row').style.display='flex';this.style.display='none'">Reset all data</button>
+            <div id="reset-confirm-row" style="display:none;align-items:center;gap:8px;flex-wrap:wrap">
+              <span style="font-size:13px;color:var(--rust);font-weight:600">Permanently erase everything?</span>
+              <button class="btn btn-danger btn-sm" onclick="resetAll()">Yes, delete all</button>
+              <button class="btn btn-ghost btn-sm" onclick="document.getElementById('reset-confirm-row').style.display='none';document.getElementById('reset-btn').style.display=''">Cancel</button>
+            </div>
           </div>
         </div>
       </div>
@@ -2507,6 +2514,7 @@ const defaultState = {
   transactions:[], funds:[], debts:[], courses:[], goals:[], notes:[], subs:[], scholarships:[], internships:[], growthAccounts:[],
   budgetInputs:{},
   months:{}, // ← per-month database: { 'YYYY-M': { budgetInputs: {...} } }
+  growthHorizon: 30,
   onboardingDone: false,
   walkthroughSeen: false
 };
@@ -2687,6 +2695,11 @@ function bootApp() {
       const el=document.getElementById(id); if(el&&state.budgetInputs[id]) el.value=state.budgetInputs[id];
     });
   }
+  // restore growth horizon slider
+  const ghSlider = document.getElementById('g-year-slider');
+  if (ghSlider) { ghSlider.value = state.growthHorizon; }
+  const ghLabel = document.getElementById('g-year-label');
+  if (ghLabel) ghLabel.textContent = state.growthHorizon + ' year' + (state.growthHorizon === 1 ? '' : 's');
   selectTheme(state.theme, null);
   updateHeader();
   calcAll();
@@ -4680,8 +4693,13 @@ function renderMonthArchive() {
         </div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
           ${!isCurrent?`<button class="btn btn-primary btn-xs" onclick="switchToMonth(${m},${y})">Open →</button>`:''}
-          ${empty?'':`<button class="btn btn-ghost btn-xs" onclick="deleteMonth(${m},${y})" title="Erase this month's saved budget">🗑</button>`}
+          ${empty?'':`<button class="btn btn-ghost btn-xs" onclick="archiveConfirmDelete(this,${m},${y})" title="Erase this month's saved budget">🗑</button>`}
         </div>
+      </div>
+      ${empty?'':``}<div id="arch-del-confirm-${m}-${y}" style="display:none;align-items:center;gap:8px;padding:8px 0 2px;font-size:13px;color:var(--rust)">
+        Erase ${MONTHS[m]} ${y} budget? Transactions are kept.
+        <button class="btn btn-danger btn-xs" onclick="deleteMonth(${m},${y})">Yes, erase</button>
+        <button class="btn btn-ghost btn-xs" onclick="document.getElementById('arch-del-confirm-${m}-${y}').style.display='none'">Cancel</button>
       </div>
       ${empty ? `
         <div style="font-size:13px;color:var(--ink4);padding:10px 0">No saved budget. Click "Open" to start tracking this month.</div>
@@ -4783,8 +4801,11 @@ function jumpFromArchive() {
   document.querySelector('.sb-item').classList.add('active');
 }
 
+function archiveConfirmDelete(btn, m, y) {
+  const row = document.getElementById('arch-del-confirm-'+m+'-'+y);
+  if (row) row.style.display = row.style.display === 'none' ? 'flex' : 'none';
+}
 function deleteMonth(m, y) {
-  if (!confirm('Delete the saved budget for '+MONTHS[m]+' '+y+'? Transactions for this month are kept; only the budget numbers are erased.')) return;
   delete state.months[monthKey(m,y)];
   saveState();
   renderMonthArchive();
@@ -4831,8 +4852,11 @@ function setSchStatus(i, newStatus) {
   persist('Status updated');
 }
 
+function schConfirmDelete(i) {
+  const row = document.getElementById('sch-del-confirm-'+i);
+  if (row) row.style.display = row.style.display === 'none' ? 'flex' : 'none';
+}
 function delScholarship(i) {
-  if (!confirm('Remove this scholarship from your tracker?')) return;
   state.scholarships.splice(i,1);
   renderScholarships(); persist();
 }
@@ -4969,7 +4993,12 @@ function renderScholarships() {
           ${Object.entries({awarded:'✅ Awarded',applied:'📝 Applied',eligible:'🔍 Not applied',renewal:'🔄 Renewal due',lost:'❌ Lost'})
             .map(([k,v]) => `<option value="${k}"${s.status===k?' selected':''}>${v}</option>`).join('')}
         </select>
-        <button class="btn btn-ghost btn-xs" onclick="delScholarship(${realIdx})">Remove</button>
+        <button class="btn btn-ghost btn-xs" onclick="schConfirmDelete(${realIdx})">Remove</button>
+      </div>
+      <div id="sch-del-confirm-${realIdx}" style="display:none;align-items:center;gap:8px;padding:6px 0 2px;font-size:13px;color:var(--rust)">
+        Remove this scholarship?
+        <button class="btn btn-danger btn-xs" onclick="delScholarship(${realIdx})">Yes, remove</button>
+        <button class="btn btn-ghost btn-xs" onclick="document.getElementById('sch-del-confirm-${realIdx}').style.display='none'">Cancel</button>
       </div>
     </div>`;
   }).join('');
@@ -5010,8 +5039,11 @@ function addInternship() {
   renderInternships(); persist('Internship added!');
 }
 
+function intConfirmDelete(i) {
+  const row = document.getElementById('int-del-confirm-'+i);
+  if (row) row.style.display = row.style.display === 'none' ? 'flex' : 'none';
+}
 function delInternship(i) {
-  if (!confirm('Remove this internship from your tracker?')) return;
   state.internships.splice(i, 1);
   renderInternships(); persist();
 }
@@ -5198,7 +5230,12 @@ function renderInternships() {
           ${Object.entries({saved:'🔖 Saved',applied:'📤 Applied',assessment:'📝 Assessment',interview:'💬 Interview',offer:'🎉 Offer',accepted:'✅ Accepted',rejected:'❌ Rejected',ghosted:'👻 Ghosted',withdrew:'🚪 Withdrew'})
             .map(([k,v]) => `<option value="${k}"${it.status===k?' selected':''}>${v}</option>`).join('')}
         </select>
-        <button class="btn btn-ghost btn-xs" onclick="delInternship(${realIdx})">Remove</button>
+        <button class="btn btn-ghost btn-xs" onclick="intConfirmDelete(${realIdx})">Remove</button>
+      </div>
+      <div id="int-del-confirm-${realIdx}" style="display:none;align-items:center;gap:8px;padding:6px 0 2px;font-size:13px;color:var(--rust)">
+        Remove this internship?
+        <button class="btn btn-danger btn-xs" onclick="delInternship(${realIdx})">Yes, remove</button>
+        <button class="btn btn-ghost btn-xs" onclick="document.getElementById('int-del-confirm-${realIdx}').style.display='none'">Cancel</button>
       </div>
     </div>`;
   }).join('');
@@ -5728,8 +5765,7 @@ const GROWTH_RATE_PRESETS = {
 let growthOneTimeScratch = [];
 
 // Global projection horizon in years — driven by the year slider, default 30.
-// Replaces per-account a.horizon for all display calculations; saved a.horizon is preserved.
-let growthHorizon = 30;
+// Persisted in state.growthHorizon so it survives page reloads.
 
 // Core compound-growth formula (safe for rate = 0)
 function growthFV(balance, monthly, annualRate, years) {
@@ -5777,7 +5813,7 @@ function addGrowthAccount() {
     balance: +document.getElementById('g-balance').value  || 0,
     monthly: +document.getElementById('g-monthly').value  || 0,
     rate:    +document.getElementById('g-rate').value     || 0,
-    horizon: growthHorizon  // saved for reference; growthHorizon global controls display
+    horizon: state.growthHorizon  // saved for reference; state.growthHorizon global controls display
   });
   // Reset form
   ['g-name','g-balance','g-monthly'].forEach(id => {
@@ -5825,7 +5861,7 @@ function renderGrowthAccounts() {
   container.innerHTML = state.growthAccounts.map((a, i) => {
     const safeName = escapeHTML(a.name);
     const safeType = escapeHTML(a.type);
-    const h          = growthHorizon;
+    const h          = state.growthHorizon;
     const fv         = growthFV(a.balance, a.monthly, a.rate, h);
     const contributed = (a.balance || 0) + (a.monthly || 0) * h * 12;
     const gain       = Math.max(0, fv - contributed);
@@ -5931,7 +5967,7 @@ function calcGrowthWhatsIf() {
   // Base includes any one-time scratch amounts already entered
   const baseFV = state.growthAccounts.reduce((s, a, i) => {
     const ot = growthOneTimeScratch[i] || 0;
-    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, growthHorizon);
+    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, state.growthHorizon);
   }, 0);
 
   if (extra <= 0) {
@@ -5946,7 +5982,7 @@ function calcGrowthWhatsIf() {
     const share = totMo > 0
       ? extra * ((a.monthly || 0) / totMo)
       : extra / state.growthAccounts.length;
-    return s + growthFV((a.balance || 0) + ot, (a.monthly || 0) + share, a.rate, growthHorizon);
+    return s + growthFV((a.balance || 0) + ot, (a.monthly || 0) + share, a.rate, state.growthHorizon);
   }, 0);
 
   const diff = Math.round(extraFV - baseFV);
@@ -5954,7 +5990,7 @@ function calcGrowthWhatsIf() {
   document.getElementById('g-whatsif-new').textContent     = state.currency + Math.round(extraFV).toLocaleString();
   document.getElementById('g-whatsif-diff').textContent    = '+' + state.currency + diff.toLocaleString();
   document.getElementById('g-whatsif-insight').textContent =
-    `Adding ${state.currency}${extra}/month could mean about ${state.currency}${diff.toLocaleString()} more by year ${growthHorizon}.`;
+    `Adding ${state.currency}${extra}/month could mean about ${state.currency}${diff.toLocaleString()} more by year ${state.growthHorizon}.`;
   document.getElementById('growth-whatsif-results').style.display = 'block';
 }
 
@@ -5974,9 +6010,10 @@ function syncGrowthInput(val) {
 
 // Global projection horizon slider — updates all calculations and redraws everything
 function syncGrowthHorizon(val) {
-  growthHorizon = Math.max(1, Math.min(50, +val || 30));
+  state.growthHorizon = Math.max(1, Math.min(50, +val || 30));
   const label = document.getElementById('g-year-label');
-  if (label) label.textContent = growthHorizon + ' year' + (growthHorizon === 1 ? '' : 's');
+  if (label) label.textContent = state.growthHorizon + ' year' + (state.growthHorizon === 1 ? '' : 's');
+  saveState();
   renderGrowthAccounts();
 }
 
@@ -5986,7 +6023,7 @@ function renderGrowthChart() {
   if (!container) return;
   if (!state.growthAccounts.length) { container.innerHTML = ''; return; }
 
-  const maxH = growthHorizon;
+  const maxH = state.growthHorizon;
 
   // Build data points year by year
   const pts = [];
@@ -6074,11 +6111,11 @@ function updateGrowthSummaryStrip() {
   const totMo    = state.growthAccounts.reduce((s, a)    => s + (a.monthly || 0), 0);
   const totFV    = state.growthAccounts.reduce((s, a, i) => {
     const ot = growthOneTimeScratch[i] || 0;
-    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, growthHorizon);
+    return s + growthFV((a.balance || 0) + ot, a.monthly, a.rate, state.growthHorizon);
   }, 0);
   const totContr = state.growthAccounts.reduce((s, a, i) => {
     const ot = growthOneTimeScratch[i] || 0;
-    return s + (a.balance || 0) + ot + (a.monthly || 0) * growthHorizon * 12;
+    return s + (a.balance || 0) + ot + (a.monthly || 0) * state.growthHorizon * 12;
   }, 0);
   const totGain  = Math.max(0, totFV - totContr);
   const gEl = id => document.getElementById(id);
@@ -6092,11 +6129,11 @@ function updateGrowthSummaryStrip() {
 function growthOneTimeOutputHTML(i, oneTime) {
   const a = state.growthAccounts[i];
   if (!a || !(oneTime > 0)) return '';
-  const baseFV = growthFV(a.balance || 0, a.monthly, a.rate, growthHorizon);
-  const newFV  = growthFV((a.balance || 0) + oneTime, a.monthly, a.rate, growthHorizon);
+  const baseFV = growthFV(a.balance || 0, a.monthly, a.rate, state.growthHorizon);
+  const newFV  = growthFV((a.balance || 0) + oneTime, a.monthly, a.rate, state.growthHorizon);
   const diff   = Math.round(newFV - baseFV);
   return `<span style="color:var(--accent,var(--sage));font-weight:700">With this deposit: ${state.currency}${Math.round(newFV).toLocaleString()}</span>`
-       + `<span style="color:var(--ink3)"> &nbsp;(+${state.currency}${diff.toLocaleString()} at yr ${growthHorizon})</span>`;
+       + `<span style="color:var(--ink3)"> &nbsp;(+${state.currency}${diff.toLocaleString()} at yr ${state.growthHorizon})</span>`;
 }
 
 // Update just the scenario output line for a single account card — no full re-render
@@ -6138,7 +6175,7 @@ function growthRateInput(i, val) {
   const badge = document.getElementById('growth-rate-badge-' + i);
   if (badge) badge.textContent = a.rate + '% / yr \u270E';
 
-  const h           = growthHorizon;
+  const h           = state.growthHorizon;
   const fv          = growthFV(a.balance, a.monthly, a.rate, h);
   const contributed = (a.balance || 0) + (a.monthly || 0) * h * 12;
   const gain        = Math.max(0, fv - contributed);
@@ -6173,7 +6210,7 @@ function growthMonthlyInput(i, val) {
   a.monthly = Math.max(0, +val || 0);
   persist();
 
-  const h           = growthHorizon;
+  const h           = state.growthHorizon;
   const fv          = growthFV(a.balance, a.monthly, a.rate, h);
   const contributed = (a.balance || 0) + a.monthly * h * 12;
   const gain        = Math.max(0, fv - contributed);
@@ -6232,6 +6269,7 @@ function fmtEl(id, val, signed=false) {
 }
 function toast(msg) {
   const t = document.getElementById('toast');
+  if (!t) return;
   t.textContent = msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 }
@@ -6267,7 +6305,6 @@ function importData() {
   input.click();
 }
 function resetAll() {
-  if(!confirm('This will erase ALL your data permanently. Are you sure?')) return;
   localStorage.removeItem(SAVE_KEY);
   location.reload();
 }
