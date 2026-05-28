@@ -2548,7 +2548,7 @@ line-height:1.55;margin-bottom:1rem;">
     </div>
 
     <div style="display:flex;gap:8px;margin-top:1rem;">
-      <button id="pro-activate-btn" class="btn btn-primary" style="flex:1;justify-content:center;" onclick="validateAndUnlock()">Activate license</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="validateAndUnlock()">Activate license</button>
       <button class="btn btn-ghost" onclick="closeProModal()">Cancel</button>
     </div>
     <p style="font-size:12px;color:var(--ink4);margin-top:1rem;text-align:center;">Your key was emailed to you after purchase. Check your spam folder if you don't see it.</p>
@@ -2563,21 +2563,26 @@ line-height:1.55;margin-bottom:1rem;">
 const PRO_KEY_STORE = 'ccp_pro_unlocked';
 const PRO_PAGES = new Set(['debt','subscriptions','growth','scholarships','internships','gpa']);
 
-function isProUnlocked() {
+// Local/offline copy only. The deployable CAMPUS-CASH-PRO.html validates
+// licenses through the Netlify/Lemon Squeezy function.
+function validateLicense(raw) {
+  const key = (raw || '').trim().toUpperCase();
+  const m = key.match(/^CCP-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})$/);
+  if (!m) return false;
   try {
-    const raw = localStorage.getItem(PRO_KEY_STORE);
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    return !!(data && data.token && data.ts && data.v === 1);
+    const a = parseInt(m[1], 36);
+    const b = parseInt(m[2], 36);
+    const c = parseInt(m[3], 36);
+    return ((a * 0x4CCA) + (b * 0x7F3D)) % 0xFFFF === c;
   } catch(e) { return false; }
 }
 
-function savePro(token) {
-  localStorage.setItem(PRO_KEY_STORE, JSON.stringify({
-    token: token,
-    ts: Date.now(),
-    v: 1
-  }));
+function isProUnlocked() {
+  return localStorage.getItem(PRO_KEY_STORE) === '1';
+}
+
+function savePro() {
+  localStorage.setItem(PRO_KEY_STORE, '1');
 }
 
 // Stores the feature the user tried to open before hitting the gate.
@@ -2904,8 +2909,6 @@ function showProModal() {
   modal.style.display = 'flex';
   document.getElementById('pro-key-input').value = '';
   document.getElementById('pro-key-err').style.display = 'none';
-  const btn = document.getElementById('pro-activate-btn');
-  if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
   setTimeout(() => document.getElementById('pro-key-input').focus(), 80);
 }
 
@@ -2924,62 +2927,43 @@ function proGateDismiss() {
   renderDashboard();
 }
 
-async function validateAndUnlock() {
+function validateAndUnlock() {
   const raw = document.getElementById('pro-key-input').value;
   const errEl = document.getElementById('pro-key-err');
-  const btn = document.getElementById('pro-activate-btn');
-
   if (!raw.trim()) {
     errEl.textContent = 'Please enter your license key.';
     errEl.style.display = 'block';
     return;
   }
-
-  if (btn) { btn.textContent = 'Validating…'; btn.disabled = true; }
-  errEl.style.display = 'none';
-
-  try {
-    const res = await fetch('/.netlify/functions/validate-license', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: raw.trim() })
-    });
-
-    const data = await res.json();
-
-    if (!data.valid) {
-      errEl.textContent = 'That key couldn\'t be verified. Check for typos or contact support at jrdud11@gmail.com.';
-      errEl.style.display = 'block';
-      if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
-      return;
-    }
-
-    // Valid — store token and unlock UI.
-    savePro(data.token);
-    closeProModal();
-    document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
-      el.classList.remove('pro-locked');
-      const lockSpan = el.querySelector('.si-lock');
-      if (lockSpan) lockSpan.remove();
-    });
-    const bl = document.getElementById('sb-backup-lock');
-    if (bl) bl.style.display = 'none';
-    const sn = document.getElementById('settings-pro-note');
-    if (sn) sn.style.display = 'none';
-    toast('🎉 Campus Cash Pro unlocked! All features are now available.');
-    if (_postUnlockAction === 'import') {
-      _postUnlockAction = null;
-      openImport();
-      return;
-    }
-    const dest = (_gateReturnPage && _gateReturnPage !== 'pro-gate') ? _gateReturnPage : 'dashboard';
-    const destEl = document.querySelector('.sb-item[onclick*="' + dest + '"]') || null;
-    showPage(dest, destEl);
-  } catch(e) {
-    errEl.textContent = 'Network error — check your connection and try again.';
+  if (!validateLicense(raw)) {
+    errEl.textContent = 'That key doesn\'t look right. Check for typos and make sure you\'re using the key that was emailed to you (format: CCP-XXXX-YYYY-ZZZZ).';
     errEl.style.display = 'block';
-    if (btn) { btn.textContent = 'Activate license'; btn.disabled = false; }
+    return;
   }
+  // Valid — persist and reload UI.
+  savePro();
+  closeProModal();
+  // Remove pro-locked class from sidebar items now that they're unlocked.
+  document.querySelectorAll('.sb-item.pro-locked').forEach(el => {
+    el.classList.remove('pro-locked');
+    const lockSpan = el.querySelector('.si-lock');
+    if (lockSpan) lockSpan.remove();
+  });
+  // Hide backup lock badge and settings pro note.
+  const bl = document.getElementById('sb-backup-lock');
+  if (bl) bl.style.display = 'none';
+  const sn = document.getElementById('settings-pro-note');
+  if (sn) sn.style.display = 'none';
+  toast('🎉 Campus Cash Pro unlocked! All features are now available.');
+  if (_postUnlockAction === 'import') {
+    _postUnlockAction = null;
+    openImport();
+    return;
+  }
+  // Navigate to whatever the user was trying to open.
+  const dest = (_gateReturnPage && _gateReturnPage !== 'pro-gate') ? _gateReturnPage : 'dashboard';
+  const destEl = document.querySelector('.sb-item[onclick*="' + dest + '"]') || null;
+  showPage(dest, destEl);
 }
 
 // On page load, if already unlocked, remove lock badges from sidebar immediately.
