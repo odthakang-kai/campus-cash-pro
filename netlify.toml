@@ -2,6 +2,11 @@
   publish = "."
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/"
+  to = "/CAMPUS-CASH-PRO.html"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
