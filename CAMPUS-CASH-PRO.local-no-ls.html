@@ -436,7 +436,6 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 .fund-card.fund-complete{border-left-color:var(--gold);}
 .fund-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .fund-name-row{display:flex;align-items:center;gap:8px;}
-.fund-emoji{font-size:20px;}
 .fund-title{font-weight:700;font-size:14px;color:var(--ink);}
 .fund-subtitle{font-size:12px;color:var(--ink3);margin-top:1px;}
 .fund-nums{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink3);text-align:right;}
@@ -445,6 +444,31 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 .fund-custom{display:flex;gap:4px;align-items:center;}
 .fund-custom-input{width:75px;padding:5px 8px;border:1.5px solid var(--border2);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--cream);color:var(--ink);outline:none;}
 .fund-custom-input:focus{border-color:var(--accent,var(--sage));background:white;}
+.fund-summary-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:1.2rem;}
+.fund-summary-tile{background:white;border:1px solid var(--border);border-radius:var(--r);padding:1rem;text-align:center;box-shadow:var(--shadow);}
+.fund-summary-val{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:var(--ink);}
+.fund-summary-val.pos{color:var(--sage);}
+.fund-summary-lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink4);margin-top:3px;font-weight:700;}
+.fund-history{margin-top:10px;padding:10px 12px;background:var(--cream2);border-radius:var(--r);border:1px solid var(--border);}
+.fund-history-title{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--ink4);font-weight:700;margin-bottom:6px;}
+.fund-history-row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);padding:3px 0;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+.fund-history-row:last-child{border-bottom:none;}
+.fund-history-amt{color:var(--sage);font-weight:700;}
+.fund-streak{display:inline-flex;align-items:center;gap:4px;background:rgba(191,140,48,0.12);border:1px solid rgba(191,140,48,0.25);border-radius:20px;padding:2px 9px;font-size:11.5px;font-weight:700;color:var(--gold);margin-left:6px;}
+.fund-card.fund-paused{opacity:0.65;border-left-color:var(--border2)!important;background:var(--cream2)!important;}
+.fund-paused-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(0,0,0,0.07);color:var(--ink3);margin-left:4px;}
+.fund-microframe{font-size:11.5px;color:var(--ink4);margin-top:5px;font-style:italic;}
+.fund-milestone-flash{position:fixed;top:80px;left:50%;transform:translateX(-50%);background:var(--gold);color:white;border-radius:var(--r-lg);padding:14px 22px;font-size:14px;font-weight:700;text-align:center;z-index:9998;box-shadow:var(--shadow-lg);animation:fadeUp .3s ease, flashFade 5.6s ease forwards;}
+.fund-rollover{margin-top:10px;padding:10px 12px;background:var(--sage-light);border:1px solid rgba(74,103,65,0.2);border-radius:var(--r);font-size:13px;color:var(--ink2);line-height:1.5;}
+.fund-rollover select{margin:6px 0 4px;padding:5px 8px;border:1.5px solid var(--border2);border-radius:6px;font-size:12px;background:var(--cream);color:var(--ink);width:100%;}
+.fund-tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.fund-tip-chip{background:white;border:1px solid rgba(74,103,65,0.2);border-radius:var(--r);padding:10px 12px;}
+.fund-tip-icon{font-size:18px;margin-bottom:4px;}
+.fund-tip-title{font-size:12.5px;font-weight:700;color:var(--ink2);margin-bottom:2px;}
+.fund-tip-body{font-size:12px;color:var(--ink3);line-height:1.5;}
+.fund-monthly-hint{font-size:12px;font-weight:700;margin-top:4px;min-height:18px;transition:opacity .2s;}
+.fund-extend-row{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.fund-extend-row select{padding:4px 6px;border:1.5px solid var(--border2);border-radius:6px;font-size:12px;background:var(--cream);color:var(--ink);}
 
 /* ── DEBT CARD ── */
 .debt-item{background:white;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.4rem;margin-bottom:12px;box-shadow:var(--shadow);transition:box-shadow .15s;}
@@ -497,13 +521,6 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
 .debt-stage-btn{flex:1;padding:9px 6px;font-size:12.5px;font-weight:700;font-family:'Lato',sans-serif;border:none;background:transparent;cursor:pointer;color:var(--ink3);letter-spacing:0.2px;transition:background .15s,color .15s;}
 .debt-stage-btn.active{background:var(--ink);color:var(--cream);border-radius:8px;}
 .debt-stage-label{font-size:11px;text-transform:uppercase;letter-spacing:0.6px;color:var(--ink4);margin-bottom:8px;font-weight:700;}
-
-/* ── INTEREST ACCRUAL COUNTER ── */
-.debt-accrual-banner{background:var(--rust-light);border:1.5px solid rgba(196,92,58,0.25);border-radius:var(--r-lg);padding:1.2rem 1.4rem;margin-bottom:1.2rem;display:none;}
-.debt-accrual-banner.visible{display:block;}
-.debt-accrual-headline{font-size:13px;color:var(--rust);font-weight:700;margin-bottom:4px;}
-.debt-accrual-ticker{font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:600;color:var(--rust);line-height:1;}
-.debt-accrual-sub{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.5;}
 
 /* ── GRADUATION CALCULATOR ── */
 .debt-grad-calc{background:var(--blue-light);border:1.5px solid rgba(58,96,128,0.2);border-radius:var(--r-lg);padding:1.2rem 1.4rem;margin-bottom:1.2rem;display:none;}
@@ -1399,26 +1416,30 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
       <div class="ph"><h1>Savings Funds</h1><p>Active savings buckets for bigger expenses — deposit over time and stay on track.</p></div>
       <div class="card">
         <div class="card-label">Create a new fund</div>
+        <div class="field"><label>Fund name <span class="req-star">*</span></label><input type="text" id="f-name" placeholder="e.g. Study Abroad Trip"></div>
         <div class="field-row">
-          <div class="field"><label>Fund name <span class="req-star">*</span></label><input type="text" id="f-name" placeholder="e.g. Study Abroad Trip"></div>
-          <div class="field"><label>Emoji</label><input type="text" id="f-emoji" placeholder="✈️" maxlength="2"></div>
+          <div class="field"><label>Goal amount ($) <span class="req-star">*</span></label><input type="number" id="f-goal" placeholder="500" oninput="calcFundMonthlyHint()"></div>
+          <div class="field">
+            <label>Already saved ($) <span style="font-size:11px;color:var(--ink4);font-weight:400">- money already set aside?</span></label>
+            <input type="number" id="f-saved" placeholder="0" title="Any money you've already set aside for this goal. It counts toward your progress right away." oninput="calcFundMonthlyHint()">
+          </div>
         </div>
         <div class="field-row">
-          <div class="field"><label>Goal amount ($) <span class="req-star">*</span></label><input type="number" id="f-goal" placeholder="500"></div>
-          <div class="field"><label>Already saved ($)</label><input type="number" id="f-saved" placeholder="0"></div>
-        </div>
-        <div class="field-row">
-          <div class="field"><label>Monthly contribution ($)</label><input type="number" id="f-monthly" placeholder="50"></div>
+          <div class="field">
+            <label>Monthly contribution ($)</label>
+            <input type="number" id="f-monthly" placeholder="50" oninput="calcFundMonthlyHint()" onfocus="calcFundMonthlyHint()">
+            <div class="fund-monthly-hint" id="f-monthly-hint"></div>
+          </div>
           <div class="field">
             <label>Target month</label>
             <div class="field-row">
-              <select id="f-target-month">
+              <select id="f-target-month" onchange="calcFundMonthlyHint()">
                 <option value="0">January</option><option value="1">February</option><option value="2">March</option>
                 <option value="3">April</option><option value="4">May</option><option value="5">June</option>
                 <option value="6">July</option><option value="7">August</option><option value="8">September</option>
                 <option value="9">October</option><option value="10">November</option><option value="11">December</option>
               </select>
-              <select id="f-target-year">
+              <select id="f-target-year" onchange="calcFundMonthlyHint()">
                 <option>2025</option><option selected>2026</option><option>2027</option><option>2028</option>
               </select>
             </div>
@@ -1427,17 +1448,45 @@ body.theme-mint{--accent:#4FA38E;--accent2:#6FBFAB;--accent-light:#E0F2EE;}
         <div class="field"><label>Why this fund matters to you</label><input type="text" id="f-why" placeholder="e.g. First time traveling alone — life goal!"></div>
         <button class="btn btn-primary" onclick="addFund()">+ Create fund</button>
       </div>
-      <div id="funds-container"></div>
-      <div class="g2 mt">
-        <div class="metric"><div class="metric-val pos" id="f-total-saved">$0</div><div class="metric-label">Total saved</div></div>
-        <div class="metric"><div class="metric-val" id="f-total-goal">$0</div><div class="metric-label">Total goal</div></div>
+      <div class="fund-summary-strip" id="fund-summary-strip" style="display:none">
+        <div class="fund-summary-tile">
+          <div class="fund-summary-val pos" id="f-total-saved">$0</div>
+          <div class="fund-summary-lbl">Total Saved</div>
+        </div>
+        <div class="fund-summary-tile">
+          <div class="fund-summary-val" id="f-total-goal">$0</div>
+          <div class="fund-summary-lbl">Total Goal</div>
+        </div>
+        <div class="fund-summary-tile">
+          <div class="fund-summary-val" id="f-total-pct">0%</div>
+          <div class="fund-summary-lbl">Overall Progress</div>
+        </div>
       </div>
+      <div id="funds-container"></div>
       <!-- Savings tips -->
       <div class="card" style="margin-top:1rem;background:var(--sage-light);border-color:rgba(74,103,65,0.2)">
         <div class="card-label" style="color:var(--sage)">💡 Savings tips</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Emergency fund comes first.</strong> Before any other savings goal, build $500–$1,000 in an untouched account. One unexpected expense — a car repair, a medical bill, a last-minute flight home — without this cushion means credit card debt. It's the single most protective thing you can do with your first $500.</div>
-          <div style="font-size:13px;color:var(--ink3);line-height:1.6"><strong style="color:var(--ink2)">Pay yourself first.</strong> The day your paycheck hits, move your savings amount out immediately — before you spend anything. What's left is your spending money. Most people do it backwards, spend freely, and wonder why saving feels impossible. Automate it if you can.</div>
+        <div class="fund-tips-grid">
+          <div class="fund-tip-chip">
+            <div class="fund-tip-icon">🛡️</div>
+            <div class="fund-tip-title">Emergency fund first</div>
+            <div class="fund-tip-body">Before anything else, save $500 to $1,000 untouched. One surprise bill without it can become credit card debt.</div>
+          </div>
+          <div class="fund-tip-chip">
+            <div class="fund-tip-icon">💸</div>
+            <div class="fund-tip-title">Pay yourself first</div>
+            <div class="fund-tip-body">Move savings out when your paycheck hits. What remains is your spending money, not the other way around.</div>
+          </div>
+          <div class="fund-tip-chip">
+            <div class="fund-tip-icon">📅</div>
+            <div class="fund-tip-title">Name a date</div>
+            <div class="fund-tip-body">Goals with deadlines become plans. Save $800 by August is easier to act on than save more.</div>
+          </div>
+          <div class="fund-tip-chip">
+            <div class="fund-tip-icon">🔁</div>
+            <div class="fund-tip-title">Automate then forget</div>
+            <div class="fund-tip-body">Set a recurring transfer for payday. Willpower fades, but a scheduled transfer keeps working.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1634,15 +1683,6 @@ line-height:1.55;margin-bottom:1rem;">
         <button class="debt-stage-btn" id="stage-btn-school" onclick="setDebtStage('in-school')">In School</button>
         <button class="debt-stage-btn" id="stage-btn-grace" onclick="setDebtStage('grace')">Grace Period</button>
         <button class="debt-stage-btn active" id="stage-btn-repayment" onclick="setDebtStage('repayment')">In Repayment</button>
-      </div>
-
-      <!-- Live accrual counter (in-school + grace only) -->
-      <div class="debt-accrual-banner" id="debt-accrual-banner">
-        <div class="debt-accrual-headline">🔥 Interest accruing on your unsubsidized loans right now</div>
-        <div class="debt-accrual-ticker" id="debt-accrual-ticker">$0.00</div>
-        <div class="debt-accrual-sub">
-          This counter started when you loaded this page. Unsubsidized loans accrue interest from day one — before you graduate, before you make a single payment. <strong id="debt-accrual-daily">$0.00/day</strong> adding up silently.
-        </div>
       </div>
 
       <!-- Graduation balance calculator (in-school only) -->
@@ -3719,23 +3759,167 @@ function renderTx() {
 }
 
 // ── SINKING FUNDS ─────────────────────────────
+function calcFundMonthlyHint() {
+  const hint = document.getElementById('f-monthly-hint');
+  if (!hint) return;
+  const goal = +document.getElementById('f-goal')?.value || 0;
+  const saved = +document.getElementById('f-saved')?.value || 0;
+  const month = +document.getElementById('f-target-month')?.value;
+  const year = +document.getElementById('f-target-year')?.value;
+  const manual = +document.getElementById('f-monthly')?.value || 0;
+  if (!goal || !year) { hint.textContent = ''; return; }
+  const now = new Date();
+  const moRemain = Math.max(1, (year - now.getFullYear()) * 12 + (month - now.getMonth()));
+  const needed = Math.ceil(Math.max(0, goal - saved) / moRemain);
+  if (manual > 0) {
+    if (manual >= needed) {
+      const moActual = Math.max(1, Math.ceil(Math.max(0, goal - saved) / manual));
+      hint.style.color = 'var(--sage)';
+      hint.textContent = `At ${state.currency}${manual}/mo you'll hit your goal in ${moActual} month${moActual !== 1 ? 's' : ''}`;
+    } else {
+      hint.style.color = 'var(--rust)';
+      hint.textContent = `Need ${state.currency}${needed}/mo to reach goal by your target date`;
+    }
+  } else {
+    hint.style.color = 'var(--sage)';
+    hint.textContent = `Suggested: ${state.currency}${needed}/mo to hit your goal on time`;
+  }
+}
+
+function recordDeposit(fund, amt) {
+  const now = new Date();
+  const monthKey = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+  const label = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  if (!fund.history) fund.history = [];
+  fund.history.unshift({ date: label, amt });
+  if (fund.history.length > 8) fund.history = fund.history.slice(0, 8);
+  if (fund.lastDepMonth !== monthKey) {
+    if (fund.lastDepMonth) {
+      const prev = new Date(fund.lastDepMonth + '-01');
+      const expected = new Date(prev.getFullYear(), prev.getMonth() + 1, 1);
+      const actual = new Date(monthKey + '-01');
+      fund.streak = (actual.getTime() === expected.getTime()) ? (fund.streak || 0) + 1 : 1;
+    } else {
+      fund.streak = 1;
+    }
+    fund.lastDepMonth = monthKey;
+  }
+}
+
+function checkFundMilestone(fund) {
+  if (!fund.milestones) fund.milestones = [];
+  const pct = Math.min(100, Math.round((fund.saved / fund.goal) * 100));
+  for (const t of [25, 50, 75, 100]) {
+    if (pct >= t && !fund.milestones.includes(String(t))) {
+      fund.milestones.push(String(t));
+      fireFundConfetti();
+      showFundMilestoneFlash(fund.name, t);
+      break;
+    }
+  }
+}
+
+function fireFundConfetti() {
+  const colors = ['#4A6741','#BF8C30','#C45C3A','#3A6080','#6B9362'];
+  for (let i = 0; i < 38; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position:fixed;left:${Math.random()*100}vw;top:-10px;
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      border-radius:${Math.random()>.5?'50%':'2px'};
+      pointer-events:none;z-index:9999;
+      animation:confetti-fall ${1.4+Math.random()}s ease-in forwards;
+      animation-delay:${Math.random()*.6}s;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2800);
+  }
+}
+
+function showFundMilestoneFlash(name, pct) {
+  const existing = document.querySelector('.fund-milestone-flash');
+  if (existing) existing.remove();
+  const msgs = {
+    25: `25% there on ${name}. Keep it up.`,
+    50: `Halfway to ${name}. You're doing it.`,
+    75: `75% funded. ${name} is almost there.`,
+    100: `${name} is fully funded. Time to celebrate.`
+  };
+  const el = document.createElement('div');
+  el.className = 'fund-milestone-flash';
+  el.textContent = msgs[pct] || `${pct}% milestone on ${name}!`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6400);
+}
+
+function togglePauseFund(i) {
+  state.funds[i].paused = !state.funds[i].paused;
+  renderFunds(); persist();
+}
+
+function showExtendPanel(i) {
+  const panel = document.getElementById(`f-extend-panel-${i}`);
+  if (panel) panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+}
+
+function applyExtend(i) {
+  const monthEl = document.getElementById(`f-ext-month-${i}`);
+  const yearEl = document.getElementById(`f-ext-year-${i}`);
+  if (!monthEl || !yearEl) return;
+  state.funds[i].targetMonth = +monthEl.value;
+  state.funds[i].targetYear = +yearEl.value;
+  renderFunds(); persist('Deadline updated!');
+}
+
+function applyRollover(completedIdx) {
+  const sel = document.getElementById(`f-rollover-sel-${completedIdx}`);
+  if (!sel || sel.value === '') { toast('Select a fund to roll over to'); return; }
+  const targetIdx = +sel.value;
+  const srcMonthly = state.funds[completedIdx].monthly || 0;
+  if (srcMonthly > 0) {
+    state.funds[targetIdx].monthly = (state.funds[targetIdx].monthly || 0) + srcMonthly;
+    state.funds[completedIdx].monthly = 0;
+    persist(`Rolled ${state.currency}${srcMonthly}/mo to ${state.funds[targetIdx].name}!`);
+  }
+  renderFunds();
+}
+
+function microframe(monthly) {
+  if (!monthly || monthly <= 0) return '';
+  const daily = (monthly / 30).toFixed(2);
+  const weekly = (monthly / 4.33).toFixed(2);
+  if (daily < 5) return `That's just ${state.currency}${daily}/day`;
+  if (weekly < 20) return `That's about ${state.currency}${weekly}/week`;
+  return `${state.currency}${monthly}/month commitment`;
+}
+
 function addFund() {
   const name = document.getElementById('f-name').value.trim();
   const goal = +document.getElementById('f-goal').value;
   if(!name||!goal){toast('Name and goal amount required');return;}
   state.funds.push({
-    name, emoji: document.getElementById('f-emoji').value||'💰',
+    name,
     goal, saved: +document.getElementById('f-saved').value||0,
     monthly: +document.getElementById('f-monthly').value||0,
     targetMonth: +document.getElementById('f-target-month').value,
     targetYear: +document.getElementById('f-target-year').value,
-    why: document.getElementById('f-why').value
+    why: document.getElementById('f-why').value,
+    history: [],
+    streak: 0,
+    lastDepMonth: null,
+    paused: false,
+    milestones: []
   });
-  ['f-name','f-emoji','f-goal','f-saved','f-monthly','f-why'].forEach(id=>document.getElementById(id).value='');
+  ['f-name','f-goal','f-saved','f-monthly','f-why'].forEach(id=>document.getElementById(id).value='');
   renderFunds(); persist('Fund created!');
 }
 function depositFund(i, amt) {
-  state.funds[i].saved = Math.min(state.funds[i].saved+amt, state.funds[i].goal);
+  const f = state.funds[i];
+  if (f.paused) { toast('This fund is paused - resume it first'); return; }
+  f.saved = Math.round((f.saved + amt) * 100) / 100;
+  recordDeposit(f, amt);
+  checkFundMilestone(f);
   renderFunds(); calcAll(); persist();
 }
 function depositCustom(i) {
@@ -3743,22 +3927,20 @@ function depositCustom(i) {
   if (!input) return;
   const amt = parseFloat(input.value);
   if (!amt || amt <= 0) { toast('Enter an amount above 0'); input.focus(); return; }
-  // Allow over-funding (saving past goal) — surface it but don't block
   const fund = state.funds[i];
-  const wasComplete = fund.saved >= fund.goal;
-  fund.saved = Math.max(0, fund.saved + amt);
+  if (fund.paused) { toast('This fund is paused - resume it first'); return; }
+  fund.saved = Math.round((fund.saved + amt) * 100) / 100;
   input.value = '';
-  renderFunds(); calcAll();
-  if (!wasComplete && fund.saved >= fund.goal) {
-    persist('🎉 '+fund.name+' fully funded!');
-  } else {
-    persist('Added '+state.currency+amt.toFixed(2)+' to '+fund.name);
-  }
+  recordDeposit(fund, amt);
+  checkFundMilestone(fund);
+  renderFunds(); calcAll(); persist();
 }
 function delFund(i){state.funds.splice(i,1);renderFunds();persist();}
 
 function renderFunds() {
   const c = document.getElementById('funds-container');
+  const strip = document.getElementById('fund-summary-strip');
+  if (strip) strip.style.display = state.funds.length ? 'grid' : 'none';
 
   if(!state.funds.length){
     c.innerHTML=`<div style="padding:1.8rem 1rem">
@@ -3767,10 +3949,14 @@ function renderFunds() {
       <div style="font-size:13px;color:var(--ink3);line-height:1.6;margin-bottom:1.2rem">A savings fund lets you set aside a little each month so a big one-time expense never hits you out of nowhere. Study abroad, a new laptop, spring break, car repairs — start a fund for each.</div>
       <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--ink4);margin-bottom:8px">Quick-start templates</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px">
-        <button class="sub-chip" onclick="applyFundTemplate('Study Abroad','✈️',2000,150)">✈️ Study Abroad</button>
-        <button class="sub-chip" onclick="applyFundTemplate('New Laptop','💻',1200,100)">💻 New Laptop</button>
-        <button class="sub-chip" onclick="applyFundTemplate('Car Fund','🚗',800,60)">🚗 Car Fund</button>
-        <button class="sub-chip" onclick="applyFundTemplate('Textbooks','📚',400,50)">📚 Textbooks</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Emergency Fund',1000,85,'My safety net - so one bad week does not wreck everything')">Emergency Fund</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Study Abroad',2000,150,'First time traveling alone - this is a life goal')">Study Abroad</button>
+        <button class="sub-chip" onclick="applyFundTemplate('New Laptop',1200,100,'My current one is dying - need this for class')">New Laptop</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Spring Break',600,75,'A real break - I have earned it')">Spring Break</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Car Fund',800,60,'Repairs happen - I need to be ready')">Car Fund</button>
+        <button class="sub-chip" onclick="applyFundTemplate('First Apartment',2500,200,'Security deposit plus first month when I graduate')">First Apartment</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Graduation Trip',1500,120,'Celebrating before real life kicks in')">Graduation Trip</button>
+        <button class="sub-chip" onclick="applyFundTemplate('Textbooks',400,50,'Next semester books without the panic')">Textbooks</button>
       </div>
     </div>`;
     document.getElementById('dash-funds-count').textContent = 0;
@@ -3786,7 +3972,6 @@ function renderFunds() {
   c.innerHTML = state.funds.map((f,i)=>{
     total+=f.saved; goalTotal+=f.goal;
     const safeName = escapeHTML(f.name);
-    const safeEmoji = escapeHTML(f.emoji);
     const safeWhy = escapeHTML(f.why);
     const pct      = Math.min(Math.round((f.saved/f.goal)*100),100);
     const left     = Math.max(0, f.goal - f.saved);
@@ -3834,13 +4019,85 @@ function renderFunds() {
       </div>`;
     }
 
-    return `<div class="fund-card ${statusClass}">
+    const monthlyAmt = f.monthly || 0;
+    const depositBtns = monthlyAmt > 0
+      ? [...new Set([
+          Math.round(monthlyAmt * 0.25),
+          Math.round(monthlyAmt * 0.5),
+          monthlyAmt,
+          Math.round(monthlyAmt * 2)
+        ].filter(v => v > 0))]
+        .map(v => `<button class="btn btn-ghost btn-xs" onclick="depositFund(${i},${v})">+${state.currency}${v}</button>`)
+        .join('')
+      : `<button class="btn btn-ghost btn-xs" onclick="depositFund(${i},10)">+${state.currency}10</button>
+         <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},25)">+${state.currency}25</button>
+         <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},50)">+${state.currency}50</button>
+         <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},100)">+${state.currency}100</button>`;
+
+    const streakHtml = (f.streak >= 2)
+      ? `<span class="fund-streak">${f.streak} mo streak</span>`
+      : '';
+
+    const microHtml = monthlyAmt > 0 && !done
+      ? `<div class="fund-microframe">${microframe(monthlyAmt)}</div>`
+      : '';
+
+    const historyHtml = (f.history && f.history.length > 0)
+      ? `<div class="fund-history">
+          <div class="fund-history-title">Recent deposits</div>
+          ${f.history.slice(0,5).map(h =>
+            `<div class="fund-history-row">
+              <span>${h.date}</span>
+              <span class="fund-history-amt">+${state.currency}${(+h.amt).toFixed(0)}</span>
+            </div>`
+          ).join('')}
+        </div>`
+      : '';
+
+    const extendHtml = isOverdue
+      ? `<div style="margin-top:8px">
+          <button class="btn btn-ghost btn-xs" onclick="showExtendPanel(${i})">Extend deadline</button>
+          <div id="f-extend-panel-${i}" class="fund-extend-row" style="display:none">
+            <select id="f-ext-month-${i}">
+              ${MONTHS.map((m,mi) => `<option value="${mi}"${mi===f.targetMonth?' selected':''}>${m}</option>`).join('')}
+            </select>
+            <select id="f-ext-year-${i}">
+              ${[0,1,2,3].map(offset => {
+                const y = new Date().getFullYear() + offset;
+                return `<option value="${y}"${y===f.targetYear?' selected':''}>${y}</option>`;
+              }).join('')}
+            </select>
+            <button class="btn btn-primary btn-xs" onclick="applyExtend(${i})">Save</button>
+          </div>
+        </div>`
+      : '';
+
+    const rolloverFunds = state.funds
+      .map((rf, ri) => ({ rf, ri }))
+      .filter(({ rf, ri }) => ri !== i && !rf.paused && rf.saved < rf.goal);
+
+    const rolloverHtml = done && f.monthly > 0 && rolloverFunds.length > 0
+      ? `<div class="fund-rollover">
+          <strong>You freed up ${state.currency}${f.monthly}/mo.</strong> Roll it into another fund?
+          <select id="f-rollover-sel-${i}">
+            <option value="">Choose a fund</option>
+            ${rolloverFunds.map(({ rf, ri }) =>
+              `<option value="${ri}">${escapeHTML(rf.name)}</option>`
+            ).join('')}
+          </select>
+          <button class="btn btn-primary btn-xs" onclick="applyRollover(${i})">Apply</button>
+        </div>`
+      : '';
+
+    const pauseBtn = !done
+      ? `<button class="btn btn-ghost btn-xs" onclick="togglePauseFund(${i})">${f.paused ? 'Resume' : 'Pause'}</button>`
+      : '';
+    return `<div class="fund-card ${statusClass}${f.paused ? ' fund-paused' : ''}">
       <div class="fund-top">
         <div class="fund-name-row">
-          <span class="fund-emoji">${safeEmoji}</span>
           <div>
-            <div class="fund-title">${safeName} ${statusBadge}</div>
-            ${f.why?`<div class="fund-subtitle">${safeWhy}</div>`:''}
+            <div class="fund-title">${safeName} ${statusBadge}${f.paused ? '<span class="fund-paused-badge">Paused</span>' : ''}${streakHtml}</div>
+            ${f.why?`<div class="fund-subtitle" style="font-style:italic">"${safeWhy}"</div>`:''}
           </div>
         </div>
         <div class="fund-nums"><strong>${state.currency}${f.saved.toFixed(0)}</strong> / ${state.currency}${f.goal.toFixed(0)}<br>
@@ -3852,38 +4109,45 @@ function renderFunds() {
         <div style="display:flex;flex-direction:column;gap:3px">
           <span style="font-size:12px;color:var(--ink3)">${pct}% · ${state.currency}${left.toFixed(0)} left${moNeeded?' · ~'+moNeeded+' mo to fund':''}</span>
           ${urgencyHtml}
-        </div>
-        <div class="flex-gap">
-          <div class="fund-actions">
-            <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},10)">+${state.currency}10</button>
-            <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},25)">+${state.currency}25</button>
-            <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},50)">+${state.currency}50</button>
-            <button class="btn btn-ghost btn-xs" onclick="depositFund(${i},100)">+${state.currency}100</button>
-          </div>
-          <div class="fund-custom">
-            <input type="number" id="f-custom-${i}" placeholder="custom" min="0" step="any" class="fund-custom-input" onkeydown="if(event.key==='Enter'){depositCustom(${i});event.preventDefault();}">
-            <button class="btn btn-primary btn-xs" onclick="depositCustom(${i})">+ Add</button>
-          </div>
-          <button class="btn btn-danger btn-xs" onclick="delFund(${i})" title="Remove fund">×</button>
+          ${microHtml}
         </div>
       </div>
       ${suggestHtml}
+      ${extendHtml}
+      ${!f.paused ? `
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+        <div class="fund-actions">${depositBtns}</div>
+        <div class="fund-custom">
+          <input type="number" id="f-custom-${i}" placeholder="custom" min="0" step="any" class="fund-custom-input" onkeydown="if(event.key==='Enter'){depositCustom(${i});event.preventDefault();}">
+          <button class="btn btn-primary btn-xs" onclick="depositCustom(${i})">+ Add</button>
+        </div>
+        ${pauseBtn}
+        <button class="btn btn-danger btn-xs" onclick="delFund(${i})" title="Remove fund">×</button>
+      </div>` : `
+      <div style="margin-top:10px;display:flex;gap:6px">
+        ${pauseBtn}
+        <button class="btn btn-danger btn-xs" onclick="delFund(${i})" title="Remove fund">×</button>
+      </div>`}
+      ${historyHtml}
+      ${rolloverHtml}
     </div>`;
   }).join('');
 
   fmtEl('f-total-saved', total);
   fmtEl('f-total-goal', goalTotal);
+  const pctEl = document.getElementById('f-total-pct');
+  if (pctEl) pctEl.textContent = goalTotal > 0 ? Math.round((total / goalTotal) * 100) + '%' : '0%';
   document.getElementById('dash-funds-count').textContent = state.funds.length;
   document.getElementById('dash-funds-pct').textContent = goalTotal>0?Math.round((total/goalTotal)*100)+'% of fund targets saved':'';
 }
 
-function applyFundTemplate(name, emoji, goal, monthly) {
+function applyFundTemplate(name, goal, monthly, why = '') {
   document.getElementById('f-name').value = name;
-  document.getElementById('f-emoji').value = emoji;
   document.getElementById('f-goal').value = goal;
   document.getElementById('f-monthly').value = monthly;
   document.getElementById('f-saved').value = '';
-  document.getElementById('f-why').value = '';
+  document.getElementById('f-why').value = why;
+  calcFundMonthlyHint();
   const el = document.getElementById('f-name');
   el.scrollIntoView({behavior:'smooth', block:'center'});
   el.focus();
@@ -4085,29 +4349,22 @@ function setDebtStage(stage) {
   const activeBtn = document.getElementById(btnId);
   if (activeBtn) activeBtn.classList.add('active');
 
-  const accrualBanner = document.getElementById('debt-accrual-banner');
   const gradCalc = document.getElementById('debt-grad-calc');
   const minHint = document.getElementById('d-min-hint');
   const subtypeField = document.getElementById('d-subtype-field');
 
   if (stage === 'in-school') {
-    if (accrualBanner) accrualBanner.classList.add('visible');
     if (gradCalc) gradCalc.classList.add('visible');
     if (minHint) minHint.textContent = '(optional — loans likely deferred)';
     if (subtypeField) subtypeField.style.display = 'block';
-    startAccrualCounter();
   } else if (stage === 'grace') {
-    if (accrualBanner) accrualBanner.classList.add('visible');
     if (gradCalc) gradCalc.classList.remove('visible');
     if (minHint) minHint.textContent = '(optional — grace period, not yet due)';
     if (subtypeField) subtypeField.style.display = 'block';
-    startAccrualCounter();
   } else {
-    if (accrualBanner) accrualBanner.classList.remove('visible');
     if (gradCalc) gradCalc.classList.remove('visible');
     if (minHint) minHint.textContent = '';
     if (subtypeField) subtypeField.style.display = 'none';
-    stopAccrualCounter();
   }
 
   persist();
@@ -4118,42 +4375,6 @@ function toggleSubtypeField() {
   const type = document.getElementById('d-type')?.value;
   const field = document.getElementById('d-subtype-field');
   if (field) field.style.display = (type === 'Student loan') ? 'block' : 'none';
-}
-
-// ── ACCRUAL COUNTER ────────────────────────────────────────────
-let _accrualInterval = null;
-let _accrualStartTime = null;
-let _dailyAccrualRate = 0;
-
-function startAccrualCounter() {
-  stopAccrualCounter();
-  _accrualStartTime = Date.now();
-  _dailyAccrualRate = state.debts.reduce((sum, d) => {
-    if (d.type === 'Student loan' && d.subtype !== 'subsidized') {
-      return sum + (d.bal * (d.rate / 100) / 365);
-    }
-    return sum;
-  }, 0);
-
-  const dailyEl = document.getElementById('debt-accrual-daily');
-  if (dailyEl) dailyEl.textContent = '$' + _dailyAccrualRate.toFixed(2) + '/day';
-
-  if (_dailyAccrualRate <= 0 && state.debts.length === 0) {
-    const ticker = document.getElementById('debt-accrual-ticker');
-    if (ticker) ticker.textContent = 'Add your loans above to see live accrual';
-    return;
-  }
-
-  _accrualInterval = setInterval(() => {
-    const elapsed = (Date.now() - _accrualStartTime) / 1000;
-    const accrued = (_dailyAccrualRate / 86400) * elapsed;
-    const ticker = document.getElementById('debt-accrual-ticker');
-    if (ticker) ticker.textContent = '$' + accrued.toFixed(4);
-  }, 100);
-}
-
-function stopAccrualCounter() {
-  if (_accrualInterval) { clearInterval(_accrualInterval); _accrualInterval = null; }
 }
 
 // ── GRADUATION PROJECTION ──────────────────────────────────────
@@ -4238,9 +4459,6 @@ function addDebt() {
   });
   ['d-name','d-bal','d-rate','d-min'].forEach(id=>document.getElementById(id).value='');
   renderDebts(); persist('Debt added');
-  if (state.debtStage === 'in-school' || state.debtStage === 'grace') {
-    startAccrualCounter();
-  }
 }
 
 function delDebt(i) { state.debts.splice(i,1); renderDebts(); persist(); }
